@@ -53,7 +53,6 @@ namespace HospitalityDataUpdater
             this.WebsiteInput = new System.Windows.Forms.TextBox();
             this.WebsiteLabel = new System.Windows.Forms.Label();
             this.LocationsGroupBox = new System.Windows.Forms.GroupBox();
-            this.SaveEditButton = new System.Windows.Forms.Button();
             this.SocialTagInput = new System.Windows.Forms.TextBox();
             this.SocialNameInput = new System.Windows.Forms.TextBox();
             this.SocialsGroupBox = new System.Windows.Forms.GroupBox();
@@ -98,6 +97,8 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
+            this.FileSaveNameInput = new System.Windows.Forms.TextBox();
+            this.SaveFileLabel = new System.Windows.Forms.Label();
             this.LocationFlowLayout.SuspendLayout();
             this.LocationGroupBox.SuspendLayout();
             this.InputPanel.SuspendLayout();
@@ -322,7 +323,6 @@ namespace HospitalityDataUpdater
             // 
             // LocationsGroupBox
             // 
-            this.LocationsGroupBox.Controls.Add(this.SaveEditButton);
             this.LocationsGroupBox.Controls.Add(this.SocialTagInput);
             this.LocationsGroupBox.Controls.Add(this.SocialNameInput);
             this.LocationsGroupBox.Controls.Add(this.SocialsGroupBox);
@@ -352,15 +352,6 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.TabIndex = 9;
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
-            // 
-            // SaveEditButton
-            // 
-            this.SaveEditButton.Location = new System.Drawing.Point(359, 225);
-            this.SaveEditButton.Name = "SaveEditButton";
-            this.SaveEditButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveEditButton.TabIndex = 25;
-            this.SaveEditButton.Text = "Save";
-            this.SaveEditButton.UseVisualStyleBackColor = true;
             // 
             // SocialTagInput
             // 
@@ -682,6 +673,8 @@ namespace HospitalityDataUpdater
             // 
             // CurrRowsContr
             // 
+            this.CurrRowsContr.Controls.Add(this.SaveFileLabel);
+            this.CurrRowsContr.Controls.Add(this.FileSaveNameInput);
             this.CurrRowsContr.Controls.Add(this.SaveRowButton);
             this.CurrRowsContr.Controls.Add(this.CompanyNameLabel);
             this.CurrRowsContr.Controls.Add(this.SelectButton);
@@ -772,6 +765,22 @@ namespace HospitalityDataUpdater
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
+            // FileSaveNameInput
+            // 
+            this.FileSaveNameInput.Location = new System.Drawing.Point(89, 104);
+            this.FileSaveNameInput.Name = "FileSaveNameInput";
+            this.FileSaveNameInput.Size = new System.Drawing.Size(127, 20);
+            this.FileSaveNameInput.TabIndex = 18;
+            // 
+            // SaveFileLabel
+            // 
+            this.SaveFileLabel.AutoSize = true;
+            this.SaveFileLabel.Location = new System.Drawing.Point(6, 107);
+            this.SaveFileLabel.Name = "SaveFileLabel";
+            this.SaveFileLabel.Size = new System.Drawing.Size(85, 13);
+            this.SaveFileLabel.TabIndex = 23;
+            this.SaveFileLabel.Text = "File Save Name:";
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -861,7 +870,6 @@ namespace HospitalityDataUpdater
         private System.Windows.Forms.Label SocialTagLabel;
         private System.Windows.Forms.Label SocialNameLabel;
         public System.Windows.Forms.FlowLayoutPanel LocationFlowLayout;
-        private System.Windows.Forms.Button SaveEditButton;
         public System.Windows.Forms.FlowLayoutPanel SocialsLayoutContainer;
         private System.Windows.Forms.GroupBox Brand;
         private System.Windows.Forms.Button Deletebrand1;
@@ -878,6 +886,8 @@ namespace HospitalityDataUpdater
         private Button SocialDelete1;
         private Button LocationSocialsButton1;
         private Button SaveRowButton;
+        private Label SaveFileLabel;
+        private TextBox FileSaveNameInput;
     }
 }
 

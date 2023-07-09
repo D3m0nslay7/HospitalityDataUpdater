@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using HospitalityDataUpdater._cs.Controllers;
 using Newtonsoft.Json;
 using ExcelDataReader;
+using OfficeOpenXml;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
@@ -32,6 +33,7 @@ namespace HospitalityDataUpdater
         LocationController locController;
         SocialController currentSocController;
         BrandController brandController;
+       
 
 
         public MainMenu()
@@ -49,7 +51,8 @@ namespace HospitalityDataUpdater
             socialsContainer = this.Controls.Find("SocialsLayoutContainer", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             brandsContainer = this.Controls.Find("BrandsFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             #endregion
-
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            
             #region testing
             for (int i = 0; i < -1; i++)
             {
@@ -287,7 +290,30 @@ namespace HospitalityDataUpdater
 
         public void saveFile()
         {
+            clearEntries();
+            string fileName = "";
 
+            string filePath = "C:\\TestData\\"+FileSaveNameInput.Text+".xlsx";
+            var excelPackage = new ExcelPackage();
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Data");
+
+            // Write column headers to the worksheet
+            for (int columnIndex = 0; columnIndex < importedData.Columns.Count; columnIndex++)
+            {
+                worksheet.Cells[1, columnIndex + 1].Value = importedData.Columns[columnIndex].ColumnName;
+            }
+
+            // Write data rows to the worksheet
+            for (int rowIndex = 0; rowIndex < importedData.Rows.Count; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < importedData.Columns.Count; columnIndex++)
+                {
+                    worksheet.Cells[rowIndex + 2, columnIndex + 1].Value = importedData.Rows[rowIndex][columnIndex];
+                }
+            }
+
+            excelPackage.SaveAs(new System.IO.FileInfo(filePath));
+            MessageBox.Show("Successfully saved data to: " + fileName);
         }
         private DataTable Import(int startRow, int endRow) // used to import the data we want
         {
