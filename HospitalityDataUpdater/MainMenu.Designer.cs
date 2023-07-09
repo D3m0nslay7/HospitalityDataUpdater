@@ -573,6 +573,7 @@ namespace HospitalityDataUpdater
             this.CreateLocationButton.TabIndex = 2;
             this.CreateLocationButton.Text = "Create";
             this.CreateLocationButton.UseVisualStyleBackColor = true;
+            this.CreateLocationButton.Click += new System.EventHandler(this.CreateLocationButton_Click);
             // 
             // LocationsSavedLabel
             // 

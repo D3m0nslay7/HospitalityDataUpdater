@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace HospitalityDataUpdater._cs.Controllers
             return brands;
         }
 
-        public string[] getSaveableData()
+        public string getSaveableData()
         {
             List<string> brandNames = new List<string>();
             foreach (Brand brand in getBrands())
@@ -35,8 +36,9 @@ namespace HospitalityDataUpdater._cs.Controllers
             }
 
             string[] a = brandNames.ToArray();
+            string jsonArray = JsonConvert.SerializeObject(brandNames);
 
-            return a;
+            return jsonArray;
         }
         #endregion
 
