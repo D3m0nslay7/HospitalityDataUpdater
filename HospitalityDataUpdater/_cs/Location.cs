@@ -92,7 +92,7 @@ namespace HospitalityDataUpdater._cs
         }
         #endregion
         //set methods
-        #region SetMethods
+        #region setMethods
         public void setSocials(SocialController socs)
         {
             socCont = socs;

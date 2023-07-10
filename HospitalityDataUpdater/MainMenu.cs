@@ -16,6 +16,8 @@ using ExcelDataReader;
 using OfficeOpenXml;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using PhoneNumbers;
+
 
 namespace HospitalityDataUpdater
 {
@@ -33,13 +35,14 @@ namespace HospitalityDataUpdater
         LocationController locController;
         SocialController currentSocController;
         BrandController brandController;
-       
 
+        string file;
 
         public MainMenu()
         {
             InitializeComponent();
-            FilePathTextbox.Text = "C:\\Users\\D3m0n\\Desktop\\asda.xlsx";
+            FilePathTextbox.Text = "C:\\Users\\Umer.Mohammed\\OneDrive - Access UK Ltd\\Documents\\ExcelData\\data-01";
+            file = FilePathTextbox.Text;
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -76,7 +79,38 @@ namespace HospitalityDataUpdater
         }
 
 
+        private string[] FormatPhoneNumber(string phoneNumber)
+        {
+            PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.GetInstance();
+            string defaultRegion = "GB";
+            try
+            {
+                PhoneNumber number = phoneNumberUtil.Parse(phoneNumber, defaultRegion);
 
+                // Extract calling code
+                int callingCode = number.CountryCode;
+
+                // Extract dialing code
+                string dialingCode = phoneNumberUtil.GetNationalSignificantNumber(number);
+
+                //Console.WriteLine("Calling Code: +" + callingCode);
+                //Console.WriteLine("Dialing Code: " + dialingCode);
+                int areaCodeNumber = phoneNumberUtil.GetLengthOfGeographicalAreaCode(number);
+
+
+                string substring1 = dialingCode.Substring(0, areaCodeNumber);
+                string substring2 = dialingCode.Substring(areaCodeNumber);
+                string[] numberArray = new string[] { substring1, substring2 };
+
+                return numberArray;
+            }
+            catch (NumberParseException ex)
+            {
+                Console.WriteLine("Invalid phone number: " + ex.Message);
+                return null;
+            }
+
+        }
 
         public void SetData(DataRow row)//set the data, when we get the data
         {
@@ -131,10 +165,12 @@ namespace HospitalityDataUpdater
             }
             
 
-            Console.WriteLine(row["New_Num_Stores"].ToString());
+            //Console.WriteLine(row["New_Num_Stores"].ToString());
+
+           
 
             //locations in a dictionary
-            if (row["Locations"] != null)
+            if (!row.IsNull("Locations"))
             {
                 var locations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(row["Locations"].ToString());
                 //loop through each location, and create one and put it in locationscontainer
@@ -142,10 +178,6 @@ namespace HospitalityDataUpdater
                 if (locations != null)
                 {
                     int z = 0;
-                    foreach (var test in locations)
-                    {
-                        Console.WriteLine(test.Key + ": " + test.Value);
-                    }
                     foreach (var data in locations)
                     {
 
@@ -211,11 +243,11 @@ namespace HospitalityDataUpdater
                         }
                         if (innerDict["location_phone"] != null)
                         {
-                            Console.WriteLine(innerDict["location_phone"]);
+                            //Console.WriteLine(innerDict["location_phone"]);
 
                             JArray locationPhoneArray = (JArray)innerDict["location_phone"];
                             locPho = string.Join(" ", locationPhoneArray.Select(x => x.ToString()));
-                            Console.WriteLine(locPho);
+                            //Console.WriteLine(locPho);
 
                         }
                         if (innerDict["location_website"] != null)
@@ -252,12 +284,13 @@ namespace HospitalityDataUpdater
 
             //imports
             importedData = Import(from, to);
-
+            RowChooserDropDown.Items.Clear();
             for (int i = 0; i < importedData.Rows.Count; i++)
             {
                 RowChooserDropDown.Items.Add(i);
             }
             currentRowNum = 0;
+            RowNumberLabel.Text = "Row Number: " + currentRowNum;
             maxRow = importedData.Rows.Count;
             SetData(importedData.Rows[currentRowNum]);
             MessageBox.Show("Successfully inserted data");
@@ -271,9 +304,10 @@ namespace HospitalityDataUpdater
             {
                 // Enter key was pressed
 
-                string enteredValue = FilePathTextbox.Text;
+                string enteredValue = FilePathTextbox.Text + ".xlsx";
                 int rows = GetExcelRowCount(enteredValue);
-
+                FromRowDropDown.Items.Clear();
+                ToRowDropDown.Items.Clear();
                 for (int i = 0; i < rows; i++)
                 {
                     FromRowDropDown.Items.Add(i);
@@ -288,12 +322,19 @@ namespace HospitalityDataUpdater
 
         #region excel
 
-        public void saveFile()
+        public void exportFile()
         {
             clearEntries();
-            string fileName = "";
-
-            string filePath = "C:\\TestData\\"+FileSaveNameInput.Text+".xlsx";
+            string filePath = "";
+            if(FileSaveNameInput.Text == string.Empty)
+            {
+                filePath = FilePathTextbox.Text + ".xlsx";
+            }
+            else
+            {
+                filePath = FileSaveNameInput.Text + ".xlsx";
+            }
+           
             var excelPackage = new ExcelPackage();
             ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Data");
 
@@ -313,7 +354,11 @@ namespace HospitalityDataUpdater
             }
 
             excelPackage.SaveAs(new System.IO.FileInfo(filePath));
-            MessageBox.Show("Successfully saved data to: " + fileName);
+            if (FileSaveNameInput.Text != string.Empty)
+            {
+                MessageBox.Show("Successfully saved data to: " + FileSaveNameInput.Text);
+            }
+            
         }
         private DataTable Import(int startRow, int endRow) // used to import the data we want
         {
@@ -322,7 +367,7 @@ namespace HospitalityDataUpdater
                 clearEntries();
             }
 
-            string filePath = FilePathTextbox.Text; // get the filepath from the ui
+            string filePath = FilePathTextbox.Text + ".xlsx"; // get the filepath from the ui
 
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -400,10 +445,13 @@ namespace HospitalityDataUpdater
 
 
                     int p = 0;
-                    foreach (var socialData in socCont.getSocials())
+                    if (socCont != null)
                     {
-                        locationSocials[socialData.getName()] = socialData.getAccount();
+                        foreach (var socialData in socCont.getSocials())
+                        {
+                            locationSocials[socialData.getName()] = socialData.getAccount();
 
+                        }
                     }
                     string locName = data.getName();
                     string locadd1 = data.getAdd1();
@@ -413,9 +461,14 @@ namespace HospitalityDataUpdater
                     string locPho = data.getPhoneNum();
                     string locWeb = data.getWebsite();
 
-                    string[] phoneNumbers = locPho.Split(' ');
+                    string[] phoneNumbers = FormatPhoneNumber(locPho);
                     //Console.WriteLine(phoneNumbers);
-                    JArray phojsonArray = JArray.FromObject(phoneNumbers);
+                    JArray phojsonArray = null;
+                    if (phoneNumbers != null)
+                    {
+                        phojsonArray = JArray.FromObject(phoneNumbers);
+                    }
+                    
 
                     //string phoJson = phojsonArray.ToString();
                     //Console.WriteLine(phoJson);
@@ -468,7 +521,11 @@ namespace HospitalityDataUpdater
             //clear the locations, socials and brands now
             locController.Clear();
             brandController.Clear();
-            currentSocController.Clear();
+            if (currentSocController != null)
+            {
+                currentSocController.Clear();
+            }
+            
         }
 
         //stuff to controll the rows and stuff
@@ -480,34 +537,41 @@ namespace HospitalityDataUpdater
 
             //we clear all data first
             clearEntries();
-
+            currentRowNum = row;
+            RowNumberLabel.Text = "Row Number: " + currentRowNum;
             SetData(importedData.Rows[row]);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            saveFile();
+            exportFile();
         }
 
         private void PreviousButton_Click(object sender, EventArgs e)
         {
-            //we clear all data first
-            clearEntries();
+            //save the data
+            saveEntries();
+
+            exportFile();
+
 
             currentRowNum--;
             if (currentRowNum <= -1)
             {
-                currentRowNum = maxRow;
+                currentRowNum = maxRow-1;
             }
 
             RowNumberLabel.Text = "Row Number: " + currentRowNum;
+            //set the data for the previous row
             SetData(importedData.Rows[currentRowNum]);
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
-            //we clear all data first
-            clearEntries();
+            //save the data
+            saveEntries();
+            
+            exportFile();
 
             currentRowNum++;
             if (currentRowNum > maxRow-1)
@@ -516,6 +580,7 @@ namespace HospitalityDataUpdater
             }
 
             RowNumberLabel.Text = "Row Number: " + currentRowNum;
+            //set the data for the next row to view
             SetData(importedData.Rows[currentRowNum]);
         }
 
@@ -684,10 +749,12 @@ namespace HospitalityDataUpdater
                 currentSocController.Clear();
 
             }
+
+            currentSocController = null;
         }
 
         #endregion
 
-
+        
     }
 }

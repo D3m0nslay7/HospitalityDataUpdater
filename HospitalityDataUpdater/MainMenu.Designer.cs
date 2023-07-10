@@ -89,6 +89,8 @@ namespace HospitalityDataUpdater
             this.SaveButton = new System.Windows.Forms.Button();
             this.ExcelControls = new System.Windows.Forms.GroupBox();
             this.CurrRowsContr = new System.Windows.Forms.GroupBox();
+            this.SaveFileLabel = new System.Windows.Forms.Label();
+            this.FileSaveNameInput = new System.Windows.Forms.TextBox();
             this.SaveRowButton = new System.Windows.Forms.Button();
             this.CompanyNameLabel = new System.Windows.Forms.Label();
             this.SelectButton = new System.Windows.Forms.Button();
@@ -97,8 +99,7 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
-            this.FileSaveNameInput = new System.Windows.Forms.TextBox();
-            this.SaveFileLabel = new System.Windows.Forms.Label();
+            this.LocationsPanel = new System.Windows.Forms.Panel();
             this.LocationFlowLayout.SuspendLayout();
             this.LocationGroupBox.SuspendLayout();
             this.InputPanel.SuspendLayout();
@@ -114,14 +115,17 @@ namespace HospitalityDataUpdater
             this.ExcelPanel.SuspendLayout();
             this.ExcelControls.SuspendLayout();
             this.CurrRowsContr.SuspendLayout();
+            this.LocationsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LocationFlowLayout
             // 
+            this.LocationFlowLayout.AutoScroll = true;
             this.LocationFlowLayout.Controls.Add(this.LocationGroupBox);
-            this.LocationFlowLayout.Location = new System.Drawing.Point(6, 253);
+            this.LocationFlowLayout.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LocationFlowLayout.Location = new System.Drawing.Point(0, 0);
             this.LocationFlowLayout.Name = "LocationFlowLayout";
-            this.LocationFlowLayout.Size = new System.Drawing.Size(509, 413);
+            this.LocationFlowLayout.Size = new System.Drawing.Size(529, 413);
             this.LocationFlowLayout.TabIndex = 0;
             // 
             // LocationGroupBox
@@ -133,7 +137,7 @@ namespace HospitalityDataUpdater
             this.LocationGroupBox.Controls.Add(this.LocationName1);
             this.LocationGroupBox.Location = new System.Drawing.Point(3, 3);
             this.LocationGroupBox.Name = "LocationGroupBox";
-            this.LocationGroupBox.Size = new System.Drawing.Size(506, 96);
+            this.LocationGroupBox.Size = new System.Drawing.Size(506, 91);
             this.LocationGroupBox.TabIndex = 0;
             this.LocationGroupBox.TabStop = false;
             this.LocationGroupBox.Text = "Location - 1";
@@ -323,6 +327,7 @@ namespace HospitalityDataUpdater
             // 
             // LocationsGroupBox
             // 
+            this.LocationsGroupBox.Controls.Add(this.LocationsPanel);
             this.LocationsGroupBox.Controls.Add(this.SocialTagInput);
             this.LocationsGroupBox.Controls.Add(this.SocialNameInput);
             this.LocationsGroupBox.Controls.Add(this.SocialsGroupBox);
@@ -345,10 +350,9 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.Controls.Add(this.LocationNameLabel);
             this.LocationsGroupBox.Controls.Add(this.CreateLocationButton);
             this.LocationsGroupBox.Controls.Add(this.LocationsSavedLabel);
-            this.LocationsGroupBox.Controls.Add(this.LocationFlowLayout);
             this.LocationsGroupBox.Location = new System.Drawing.Point(400, 10);
             this.LocationsGroupBox.Name = "LocationsGroupBox";
-            this.LocationsGroupBox.Size = new System.Drawing.Size(787, 672);
+            this.LocationsGroupBox.Size = new System.Drawing.Size(829, 688);
             this.LocationsGroupBox.TabIndex = 9;
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
@@ -370,20 +374,22 @@ namespace HospitalityDataUpdater
             // SocialsGroupBox
             // 
             this.SocialsGroupBox.Controls.Add(this.SocialsLayoutContainer);
-            this.SocialsGroupBox.Location = new System.Drawing.Point(523, 12);
+            this.SocialsGroupBox.Location = new System.Drawing.Point(562, 12);
             this.SocialsGroupBox.Name = "SocialsGroupBox";
             this.SocialsGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SocialsGroupBox.Size = new System.Drawing.Size(256, 654);
+            this.SocialsGroupBox.Size = new System.Drawing.Size(261, 654);
             this.SocialsGroupBox.TabIndex = 14;
             this.SocialsGroupBox.TabStop = false;
             this.SocialsGroupBox.Text = "Socials";
             // 
             // SocialsLayoutContainer
             // 
+            this.SocialsLayoutContainer.AutoScroll = true;
             this.SocialsLayoutContainer.Controls.Add(this.Social1Box);
-            this.SocialsLayoutContainer.Location = new System.Drawing.Point(6, 19);
+            this.SocialsLayoutContainer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SocialsLayoutContainer.Location = new System.Drawing.Point(3, 16);
             this.SocialsLayoutContainer.Name = "SocialsLayoutContainer";
-            this.SocialsLayoutContainer.Size = new System.Drawing.Size(244, 629);
+            this.SocialsLayoutContainer.Size = new System.Drawing.Size(255, 629);
             this.SocialsLayoutContainer.TabIndex = 1;
             // 
             // Social1Box
@@ -690,6 +696,22 @@ namespace HospitalityDataUpdater
             this.CurrRowsContr.TabStop = false;
             this.CurrRowsContr.Text = "Current Rows Controller";
             // 
+            // SaveFileLabel
+            // 
+            this.SaveFileLabel.AutoSize = true;
+            this.SaveFileLabel.Location = new System.Drawing.Point(6, 107);
+            this.SaveFileLabel.Name = "SaveFileLabel";
+            this.SaveFileLabel.Size = new System.Drawing.Size(85, 13);
+            this.SaveFileLabel.TabIndex = 23;
+            this.SaveFileLabel.Text = "File Save Name:";
+            // 
+            // FileSaveNameInput
+            // 
+            this.FileSaveNameInput.Location = new System.Drawing.Point(89, 104);
+            this.FileSaveNameInput.Name = "FileSaveNameInput";
+            this.FileSaveNameInput.Size = new System.Drawing.Size(127, 20);
+            this.FileSaveNameInput.TabIndex = 18;
+            // 
             // SaveRowButton
             // 
             this.SaveRowButton.Location = new System.Drawing.Point(83, 56);
@@ -765,27 +787,19 @@ namespace HospitalityDataUpdater
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
-            // FileSaveNameInput
+            // LocationsPanel
             // 
-            this.FileSaveNameInput.Location = new System.Drawing.Point(89, 104);
-            this.FileSaveNameInput.Name = "FileSaveNameInput";
-            this.FileSaveNameInput.Size = new System.Drawing.Size(127, 20);
-            this.FileSaveNameInput.TabIndex = 18;
-            // 
-            // SaveFileLabel
-            // 
-            this.SaveFileLabel.AutoSize = true;
-            this.SaveFileLabel.Location = new System.Drawing.Point(6, 107);
-            this.SaveFileLabel.Name = "SaveFileLabel";
-            this.SaveFileLabel.Size = new System.Drawing.Size(85, 13);
-            this.SaveFileLabel.TabIndex = 23;
-            this.SaveFileLabel.Text = "File Save Name:";
+            this.LocationsPanel.Controls.Add(this.LocationFlowLayout);
+            this.LocationsPanel.Location = new System.Drawing.Point(8, 253);
+            this.LocationsPanel.Name = "LocationsPanel";
+            this.LocationsPanel.Size = new System.Drawing.Size(529, 413);
+            this.LocationsPanel.TabIndex = 25;
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 710);
+            this.ClientSize = new System.Drawing.Size(1241, 710);
             this.Controls.Add(this.ExcelControls);
             this.Controls.Add(this.InputPanel);
             this.Controls.Add(this.LocationsGroupBox);
@@ -814,6 +828,7 @@ namespace HospitalityDataUpdater
             this.ExcelControls.ResumeLayout(false);
             this.CurrRowsContr.ResumeLayout(false);
             this.CurrRowsContr.PerformLayout();
+            this.LocationsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -888,6 +903,7 @@ namespace HospitalityDataUpdater
         private Button SaveRowButton;
         private Label SaveFileLabel;
         private TextBox FileSaveNameInput;
+        private Panel LocationsPanel;
     }
 }
 
