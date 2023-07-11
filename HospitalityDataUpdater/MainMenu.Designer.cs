@@ -53,6 +53,7 @@ namespace HospitalityDataUpdater
             this.WebsiteInput = new System.Windows.Forms.TextBox();
             this.WebsiteLabel = new System.Windows.Forms.Label();
             this.LocationsGroupBox = new System.Windows.Forms.GroupBox();
+            this.LocationsPanel = new System.Windows.Forms.Panel();
             this.SocialTagInput = new System.Windows.Forms.TextBox();
             this.SocialNameInput = new System.Windows.Forms.TextBox();
             this.SocialsGroupBox = new System.Windows.Forms.GroupBox();
@@ -80,8 +81,8 @@ namespace HospitalityDataUpdater
             this.CreateLocationButton = new System.Windows.Forms.Button();
             this.LocationsSavedLabel = new System.Windows.Forms.Label();
             this.ExcelPanel = new System.Windows.Forms.GroupBox();
-            this.FilePathTextbox = new System.Windows.Forms.TextBox();
-            this.FilePathLabel = new System.Windows.Forms.Label();
+            this.FileNameTextbox = new System.Windows.Forms.TextBox();
+            this.FileNameLabel = new System.Windows.Forms.Label();
             this.ImportButton = new System.Windows.Forms.Button();
             this.ToRowDropDown = new System.Windows.Forms.ComboBox();
             this.RowToRow = new System.Windows.Forms.Label();
@@ -99,7 +100,6 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
-            this.LocationsPanel = new System.Windows.Forms.Panel();
             this.LocationFlowLayout.SuspendLayout();
             this.LocationGroupBox.SuspendLayout();
             this.InputPanel.SuspendLayout();
@@ -109,13 +109,13 @@ namespace HospitalityDataUpdater
             this.BrandsFlowLayout.SuspendLayout();
             this.Brand.SuspendLayout();
             this.LocationsGroupBox.SuspendLayout();
+            this.LocationsPanel.SuspendLayout();
             this.SocialsGroupBox.SuspendLayout();
             this.SocialsLayoutContainer.SuspendLayout();
             this.Social1Box.SuspendLayout();
             this.ExcelPanel.SuspendLayout();
             this.ExcelControls.SuspendLayout();
             this.CurrRowsContr.SuspendLayout();
-            this.LocationsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LocationFlowLayout
@@ -357,6 +357,14 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
             // 
+            // LocationsPanel
+            // 
+            this.LocationsPanel.Controls.Add(this.LocationFlowLayout);
+            this.LocationsPanel.Location = new System.Drawing.Point(8, 253);
+            this.LocationsPanel.Name = "LocationsPanel";
+            this.LocationsPanel.Size = new System.Drawing.Size(529, 413);
+            this.LocationsPanel.TabIndex = 25;
+            // 
             // SocialTagInput
             // 
             this.SocialTagInput.Location = new System.Drawing.Point(336, 194);
@@ -583,8 +591,8 @@ namespace HospitalityDataUpdater
             // 
             // ExcelPanel
             // 
-            this.ExcelPanel.Controls.Add(this.FilePathTextbox);
-            this.ExcelPanel.Controls.Add(this.FilePathLabel);
+            this.ExcelPanel.Controls.Add(this.FileNameTextbox);
+            this.ExcelPanel.Controls.Add(this.FileNameLabel);
             this.ExcelPanel.Controls.Add(this.ImportButton);
             this.ExcelPanel.Controls.Add(this.ToRowDropDown);
             this.ExcelPanel.Controls.Add(this.RowToRow);
@@ -597,22 +605,22 @@ namespace HospitalityDataUpdater
             this.ExcelPanel.TabStop = false;
             this.ExcelPanel.Text = "Importer";
             // 
-            // FilePathTextbox
+            // FileNameTextbox
             // 
-            this.FilePathTextbox.Location = new System.Drawing.Point(4, 101);
-            this.FilePathTextbox.Name = "FilePathTextbox";
-            this.FilePathTextbox.Size = new System.Drawing.Size(127, 20);
-            this.FilePathTextbox.TabIndex = 17;
-            this.FilePathTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathTextbox_KeyDown);
+            this.FileNameTextbox.Location = new System.Drawing.Point(4, 101);
+            this.FileNameTextbox.Name = "FileNameTextbox";
+            this.FileNameTextbox.Size = new System.Drawing.Size(127, 20);
+            this.FileNameTextbox.TabIndex = 17;
+            this.FileNameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathTextbox_KeyDown);
             // 
-            // FilePathLabel
+            // FileNameLabel
             // 
-            this.FilePathLabel.AutoSize = true;
-            this.FilePathLabel.Location = new System.Drawing.Point(6, 85);
-            this.FilePathLabel.Name = "FilePathLabel";
-            this.FilePathLabel.Size = new System.Drawing.Size(48, 13);
-            this.FilePathLabel.TabIndex = 16;
-            this.FilePathLabel.Text = "File Path";
+            this.FileNameLabel.AutoSize = true;
+            this.FileNameLabel.Location = new System.Drawing.Point(6, 85);
+            this.FileNameLabel.Name = "FileNameLabel";
+            this.FileNameLabel.Size = new System.Drawing.Size(48, 13);
+            this.FileNameLabel.TabIndex = 16;
+            this.FileNameLabel.Text = "File Path";
             // 
             // ImportButton
             // 
@@ -787,14 +795,6 @@ namespace HospitalityDataUpdater
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
-            // LocationsPanel
-            // 
-            this.LocationsPanel.Controls.Add(this.LocationFlowLayout);
-            this.LocationsPanel.Location = new System.Drawing.Point(8, 253);
-            this.LocationsPanel.Name = "LocationsPanel";
-            this.LocationsPanel.Size = new System.Drawing.Size(529, 413);
-            this.LocationsPanel.TabIndex = 25;
-            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -819,6 +819,7 @@ namespace HospitalityDataUpdater
             this.Brand.ResumeLayout(false);
             this.LocationsGroupBox.ResumeLayout(false);
             this.LocationsGroupBox.PerformLayout();
+            this.LocationsPanel.ResumeLayout(false);
             this.SocialsGroupBox.ResumeLayout(false);
             this.SocialsLayoutContainer.ResumeLayout(false);
             this.Social1Box.ResumeLayout(false);
@@ -828,7 +829,6 @@ namespace HospitalityDataUpdater
             this.ExcelControls.ResumeLayout(false);
             this.CurrRowsContr.ResumeLayout(false);
             this.CurrRowsContr.PerformLayout();
-            this.LocationsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -888,8 +888,8 @@ namespace HospitalityDataUpdater
         public System.Windows.Forms.FlowLayoutPanel SocialsLayoutContainer;
         private System.Windows.Forms.GroupBox Brand;
         private System.Windows.Forms.Button Deletebrand1;
-        private System.Windows.Forms.TextBox FilePathTextbox;
-        private System.Windows.Forms.Label FilePathLabel;
+        private System.Windows.Forms.TextBox FileNameTextbox;
+        private System.Windows.Forms.Label FileNameLabel;
         private Label CompanyNameLabel;
         private GroupBox LocationGroupBox;
         private Label LocationAdd1Label;

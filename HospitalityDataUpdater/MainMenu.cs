@@ -36,13 +36,12 @@ namespace HospitalityDataUpdater
         SocialController currentSocController;
         BrandController brandController;
 
-        string file;
+        string filePath = @"C:\ExcelData\";
 
         public MainMenu()
         {
             InitializeComponent();
-            FilePathTextbox.Text = "C:\\Users\\Umer.Mohammed\\OneDrive - Access UK Ltd\\Documents\\ExcelData\\data-01";
-            file = FilePathTextbox.Text;
+            FileNameTextbox.Text = "data-01";
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -76,6 +75,16 @@ namespace HospitalityDataUpdater
 
 
             #endregion
+            //makes the filepath
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+                Console.WriteLine("Folder created successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Folder already exists.");
+            }
         }
 
 
@@ -101,7 +110,8 @@ namespace HospitalityDataUpdater
                 string substring1 = dialingCode.Substring(0, areaCodeNumber);
                 string substring2 = dialingCode.Substring(areaCodeNumber);
                 string[] numberArray = new string[] { substring1, substring2 };
-
+                Console.WriteLine(areaCodeNumber);
+                Console.WriteLine(substring1 + "\\n" + substring2);
                 return numberArray;
             }
             catch (NumberParseException ex)
@@ -284,16 +294,20 @@ namespace HospitalityDataUpdater
 
             //imports
             importedData = Import(from, to);
-            RowChooserDropDown.Items.Clear();
-            for (int i = 0; i < importedData.Rows.Count; i++)
+            if(importedData != null)
             {
-                RowChooserDropDown.Items.Add(i);
+                RowChooserDropDown.Items.Clear();
+                for (int i = 0; i < importedData.Rows.Count; i++)
+                {
+                    RowChooserDropDown.Items.Add(i);
+                }
+                currentRowNum = 0;
+                RowNumberLabel.Text = "Row Number: " + currentRowNum;
+                maxRow = importedData.Rows.Count;
+                SetData(importedData.Rows[currentRowNum]);
+                MessageBox.Show("Successfully inserted data");
             }
-            currentRowNum = 0;
-            RowNumberLabel.Text = "Row Number: " + currentRowNum;
-            maxRow = importedData.Rows.Count;
-            SetData(importedData.Rows[currentRowNum]);
-            MessageBox.Show("Successfully inserted data");
+            
         }
 
 
@@ -304,18 +318,21 @@ namespace HospitalityDataUpdater
             {
                 // Enter key was pressed
 
-                string enteredValue = FilePathTextbox.Text + ".xlsx";
+                string enteredValue = filePath+FileNameTextbox.Text + ".xlsx";
                 int rows = GetExcelRowCount(enteredValue);
-                FromRowDropDown.Items.Clear();
-                ToRowDropDown.Items.Clear();
-                for (int i = 0; i < rows; i++)
+                if (rows > -1)
                 {
-                    FromRowDropDown.Items.Add(i);
-                    ToRowDropDown.Items.Add(i);
-                   
-                }
+                    FromRowDropDown.Items.Clear();
+                    ToRowDropDown.Items.Clear();
+                    for (int i = 0; i < rows; i++)
+                    {
+                        FromRowDropDown.Items.Add(i);
+                        ToRowDropDown.Items.Add(i);
 
-                MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
+                    }
+
+                    MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
+                }   
             }
         }
         #endregion
@@ -324,15 +341,19 @@ namespace HospitalityDataUpdater
 
         public void exportFile()
         {
+            if(importedData == null)
+            {
+                return;
+            }
             clearEntries();
-            string filePath = "";
+            string newFilePath = "";
             if(FileSaveNameInput.Text == string.Empty)
             {
-                filePath = FilePathTextbox.Text + ".xlsx";
+                newFilePath = filePath+FileNameTextbox.Text + ".xlsx";
             }
             else
             {
-                filePath = FileSaveNameInput.Text + ".xlsx";
+                newFilePath = filePath+FileSaveNameInput.Text + ".xlsx";
             }
            
             var excelPackage = new ExcelPackage();
@@ -353,7 +374,7 @@ namespace HospitalityDataUpdater
                 }
             }
 
-            excelPackage.SaveAs(new System.IO.FileInfo(filePath));
+            excelPackage.SaveAs(new System.IO.FileInfo(newFilePath));
             if (FileSaveNameInput.Text != string.Empty)
             {
                 MessageBox.Show("Successfully saved data to: " + FileSaveNameInput.Text);
@@ -367,139 +388,168 @@ namespace HospitalityDataUpdater
                 clearEntries();
             }
 
-            string filePath = FilePathTextbox.Text + ".xlsx"; // get the filepath from the ui
-
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            string path = filePath+FileNameTextbox.Text + ".xlsx"; // get the filepath from the ui
+            if (File.Exists(path))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                using (var stream = File.Open(path, FileMode.Open, FileAccess.Read))
                 {
-                    var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
-                    });
+                        var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                        {
+                            ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
+                        });
 
-                    DataTable dataTable = result.Tables[0];
+                        DataTable dataTable = result.Tables[0];
 
-                    // Filter the rows within the desired range
-                    DataTable filteredTable = dataTable.AsEnumerable()
-                        .Skip(startRow - 1)
-                        .Take(endRow - startRow + 1)
-                        .CopyToDataTable();
+                        // Filter the rows within the desired range
+                        DataTable filteredTable = dataTable.AsEnumerable()
+                            .Skip(startRow - 1)
+                            .Take(endRow - startRow + 1)
+                            .CopyToDataTable();
 
-                    if (currentSocController != null)
-                    {
-                        currentSocController.Clear();
+                        if (currentSocController != null)
+                        {
+                            currentSocController.Clear();
+                        }
+
+                        currentSocController = null;
+                        return filteredTable;
                     }
-
-                    currentSocController = null;
-                    return filteredTable;
                 }
             }
+            else
+            {
+                MessageBox.Show("Failed to import, file doesnt exist");
+                return null;
+            }
+           
         }
         public int GetExcelRowCount(string filePath) // used to retrieve the amount of rows
         {
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            if (File.Exists(filePath) && File.)
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                try
                 {
-                    var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                    using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
-                    });
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                            {
+                                ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
+                            });
 
-                    DataTable dataTable = result.Tables[0];
-                    int rowCount = dataTable.Rows.Count;
+                            DataTable dataTable = result.Tables[0];
+                            int rowCount = dataTable.Rows.Count;
 
-                    return rowCount;
+                            return rowCount;
+                        }
+                    }
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("File is already open or in use by another process.");
                 }
             }
+            else
+            {
+                MessageBox.Show("Warning, file does not exist!");
+                return -1;
+            }
+            
         }
         #endregion
 
 
         public void saveEntries()
         {
-            //we save all the entries into the row
-            importedData.Rows[currentRowNum]["Website"] = WebsiteInput.Text;
-            importedData.Rows[currentRowNum]["New_Num_Stores"] = NumNewStoresInput.Value;
-            importedData.Rows[currentRowNum]["Num_Developing_Stores"] = NumDevStoresInput.Value;
-            importedData.Rows[currentRowNum]["Bookings_provider"] = BookingsProviderInput.Text;
-            importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
-
-
-            //locations in a dictionary
-            Dictionary<string, object> locationsData = new Dictionary<string, object>();
-
-            //loop through each location, and create one and put it in locationscontainer
-            if (locController.getLocations().Count > 0)
+            if(importedData != null)
             {
-                int z = 1;
-                foreach (Location data in locController.getLocations())
+                //we save all the entries into the row
+                importedData.Rows[currentRowNum]["Website"] = WebsiteInput.Text;
+                importedData.Rows[currentRowNum]["New_Num_Stores"] = NumNewStoresInput.Value;
+                importedData.Rows[currentRowNum]["Num_Developing_Stores"] = NumDevStoresInput.Value;
+                importedData.Rows[currentRowNum]["Bookings_provider"] = BookingsProviderInput.Text;
+                importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
+
+
+                //locations in a dictionary
+                Dictionary<string, object> locationsData = new Dictionary<string, object>();
+
+                //loop through each location, and create one and put it in locationscontainer
+                if (locController.getLocations().Count > 0)
                 {
-
-                    Dictionary<string, object> locationData = new Dictionary<string, object>();
-
-                    //first we setup the socials
-                    SocialController socCont = data.getSocials();
-                    Dictionary<string, object> locationSocials = new Dictionary<string, object>();
-
-
-                    int p = 0;
-                    if (socCont != null)
+                    int z = 1;
+                    foreach (Location data in locController.getLocations())
                     {
-                        foreach (var socialData in socCont.getSocials())
+
+                        Dictionary<string, object> locationData = new Dictionary<string, object>();
+
+                        //first we setup the socials
+                        SocialController socCont = data.getSocials();
+                        Dictionary<string, object> locationSocials = new Dictionary<string, object>();
+
+
+                        int p = 0;
+                        if (socCont != null)
                         {
-                            locationSocials[socialData.getName()] = socialData.getAccount();
+                            foreach (var socialData in socCont.getSocials())
+                            {
+                                locationSocials[socialData.getName()] = socialData.getAccount();
 
+                            }
                         }
+                        string locName = data.getName();
+                        string locadd1 = data.getAdd1();
+                        string locadd2 = data.getAdd2();
+                        string locCity = data.getCity();
+                        string locPost = data.getPost();
+                        string locPho = data.getPhoneNum();
+                        string locWeb = data.getWebsite();
+
+                        string[] phoneNumbers = FormatPhoneNumber(locPho);
+                        //Console.WriteLine(phoneNumbers);
+                        JArray phojsonArray = null;
+                        if (phoneNumbers != null)
+                        {
+                            phojsonArray = JArray.FromObject(phoneNumbers);
+                        }
+
+
+                        //string phoJson = phojsonArray.ToString();
+                        //Console.WriteLine(phoJson);
+                        locationData["location_name"] = locName;
+                        locationData["location_address_1"] = locadd1;
+                        locationData["location_address_2"] = locadd2;
+                        locationData["location_city"] = locCity;
+                        locationData["location_postcode"] = locPost;
+                        locationData["location_phone"] = phojsonArray;
+                        locationData["location_website"] = locWeb;
+                        locationData["location_socials"] = locationSocials;
+
+                        // Serialize the inner dictionary to JSON and add it to the outer dictionary
+                        locationsData["locationNum" + z] = locationData;
+
+
+
+                        z++;
                     }
-                    string locName = data.getName();
-                    string locadd1 = data.getAdd1();
-                    string locadd2 = data.getAdd2();
-                    string locCity = data.getCity();
-                    string locPost = data.getPost();
-                    string locPho = data.getPhoneNum();
-                    string locWeb = data.getWebsite();
 
-                    string[] phoneNumbers = FormatPhoneNumber(locPho);
-                    //Console.WriteLine(phoneNumbers);
-                    JArray phojsonArray = null;
-                    if (phoneNumbers != null)
-                    {
-                        phojsonArray = JArray.FromObject(phoneNumbers);
-                    }
-                    
+                    string json = JsonConvert.SerializeObject(locationsData);
 
-                    //string phoJson = phojsonArray.ToString();
-                    //Console.WriteLine(phoJson);
-                    locationData["location_name"] = locName;
-                    locationData["location_address_1"] = locadd1;
-                    locationData["location_address_2"] = locadd2;
-                    locationData["location_city"] = locCity;
-                    locationData["location_postcode"] = locPost;
-                    locationData["location_phone"] = phojsonArray;
-                    locationData["location_website"] = locWeb;
-                    locationData["location_socials"] = locationSocials;
-
-                    // Serialize the inner dictionary to JSON and add it to the outer dictionary
-                    locationsData["locationNum" + z] = locationData;
-                    
-
-                    
-                    z++;
+                    importedData.Rows[currentRowNum]["Locations"] = json;
+                    //Console.WriteLine(json);
                 }
 
-                string json = JsonConvert.SerializeObject(locationsData);
 
-                importedData.Rows[currentRowNum]["Locations"] = json;
-                //Console.WriteLine(json);
             }
-
 
         }
 
         public void clearEntries()
         {
+
             //we wana save data first
             saveEntries();
 
@@ -519,13 +569,13 @@ namespace HospitalityDataUpdater
             SocialTagInput.Text = "";
 
             //clear the locations, socials and brands now
-            locController.Clear();
-            brandController.Clear();
+            if (locController != null)
+                locController.Clear();
+            if (brandController != null)
+                brandController.Clear();
             if (currentSocController != null)
-            {
                 currentSocController.Clear();
-            }
-            
+
         }
 
         //stuff to controll the rows and stuff
@@ -533,6 +583,7 @@ namespace HospitalityDataUpdater
 
         private void SelectButton_Click(object sender, EventArgs e)
         {
+            if (importedData == null) return;
             int row = Convert.ToInt32(RowChooserDropDown.SelectedItem);
 
             //we clear all data first
@@ -549,6 +600,8 @@ namespace HospitalityDataUpdater
 
         private void PreviousButton_Click(object sender, EventArgs e)
         {
+            if (importedData == null) return;
+
             //save the data
             saveEntries();
 
@@ -568,6 +621,8 @@ namespace HospitalityDataUpdater
 
         private void NextButton_Click(object sender, EventArgs e)
         {
+            if (importedData == null) return;
+
             //save the data
             saveEntries();
             
