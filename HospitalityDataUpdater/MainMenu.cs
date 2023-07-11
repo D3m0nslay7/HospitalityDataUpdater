@@ -124,7 +124,6 @@ namespace HospitalityDataUpdater
 
         public void SetData(DataRow row)//set the data, when we get the data
         {
-            string temp;
             //we import the data now
 
             //get new controllers, we dont want any old data
@@ -228,7 +227,6 @@ namespace HospitalityDataUpdater
                         string locadd2 = null;
                         string locCity = null;
                         string locPost = null;
-                        string tempPho = null;
                         string locPho = null;
                         string locWeb = null;
                         if (innerDict["location_name"] != null)
@@ -339,7 +337,7 @@ namespace HospitalityDataUpdater
 
         #region excel
 
-        public void exportFile()
+        public void exportFile(string buttonName)
         {
             if(importedData == null)
             {
@@ -375,7 +373,7 @@ namespace HospitalityDataUpdater
             }
 
             excelPackage.SaveAs(new System.IO.FileInfo(newFilePath));
-            if (FileSaveNameInput.Text != string.Empty)
+            if (buttonName != "next" && buttonName != "prev" && buttonName != "sele")
             {
                 MessageBox.Show("Successfully saved data to: " + FileSaveNameInput.Text);
             }
@@ -427,7 +425,7 @@ namespace HospitalityDataUpdater
         }
         public int GetExcelRowCount(string filePath) // used to retrieve the amount of rows
         {
-            if (File.Exists(filePath) && File.)
+            if (File.Exists(filePath))
             {
                 try
                 {
@@ -450,6 +448,7 @@ namespace HospitalityDataUpdater
                 catch (IOException)
                 {
                     MessageBox.Show("File is already open or in use by another process.");
+                    return -1;
                 }
             }
             else
@@ -481,17 +480,16 @@ namespace HospitalityDataUpdater
                 if (locController.getLocations().Count > 0)
                 {
                     int z = 1;
+                    
                     foreach (Location data in locController.getLocations())
                     {
 
                         Dictionary<string, object> locationData = new Dictionary<string, object>();
 
-                        //first we setup the socials
+                        //fi    rst we setup the socials
                         SocialController socCont = data.getSocials();
                         Dictionary<string, object> locationSocials = new Dictionary<string, object>();
 
-
-                        int p = 0;
                         if (socCont != null)
                         {
                             foreach (var socialData in socCont.getSocials())
@@ -587,7 +585,8 @@ namespace HospitalityDataUpdater
             int row = Convert.ToInt32(RowChooserDropDown.SelectedItem);
 
             //we clear all data first
-            clearEntries();
+            saveEntries();
+            exportFile("sele");
             currentRowNum = row;
             RowNumberLabel.Text = "Row Number: " + currentRowNum;
             SetData(importedData.Rows[row]);
@@ -595,7 +594,7 @@ namespace HospitalityDataUpdater
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            exportFile();
+            exportFile("save");
         }
 
         private void PreviousButton_Click(object sender, EventArgs e)
@@ -605,7 +604,7 @@ namespace HospitalityDataUpdater
             //save the data
             saveEntries();
 
-            exportFile();
+            exportFile("prev");
 
 
             currentRowNum--;
@@ -626,7 +625,7 @@ namespace HospitalityDataUpdater
             //save the data
             saveEntries();
             
-            exportFile();
+            exportFile("next");
 
             currentRowNum++;
             if (currentRowNum > maxRow-1)
