@@ -31,12 +31,6 @@ namespace HospitalityDataUpdater
         private void InitializeComponent()
         {
             this.LocationFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.LocationGroupBox = new System.Windows.Forms.GroupBox();
-            this.LocationSocialsButton1 = new System.Windows.Forms.Button();
-            this.DeleteLocation1 = new System.Windows.Forms.Button();
-            this.LocationAdd1Label = new System.Windows.Forms.Label();
-            this.LocationWebsite1Label = new System.Windows.Forms.Label();
-            this.LocationName1 = new System.Windows.Forms.Label();
             this.InputPanel = new System.Windows.Forms.GroupBox();
             this.NumDevStoresInput = new System.Windows.Forms.NumericUpDown();
             this.NumNewStoresInput = new System.Windows.Forms.NumericUpDown();
@@ -44,8 +38,6 @@ namespace HospitalityDataUpdater
             this.BrandsInputLabel = new System.Windows.Forms.Label();
             this.BrandsInput = new System.Windows.Forms.TextBox();
             this.BrandsFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.Brand = new System.Windows.Forms.GroupBox();
-            this.Deletebrand1 = new System.Windows.Forms.Button();
             this.BookingsProviderInput = new System.Windows.Forms.TextBox();
             this.Bookings_ProviderLabel = new System.Windows.Forms.Label();
             this.Num_Dev_StoresLabel = new System.Windows.Forms.Label();
@@ -58,9 +50,6 @@ namespace HospitalityDataUpdater
             this.SocialNameInput = new System.Windows.Forms.TextBox();
             this.SocialsGroupBox = new System.Windows.Forms.GroupBox();
             this.SocialsLayoutContainer = new System.Windows.Forms.FlowLayoutPanel();
-            this.Social1Box = new System.Windows.Forms.GroupBox();
-            this.TagSocial1 = new System.Windows.Forms.Label();
-            this.SocialDelete1 = new System.Windows.Forms.Button();
             this.SocialTagLabel = new System.Windows.Forms.Label();
             this.LocationAdd1Input = new System.Windows.Forms.TextBox();
             this.LocationAddress1Label = new System.Windows.Forms.Label();
@@ -100,19 +89,13 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
-            this.LocationFlowLayout.SuspendLayout();
-            this.LocationGroupBox.SuspendLayout();
             this.InputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumDevStoresInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNewStoresInput)).BeginInit();
             this.BrandsGroupBox.SuspendLayout();
-            this.BrandsFlowLayout.SuspendLayout();
-            this.Brand.SuspendLayout();
             this.LocationsGroupBox.SuspendLayout();
             this.LocationsPanel.SuspendLayout();
             this.SocialsGroupBox.SuspendLayout();
-            this.SocialsLayoutContainer.SuspendLayout();
-            this.Social1Box.SuspendLayout();
             this.ExcelPanel.SuspendLayout();
             this.ExcelControls.SuspendLayout();
             this.CurrRowsContr.SuspendLayout();
@@ -121,71 +104,11 @@ namespace HospitalityDataUpdater
             // LocationFlowLayout
             // 
             this.LocationFlowLayout.AutoScroll = true;
-            this.LocationFlowLayout.Controls.Add(this.LocationGroupBox);
             this.LocationFlowLayout.Dock = System.Windows.Forms.DockStyle.Top;
             this.LocationFlowLayout.Location = new System.Drawing.Point(0, 0);
             this.LocationFlowLayout.Name = "LocationFlowLayout";
             this.LocationFlowLayout.Size = new System.Drawing.Size(529, 413);
             this.LocationFlowLayout.TabIndex = 0;
-            // 
-            // LocationGroupBox
-            // 
-            this.LocationGroupBox.Controls.Add(this.LocationSocialsButton1);
-            this.LocationGroupBox.Controls.Add(this.DeleteLocation1);
-            this.LocationGroupBox.Controls.Add(this.LocationAdd1Label);
-            this.LocationGroupBox.Controls.Add(this.LocationWebsite1Label);
-            this.LocationGroupBox.Controls.Add(this.LocationName1);
-            this.LocationGroupBox.Location = new System.Drawing.Point(3, 3);
-            this.LocationGroupBox.Name = "LocationGroupBox";
-            this.LocationGroupBox.Size = new System.Drawing.Size(506, 91);
-            this.LocationGroupBox.TabIndex = 0;
-            this.LocationGroupBox.TabStop = false;
-            this.LocationGroupBox.Text = "Location - 1";
-            // 
-            // LocationSocialsButton1
-            // 
-            this.LocationSocialsButton1.Location = new System.Drawing.Point(425, 11);
-            this.LocationSocialsButton1.Name = "LocationSocialsButton1";
-            this.LocationSocialsButton1.Size = new System.Drawing.Size(75, 23);
-            this.LocationSocialsButton1.TabIndex = 27;
-            this.LocationSocialsButton1.Text = "View Socials";
-            this.LocationSocialsButton1.UseVisualStyleBackColor = true;
-            // 
-            // DeleteLocation1
-            // 
-            this.DeleteLocation1.Location = new System.Drawing.Point(425, 69);
-            this.DeleteLocation1.Name = "DeleteLocation1";
-            this.DeleteLocation1.Size = new System.Drawing.Size(75, 23);
-            this.DeleteLocation1.TabIndex = 26;
-            this.DeleteLocation1.Text = "Delete";
-            this.DeleteLocation1.UseVisualStyleBackColor = true;
-            // 
-            // LocationAdd1Label
-            // 
-            this.LocationAdd1Label.AutoSize = true;
-            this.LocationAdd1Label.Location = new System.Drawing.Point(6, 74);
-            this.LocationAdd1Label.Name = "LocationAdd1Label";
-            this.LocationAdd1Label.Size = new System.Drawing.Size(92, 13);
-            this.LocationAdd1Label.TabIndex = 2;
-            this.LocationAdd1Label.Text = "Location Address:";
-            // 
-            // LocationWebsite1Label
-            // 
-            this.LocationWebsite1Label.AutoSize = true;
-            this.LocationWebsite1Label.Location = new System.Drawing.Point(6, 45);
-            this.LocationWebsite1Label.Name = "LocationWebsite1Label";
-            this.LocationWebsite1Label.Size = new System.Drawing.Size(93, 13);
-            this.LocationWebsite1Label.TabIndex = 1;
-            this.LocationWebsite1Label.Text = "Location Website:";
-            // 
-            // LocationName1
-            // 
-            this.LocationName1.AutoSize = true;
-            this.LocationName1.Location = new System.Drawing.Point(6, 16);
-            this.LocationName1.Name = "LocationName1";
-            this.LocationName1.Size = new System.Drawing.Size(82, 13);
-            this.LocationName1.TabIndex = 0;
-            this.LocationName1.Text = "Location Name:";
             // 
             // InputPanel
             // 
@@ -250,30 +173,10 @@ namespace HospitalityDataUpdater
             // 
             // BrandsFlowLayout
             // 
-            this.BrandsFlowLayout.Controls.Add(this.Brand);
             this.BrandsFlowLayout.Location = new System.Drawing.Point(6, 45);
             this.BrandsFlowLayout.Name = "BrandsFlowLayout";
             this.BrandsFlowLayout.Size = new System.Drawing.Size(354, 362);
             this.BrandsFlowLayout.TabIndex = 0;
-            // 
-            // Brand
-            // 
-            this.Brand.Controls.Add(this.Deletebrand1);
-            this.Brand.Location = new System.Drawing.Point(3, 3);
-            this.Brand.Name = "Brand";
-            this.Brand.Size = new System.Drawing.Size(68, 33);
-            this.Brand.TabIndex = 0;
-            this.Brand.TabStop = false;
-            this.Brand.Text = "Starbucks";
-            // 
-            // Deletebrand1
-            // 
-            this.Deletebrand1.Location = new System.Drawing.Point(1, 10);
-            this.Deletebrand1.Name = "Deletebrand1";
-            this.Deletebrand1.Size = new System.Drawing.Size(61, 23);
-            this.Deletebrand1.TabIndex = 26;
-            this.Deletebrand1.Text = "Delete";
-            this.Deletebrand1.UseVisualStyleBackColor = true;
             // 
             // BookingsProviderInput
             // 
@@ -393,41 +296,11 @@ namespace HospitalityDataUpdater
             // SocialsLayoutContainer
             // 
             this.SocialsLayoutContainer.AutoScroll = true;
-            this.SocialsLayoutContainer.Controls.Add(this.Social1Box);
             this.SocialsLayoutContainer.Dock = System.Windows.Forms.DockStyle.Top;
             this.SocialsLayoutContainer.Location = new System.Drawing.Point(3, 16);
             this.SocialsLayoutContainer.Name = "SocialsLayoutContainer";
             this.SocialsLayoutContainer.Size = new System.Drawing.Size(255, 629);
             this.SocialsLayoutContainer.TabIndex = 1;
-            // 
-            // Social1Box
-            // 
-            this.Social1Box.Controls.Add(this.TagSocial1);
-            this.Social1Box.Controls.Add(this.SocialDelete1);
-            this.Social1Box.Location = new System.Drawing.Point(3, 3);
-            this.Social1Box.Name = "Social1Box";
-            this.Social1Box.Size = new System.Drawing.Size(241, 50);
-            this.Social1Box.TabIndex = 0;
-            this.Social1Box.TabStop = false;
-            this.Social1Box.Text = "Instagram";
-            // 
-            // TagSocial1
-            // 
-            this.TagSocial1.AutoSize = true;
-            this.TagSocial1.Location = new System.Drawing.Point(7, 20);
-            this.TagSocial1.Name = "TagSocial1";
-            this.TagSocial1.Size = new System.Drawing.Size(35, 13);
-            this.TagSocial1.TabIndex = 28;
-            this.TagSocial1.Text = "label1";
-            // 
-            // SocialDelete1
-            // 
-            this.SocialDelete1.Location = new System.Drawing.Point(187, 7);
-            this.SocialDelete1.Name = "SocialDelete1";
-            this.SocialDelete1.Size = new System.Drawing.Size(48, 43);
-            this.SocialDelete1.TabIndex = 27;
-            this.SocialDelete1.Text = "Delete";
-            this.SocialDelete1.UseVisualStyleBackColor = true;
             // 
             // SocialTagLabel
             // 
@@ -806,24 +679,16 @@ namespace HospitalityDataUpdater
             this.Name = "MainMenu";
             this.Text = "z";
             this.Load += new System.EventHandler(this.MainMenu_Load);
-            this.LocationFlowLayout.ResumeLayout(false);
-            this.LocationGroupBox.ResumeLayout(false);
-            this.LocationGroupBox.PerformLayout();
             this.InputPanel.ResumeLayout(false);
             this.InputPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumDevStoresInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNewStoresInput)).EndInit();
             this.BrandsGroupBox.ResumeLayout(false);
             this.BrandsGroupBox.PerformLayout();
-            this.BrandsFlowLayout.ResumeLayout(false);
-            this.Brand.ResumeLayout(false);
             this.LocationsGroupBox.ResumeLayout(false);
             this.LocationsGroupBox.PerformLayout();
             this.LocationsPanel.ResumeLayout(false);
             this.SocialsGroupBox.ResumeLayout(false);
-            this.SocialsLayoutContainer.ResumeLayout(false);
-            this.Social1Box.ResumeLayout(false);
-            this.Social1Box.PerformLayout();
             this.ExcelPanel.ResumeLayout(false);
             this.ExcelPanel.PerformLayout();
             this.ExcelControls.ResumeLayout(false);
@@ -886,20 +751,9 @@ namespace HospitalityDataUpdater
         private System.Windows.Forms.Label SocialNameLabel;
         public System.Windows.Forms.FlowLayoutPanel LocationFlowLayout;
         public System.Windows.Forms.FlowLayoutPanel SocialsLayoutContainer;
-        private System.Windows.Forms.GroupBox Brand;
-        private System.Windows.Forms.Button Deletebrand1;
         private System.Windows.Forms.TextBox FileNameTextbox;
         private System.Windows.Forms.Label FileNameLabel;
         private Label CompanyNameLabel;
-        private GroupBox LocationGroupBox;
-        private Label LocationAdd1Label;
-        private Label LocationWebsite1Label;
-        private Label LocationName1;
-        private Button DeleteLocation1;
-        private GroupBox Social1Box;
-        private Label TagSocial1;
-        private Button SocialDelete1;
-        private Button LocationSocialsButton1;
         private Button SaveRowButton;
         private Label SaveFileLabel;
         private TextBox FileSaveNameInput;
