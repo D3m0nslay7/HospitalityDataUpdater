@@ -26,9 +26,6 @@
     <ProductName>Hospitality Data Updater</ProductName>
     <PublisherName>Umer Mohammed</PublisherName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>2</ApplicationRevision>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -58,10 +55,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>54E586EE519692ED79F85DE7B85C20C52265EDD6</ManifestCertificateThumbprint>
-    <ManifestCertificateThumbprint>54E586EE519692ED79F85DE7B85C20C52265EDD6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>CA5626EEA4D976E7FE9661EF1C058B1262B7313F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>HospitalityDataUpdater_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>HospitalityDataUpdater_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

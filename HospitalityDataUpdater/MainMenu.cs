@@ -139,7 +139,7 @@ namespace HospitalityDataUpdater
             //new stores
             if (row["New_Num_Stores"].ToString() == string.Empty)
             {
-                NumNewStoresInput.Value = 0;
+                NumNewStoresInput.Value = Convert.ToInt32(row["Number of Sites"].ToString()); ;
             }
             else
             {
@@ -278,7 +278,7 @@ namespace HospitalityDataUpdater
                 catch (Exception)
                 {
                     MessageBox.Show("Bit of an error with locations buddy");
-                    throw;
+                    
                 }
                
             }
@@ -548,7 +548,10 @@ namespace HospitalityDataUpdater
                     importedData.Rows[currentRowNum]["Locations"] = json;
                     //Console.WriteLine(json);
                 }
-
+                else
+                {
+                    importedData.Rows[currentRowNum]["Locations"] = null;
+                }
 
             }
 
