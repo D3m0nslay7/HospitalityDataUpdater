@@ -274,6 +274,7 @@ namespace HospitalityDataUpdater
                             {
                                 locWeb = innerDict["location_website"].ToString();
                             }
+                            
                             //we want to check if this key exists, because it was added in later
                             if (innerDict.ContainsKey("booking_provider"))
                             {
@@ -405,7 +406,15 @@ namespace HospitalityDataUpdater
                 }
             }
 
-            excelPackage.SaveAs(new System.IO.FileInfo(newFilePath));
+            try
+            {
+                excelPackage.SaveAs(new System.IO.FileInfo(newFilePath));
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("Error: " + ex.Message);
+
+            }
             if (buttonName != "next" && buttonName != "prev" && buttonName != "sele")
             {
                 MessageBox.Show("Successfully saved data to: " + FileSaveNameInput.Text);
@@ -422,32 +431,40 @@ namespace HospitalityDataUpdater
             string path = filePath+FileNameTextbox.Text + ".xlsx"; // get the filepath from the ui
             if (File.Exists(path))
             {
-                using (var stream = File.Open(path, FileMode.Open, FileAccess.Read))
+                try
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    using (var stream = File.Open(path, FileMode.Open, FileAccess.Read))
                     {
-                        var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
                         {
-                            ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
-                        });
+                            var result = reader.AsDataSet(new ExcelDataSetConfiguration
+                            {
+                                ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
+                            });
 
-                        DataTable dataTable = result.Tables[0];
+                            DataTable dataTable = result.Tables[0];
 
-                        // Filter the rows within the desired range
-                        DataTable filteredTable = dataTable.AsEnumerable()
-                            .Skip(startRow - 1)
-                            .Take(endRow - startRow + 1)
-                            .CopyToDataTable();
+                            // Filter the rows within the desired range
+                            DataTable filteredTable = dataTable.AsEnumerable()
+                                .Skip(startRow - 1)
+                                .Take(endRow - startRow + 1)
+                                .CopyToDataTable();
 
-                        if (currentSocController != null)
-                        {
-                            currentSocController.Clear();
+                            if (currentSocController != null)
+                            {
+                                currentSocController.Clear();
+                            }
+
+                            currentSocController = null;
+                            return filteredTable;
                         }
-
-                        currentSocController = null;
-                        return filteredTable;
                     }
                 }
+                catch  (Exception ex) 
+                {
+                    MessageBox.Show(ex.Message);
+                    return null;
+                }  
             }
             else
             {
