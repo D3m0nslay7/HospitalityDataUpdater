@@ -110,8 +110,8 @@ namespace HospitalityDataUpdater
                 string substring1 = dialingCode.Substring(0, areaCodeNumber);
                 string substring2 = dialingCode.Substring(areaCodeNumber);
                 string[] numberArray = new string[] { substring1, substring2 };
-                Console.WriteLine(areaCodeNumber);
-                Console.WriteLine(substring1 + "\\n" + substring2);
+                //Console.WriteLine(areaCodeNumber);
+                //Console.WriteLine(substring1 + "\\n" + substring2);
                 return numberArray;
             }
             catch (NumberParseException ex)
@@ -154,8 +154,17 @@ namespace HospitalityDataUpdater
             {
                 NumDevStoresInput.Value = Convert.ToInt32(row["Num_Developing_Stores"].ToString());
             }
-            //bookings
-            BookingsProviderInput.Text = row["Bookings_provider"].ToString();
+
+            if(row["Inactive"].ToString() == string.Empty)
+            {
+                InactiveCheckbox.Checked = false;
+            }
+            else
+            {
+                InactiveCheckbox.Checked = Convert.ToBoolean(row["Inactive"]);
+            }
+
+            
             if (row["Brands"] != null)
             {
                 
@@ -231,6 +240,7 @@ namespace HospitalityDataUpdater
                             string locPost = null;
                             string locPho = null;
                             string locWeb = null;
+                            string locBooking = null;
                             if (innerDict["location_name"] != null)
                             {
                                 locName = innerDict["location_name"].ToString();
@@ -264,10 +274,23 @@ namespace HospitalityDataUpdater
                             {
                                 locWeb = innerDict["location_website"].ToString();
                             }
+                            //we want to check if this key exists, because it was added in later
+                            if (innerDict.ContainsKey("booking_provider"))
+                            {
+                                if (innerDict["booking_provider"] != null)
+                                {
+                                    locBooking = innerDict["booking_provider"].ToString();
+                                }
+                            }
+                            else
+                            {
+                                innerDict.Add("booking_provider", locBooking);
+                            }
+                            
 
 
                             // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, socCont, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
+                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
 
                             locController.AddEntry(loc);
 
@@ -275,8 +298,9 @@ namespace HospitalityDataUpdater
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception test)
                 {
+                    Console.WriteLine(test.Message);
                     MessageBox.Show("Bit of an error with locations buddy");
                     
                 }
@@ -478,9 +502,8 @@ namespace HospitalityDataUpdater
                 importedData.Rows[currentRowNum]["Website"] = WebsiteInput.Text;
                 importedData.Rows[currentRowNum]["New_Num_Stores"] = NumNewStoresInput.Value;
                 importedData.Rows[currentRowNum]["Num_Developing_Stores"] = NumDevStoresInput.Value;
-                importedData.Rows[currentRowNum]["Bookings_provider"] = BookingsProviderInput.Text;
                 importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
-
+                importedData.Rows[currentRowNum]["Inactive"] = InactiveCheckbox.Checked;
 
                 //locations in a dictionary
                 Dictionary<string, object> locationsData = new Dictionary<string, object>();
@@ -514,6 +537,7 @@ namespace HospitalityDataUpdater
                         string locPost = data.getPost();
                         string locPho = data.getPhoneNum();
                         string locWeb = data.getWebsite();
+                        string locBooking = data.getBookingProvider();
 
                         string[] phoneNumbers = FormatPhoneNumber(locPho);
                         //Console.WriteLine(phoneNumbers);
@@ -534,6 +558,7 @@ namespace HospitalityDataUpdater
                         locationData["location_phone"] = phojsonArray;
                         locationData["location_website"] = locWeb;
                         locationData["location_socials"] = locationSocials;
+                        locationData["booking_provider"] = locBooking;
 
                         // Serialize the inner dictionary to JSON and add it to the outer dictionary
                         locationsData["locationNum" + z] = locationData;
@@ -568,15 +593,10 @@ namespace HospitalityDataUpdater
             NumNewStoresInput.Value = 0;
             NumDevStoresInput.Value = 0;
             BrandsInput.Text = "";
-            LocationNameInput.Text = "";
-            LocationWebsiteInput.Text = "";
-            LocationPhoneNumberInput.Text = "";
-            LocationAdd1Input.Text = "";
-            LocationAdd2Input.Text = "";
-            LocationCityInput.Text = "";
-            LocationPostcodeInput.Text = "";
-            SocialNameInput.Text = "";
-            SocialTagInput.Text = "";
+            InactiveCheckbox.Checked = false;
+
+            EmptyLocInputs();
+
 
             //clear the locations, socials and brands now
             if (locController != null)
@@ -586,6 +606,20 @@ namespace HospitalityDataUpdater
             if (currentSocController != null)
                 currentSocController.Clear();
 
+        }
+
+        public void EmptyLocInputs()
+        {
+            LocationNameInput.Text = "";
+            LocationWebsiteInput.Text = "";
+            LocationPhoneNumberInput.Text = "";
+            LocationAdd1Input.Text = "";
+            LocationAdd2Input.Text = "";
+            LocationCityInput.Text = "";
+            LocationPostcodeInput.Text = "";
+            SocialNameInput.Text = "";
+            SocialTagInput.Text = "";
+            LocationBookingProviderInput.Text = "";
         }
 
         //stuff to controll the rows and stuff
@@ -606,15 +640,17 @@ namespace HospitalityDataUpdater
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            if (importedData == null) return;
+
+
             exportFile("save");
+
+            SetData(importedData.Rows[currentRowNum]);
         }
 
         private void PreviousButton_Click(object sender, EventArgs e)
         {
             if (importedData == null) return;
-
-            //save the data
-            saveEntries();
 
             exportFile("prev");
 
@@ -633,9 +669,6 @@ namespace HospitalityDataUpdater
         private void NextButton_Click(object sender, EventArgs e)
         {
             if (importedData == null) return;
-
-            //save the data
-            saveEntries();
             
             exportFile("next");
 
@@ -749,6 +782,7 @@ namespace HospitalityDataUpdater
             string locAdd2 = LocationAdd2Input.Text;
             string locCity = LocationCityInput.Text;
             string locPost = LocationPostcodeInput.Text;
+            string bookingProvider = LocationBookingProviderInput.Text;
             //check if anything is empty, so we can assign it a null value
             if (locName == string.Empty)
             {
@@ -788,6 +822,10 @@ namespace HospitalityDataUpdater
 
                 locPost = modifiedString;
             }
+            if(bookingProvider == string.Empty)
+            {
+                bookingProvider = null;
+            }
 
             //now we create the location
 
@@ -797,20 +835,13 @@ namespace HospitalityDataUpdater
             }
 
             // now we import the locations
-            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, currentSocController, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
+            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocController, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
 
             locController.AddEntry(loc);
 
-            LocationNameInput.Text = "";
-            LocationWebsiteInput.Text = "";
-            LocationPhoneNumberInput.Text = "";
-            LocationAdd1Input.Text = "";
-            LocationAdd2Input.Text = "";
-            LocationCityInput.Text = "";
-            LocationPostcodeInput.Text = "";
-            SocialNameInput.Text = "";
-            SocialTagInput.Text = "";
-            if(currentSocController != null)
+            EmptyLocInputs();
+
+            if (currentSocController != null)
             {
                 currentSocController.Clear();
 

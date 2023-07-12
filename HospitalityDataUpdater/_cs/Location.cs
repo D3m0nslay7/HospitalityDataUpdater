@@ -23,6 +23,7 @@ namespace HospitalityDataUpdater._cs
         string lAdd2;
         string lCity;
         string lPost;
+        string bookingProvider;
 
         SocialController socCont;
         //UI vars
@@ -34,7 +35,7 @@ namespace HospitalityDataUpdater._cs
         Button viewSocialsButton = new Button();
         FlowLayoutPanel container;
 
-        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer, EventHandler viewSocials)
+        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer, EventHandler viewSocials)
         {
             index = i;
             setName(name);
@@ -46,6 +47,7 @@ namespace HospitalityDataUpdater._cs
             setPost(postcode);
             setController(cont);
             setSocials(socCont);
+            setBookingProvider(bookProvider);
             if (flowcontainer == null)
                 Console.WriteLine("NULL HERE");
 
@@ -89,6 +91,10 @@ namespace HospitalityDataUpdater._cs
         public string getPost()
         {
             return lPost;
+        }
+        public string getBookingProvider()
+        {
+            return bookingProvider;
         }
         #endregion
         //set methods
@@ -139,6 +145,10 @@ namespace HospitalityDataUpdater._cs
         public void setPost(string postcode)
         {
             lPost = postcode;
+        }
+        public void setBookingProvider(string provider)
+        {
+            bookingProvider = provider;
         }
         #endregion
         public void Clearing()
