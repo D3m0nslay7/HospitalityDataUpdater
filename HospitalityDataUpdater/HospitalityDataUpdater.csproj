@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Umer.Mohammed\OneDrive - Access UK Ltd\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\Umer.Mohammed\OneDrive - Access UK Ltd\Desktop\DataInputInterface\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,16 +23,32 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <ProductName>Hospitality Data Updater</ProductName>
+    <PublisherName>Umer Mohammed</PublisherName>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>2</ApplicationRevision>
+=======
+
+>>>>>>> 0a5252a26d8c56b639bb78915e3ce438e453c456
     <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>3</ApplicationRevision>
     <ApplicationRevision>1</ApplicationRevision>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 76d3f122d4cabe192116040bde4c09901e29ee04
+>>>>>>> 0a5252a26d8c56b639bb78915e3ce438e453c456
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -40,6 +56,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\HospitalityDataUpdater.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,7 +68,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
+<<<<<<< HEAD
     <ManifestCertificateThumbprint>54E586EE519692ED79F85DE7B85C20C52265EDD6</ManifestCertificateThumbprint>
+=======
+    <ManifestCertificateThumbprint>9B6E9C03E88B7612720475C3EE328AE76F0A7A9F</ManifestCertificateThumbprint>
+>>>>>>> 0a5252a26d8c56b639bb78915e3ce438e453c456
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>HospitalityDataUpdater_1_TemporaryKey.pfx</ManifestKeyFile>
@@ -153,7 +174,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="HospitalityDataUpdater_1_TemporaryKey.pfx" />
+<<<<<<< HEAD
     <None Include="HospitalityDataUpdater_TemporaryKey.pfx" />
+=======
+>>>>>>> 0a5252a26d8c56b639bb78915e3ce438e453c456
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
