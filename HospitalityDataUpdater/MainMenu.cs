@@ -101,7 +101,7 @@ namespace HospitalityDataUpdater
 
         #region excel
 
-        public void exportFile(string buttonName)
+        public void exportFile(string param)
         {
             if(importedData == null)
             {
@@ -116,6 +116,12 @@ namespace HospitalityDataUpdater
             else
             {
                 newFilePath = filePath+FileSaveNameInput.Text + ".xlsx";
+            }
+
+            //here we check the paramter if its meant to be a backup
+            if (param == "backup")
+            {
+                newFilePath = filePath + "backup.xlsx";
             }
            
             var excelPackage = new ExcelPackage();
@@ -136,6 +142,7 @@ namespace HospitalityDataUpdater
                 }
             }
 
+            //trys to save the file, if it cant, it throws us an error
             try
             {
                 excelPackage.SaveAs(new System.IO.FileInfo(newFilePath));
@@ -145,7 +152,8 @@ namespace HospitalityDataUpdater
                 MessageBox.Show("Error: " + ex.Message);
 
             }
-            if (buttonName != "next" && buttonName != "prev" && buttonName != "sele")
+            //we dont want to display the saved message if its from an autosave type feature, could be annoying for end user
+            if (param != "next" && param != "prev" && param != "sele" && param != "backup")
             {
                 MessageBox.Show("Successfully saved data to: " + FileSaveNameInput.Text);
             }
@@ -782,6 +790,7 @@ namespace HospitalityDataUpdater
 
         private void CreateLocationButton_Click(object sender, EventArgs e)
         {
+            #region input
             //get the values
             string locName = LocationNameInput.Text;
             string locWeb = LocationWebsiteInput.Text;
@@ -856,6 +865,22 @@ namespace HospitalityDataUpdater
             }
 
             currentSocController = null;
+
+            #endregion
+
+
+            #region savingFile
+            //check if we have imported data
+            if (importedData != null)
+            {
+                //save the data in a backup excel file for saftey
+                exportFile("backup");
+
+                SetData(importedData.Rows[currentRowNum]);
+            }
+
+
+            #endregion
         }
 
         private void FilePathTextbox_KeyDown(object sender, KeyEventArgs e)
