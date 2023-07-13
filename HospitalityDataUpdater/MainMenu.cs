@@ -45,7 +45,7 @@ namespace HospitalityDataUpdater
         public MainMenuInterface()
         {
             InitializeComponent();
-            FileNameTextbox.Text = "data-01";
+            FileNameTextbox.Text = "File Name Here";
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -610,7 +610,7 @@ namespace HospitalityDataUpdater
                         locationData["booking_provider"] = locBooking;
 
                         // Serialize the inner dictionary to JSON and add it to the outer dictionary
-                        locationsData["locationNum" + z] = locationData;
+                        locationsData["Location: " + z] = locationData;
 
 
 
@@ -909,12 +909,16 @@ namespace HospitalityDataUpdater
                 locController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
             }
 
+            //we check if this is the first entry
+
             // now we import the locations
             Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocialController, locController, locController.getLocationHolder()); // Create a new Location instance for each array element
 
             locController.AddEntry(loc);
 
             locController.CreateLocationUIs();
+
+            
 
             EmptyLocInputs();
 

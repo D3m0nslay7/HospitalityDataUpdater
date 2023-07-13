@@ -88,7 +88,7 @@ namespace HospitalityDataUpdater._cs
             //insert the new location
             locations.Insert(oldLocationIndex, newLoc);
 
-            locations[newLoc.getIndex()].CreateUI(viewSocials, editLocation);
+            CreateLocationUIs();
         }
 
         public void RemoveEntry(Location location)
