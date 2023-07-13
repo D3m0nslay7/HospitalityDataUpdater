@@ -20,6 +20,10 @@ using PhoneNumbers;
 using HospitalityDataUpdater.Windows;
 using System.Windows.Controls;
 using Button = System.Windows.Forms.Button;
+using System.Collections;
+using static OfficeOpenXml.ExcelErrorValue;
+using System.Windows.Input;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace HospitalityDataUpdater
 {
@@ -31,12 +35,14 @@ namespace HospitalityDataUpdater
         int maxRow;
         //containers
         FlowLayoutPanel locationsContainer;
-        FlowLayoutPanel socialsContainer;
+        FlowLayoutPanel locationSocialsContainer;
         FlowLayoutPanel brandsContainer;
+        FlowLayoutPanel companySocialsContainer;
         //controllers
-        LocationController locController;
-        SocialController currentSocialController;
+        LocationController locationController;
+        SocialController locationSocialController;
         BrandController brandController;
+        SocialController companySocialController;
         //used to check if we have any type of popup open
         bool popup = false;
 
@@ -55,9 +61,11 @@ namespace HospitalityDataUpdater
 
             //here we get the containers for the UI
             locationsContainer = this.Controls.Find("LocationFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
-            socialsContainer = this.Controls.Find("SocialsLayoutContainer", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
+            locationSocialsContainer = this.Controls.Find("SocialsLayoutContainer", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             brandsContainer = this.Controls.Find("BrandsFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
+            companySocialsContainer = this.Controls.Find("CompanySocialsFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
 
+            companySocialController = null;
             #endregion
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
@@ -93,32 +101,32 @@ namespace HospitalityDataUpdater
             Location tag = button.Tag as Location;
 
             //we return if we are teh same thing
-            if (currentSocialController == tag.getSocialController())
+            if (locationSocialController == tag.getSocialController())
             {
                 //Console.WriteLine("returning");
                 return;
             }
 
             //if this isnt null ,means theres prob stuff there, so lets see and delete it if there is
-            if (currentSocialController != null)
+            if (locationSocialController != null)
             {
 
-                if (currentSocialController.getSocials().Count > 0) // only if we have more
+                if (locationSocialController.getSocials().Count > 0) // only if we have more
                 {
-                    currentSocialController.Clear();
+                    locationSocialController.Clear();
                 }
 
             }
 
             //Console.WriteLine("spawning in new ones");
             //we now spawn in the next social data
-            currentSocialController = tag.getSocialController();//get the socials
-            if (currentSocialController != null)
+            locationSocialController = tag.getSocialController();//get the socials
+            if (locationSocialController != null)
             {
-                foreach (Social socialData in currentSocialController.getSocials())
+                foreach (Social socialData in locationSocialController.getSocials())
                 {
                     //Console.WriteLine("spawning");
-                    socialData.CreateUI(socialsContainer);
+                    socialData.CreateUI(locationSocialsContainer);
                 }
             }
             
@@ -182,8 +190,8 @@ namespace HospitalityDataUpdater
 
             Location location = button.Tag as Location;
 
-            if (currentSocialController != null)
-                currentSocialController.Clear();
+            if (locationSocialController != null)
+                locationSocialController.Clear();
 
             //we create the edit panel and show it
             EditControl panel = new EditControl(location, ViewSocialsButton_Click, EditDataButton_Click);
@@ -289,12 +297,12 @@ namespace HospitalityDataUpdater
                                 .Take(endRow - startRow + 1)
                                 .CopyToDataTable();
 
-                            if (currentSocialController != null)
+                            if (locationSocialController != null)
                             {
-                                currentSocialController.Clear();
+                                locationSocialController.Clear();
                             }
 
-                            currentSocialController = null;
+                            locationSocialController = null;
                             return filteredTable;
                         }
                     }
@@ -357,8 +365,8 @@ namespace HospitalityDataUpdater
 
             //get new controllers, we dont want any old data
             //here we get the controlelrs
-            locController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
-            currentSocialController = new SocialController();
+            locationController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
+            locationSocialController = new SocialController();
             brandController = new BrandController();
 
             //company name
@@ -412,6 +420,52 @@ namespace HospitalityDataUpdater
             }
 
 
+
+            if (!row.IsNull("Company_Socials"))
+            {
+                try
+                {
+                    //we get the company socials, and turn them into a dictionary
+                    Dictionary<string, List<string>> companySocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(row["Company_Socials"].ToString());
+
+                    //we create a company social controller
+                    companySocialController = new SocialController();
+                    //check if its null
+                    if (companySocials != null)
+                    {
+                        int p = 0;
+                        foreach (var social in companySocials)
+                        {
+                            foreach (string item in social.Value)
+                            {
+
+                                Social soc = new Social(p, social.Key, item, companySocialController);
+
+                                companySocialController.AddEntry(soc);
+                                p++;
+                            }
+                        }
+                    }
+
+                    //now we display the company socials
+                    foreach (Social social in companySocialController.getSocials())
+                    {
+                        social.CreateUI(companySocialsContainer);
+                    }
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    MessageBox.Show("Bit of an error with company socials buddy");
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("WARNING: please contact the developer, you are you using an outdated excel file");
+            }
+
             //Console.WriteLine(row["New_Num_Stores"].ToString());
 
 
@@ -432,34 +486,62 @@ namespace HospitalityDataUpdater
 
                             string key = data.Key; // Get the outer dictionary key
                             Dictionary<string, object> innerDict = data.Value; // Get the inner dictionary data
-                                                                               //first we setup the socials
+                            //first we setup the socials
                             SocialController socCont = new SocialController();
 
                             // Access the "location_socials" inner object
                             if (innerDict["location_socials"] != null)
                             {
-                                JObject locationSocialsObject = (JObject)innerDict["location_socials"];
-
-                                Dictionary<string, object> locationSocials = locationSocialsObject.ToObject<Dictionary<string, object>>();
-
-
-                                int p = 0;
-                                foreach (var socialData in locationSocials)
+                                //JObject locationSocialsObject = (JObject)innerDict["location_socials"];
+                                // we are going to try import the data using the new format,
+                                try
                                 {
-                                    string platform = socialData.Key; // e.g., "instagram", "twitter", "Facebook"
-                                    object obj = socialData.Value; // the value associated with the platform
+                                    Dictionary<string, List<string>> locationSocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(innerDict["location_socials"].ToString());
 
-                                    if (obj != null)
+                                    //check if its null
+                                    if (locationSocials != null)
                                     {
-                                        string tag = obj.ToString();
-                                        Social social = new Social(p, platform, tag, socCont);
+                                        int p = 0;
+                                        foreach (var social in locationSocials)
+                                        {
+                                            foreach (string item in social.Value)
+                                            {
 
-                                        socCont.AddEntry(social);
-                                        p++;
+                                                Social soc = new Social(p, social.Key, item, socCont);
+
+                                                socCont.AddEntry(soc);
+                                                p++;
+                                            }
+                                        }
                                     }
-
-
                                 }
+                                //there was an error importing
+                                catch (Exception)
+                                {
+                                    //we will now try importing based on the old format
+                                    //the reason this works is because we save it as the new format, meaning old data can now be saved as such
+                                    MessageBox.Show("You are using an old location, we are going to reformat it normally");
+                                    try
+                                    {
+                                        Dictionary<string, object>  locationSocials = JsonConvert.DeserializeObject<Dictionary<string, object>>(innerDict["location_socials"].ToString());
+                                        int p = 0;
+                                        foreach (var item in locationSocials)
+                                        {
+                                            Social soc = new Social(p, item.Key, item.Value.ToString(), socCont);
+
+                                            socCont.AddEntry(soc);
+                                            p++;
+                                        }
+
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        MessageBox.Show("You are using an old location, we are going to reformat it");
+                                    }
+                                    
+                                }
+
                             }
 
                             string locName = null;
@@ -520,9 +602,9 @@ namespace HospitalityDataUpdater
 
 
                             // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locController.getLocationHolder()); // Create a new Location instance for each array element
+                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locationController, locationController.getLocationHolder()); // Create a new Location instance for each array element
 
-                            locController.AddEntry(loc);
+                            locationController.AddEntry(loc);
 
 
                             z++;
@@ -530,7 +612,7 @@ namespace HospitalityDataUpdater
 
                         //spawn the uis now
 
-                        locController.CreateLocationUIs();
+                        locationController.CreateLocationUIs();
                     }
                 }
                 catch (Exception test)
@@ -554,29 +636,82 @@ namespace HospitalityDataUpdater
                 importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
                 importedData.Rows[currentRowNum]["Inactive"] = InactiveCheckbox.Checked;
 
+                //Company Locations in a dictionary
+                Dictionary<string, List<string>> companySocials = new Dictionary<string, List<string>>();
+                if (companySocialController != null)
+                {
+                    //check if we have any company socials to loop through
+                    if (companySocialController.getSocials().Count > 0)
+                    {
+
+                        //we loop through company socials
+                        foreach (Social social in companySocialController.getSocials())
+                        {
+                            //we check, if theres already an account, as in facebook, we just link the account we entered within the same field, 
+                            if (companySocials.ContainsKey(social.getName()))
+                            {
+                                //here we'll check if we have the same name saved before
+                                if (!companySocials[social.getName()].Contains(social.getTag()))
+                                {
+                                    companySocials[social.getName()].Add(social.getTag());
+                                }
+                                
+                            }
+                            else
+                            {
+                                //if not, we create a new list for it
+                                companySocials[social.getName()] = new List<string> { social.getTag() };
+                            }
+
+                        }
+                    }
+                }
+                
+                string companySocialsJson = JsonConvert.SerializeObject(companySocials);
+                importedData.Rows[currentRowNum]["Company_Socials"] = companySocialsJson;
                 //locations in a dictionary
                 Dictionary<string, object> locationsData = new Dictionary<string, object>();
 
                 //loop through each location, and create one and put it in locationscontainer
-                if (locController.getLocations().Count > 0)
+                if (locationController.getLocations().Count > 0)
                 {
                     int z = 1;
                     
-                    foreach (Location data in locController.getLocations())
+                    foreach (Location data in locationController.getLocations())
                     {
 
                         Dictionary<string, object> locationData = new Dictionary<string, object>();
 
-                        //fi    rst we setup the socials
+                        //first we setup the socials
                         SocialController socCont = data.getSocialController();
-                        Dictionary<string, object> locationSocials = new Dictionary<string, object>();
+                        Dictionary<string, List<string>> locationSocials = new Dictionary<string, List<string>>();
 
                         if (socCont != null)
                         {
-                            foreach (var socialData in socCont.getSocials())
+                            //check if we have any company socials to loop through
+                            if (socCont.getSocials().Count > 0)
                             {
-                                locationSocials[socialData.getName()] = socialData.getAccount();
 
+                                //we loop through company socials
+                                foreach (Social social in socCont.getSocials())
+                                {
+                                    //we check, if theres already an account, as in facebook, we just link the account we entered within the same field, 
+                                    if (locationSocials.ContainsKey(social.getName()))
+                                    {
+                                        //here we'll check if we have the same name saved before
+                                        if (!locationSocials[social.getName()].Contains(social.getTag()))
+                                        {
+                                            locationSocials[social.getName()].Add(social.getTag());
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //if not, we create a new list for it
+                                        locationSocials[social.getName()] = new List<string> { social.getTag() };
+                                    }
+
+                                }
                             }
                         }
                         string locName = data.getName();
@@ -617,15 +752,12 @@ namespace HospitalityDataUpdater
                         z++;
                     }
 
-                    string json = JsonConvert.SerializeObject(locationsData);
-
-                    importedData.Rows[currentRowNum]["Locations"] = json;
+                   
                     //Console.WriteLine(json);
                 }
-                else
-                {
-                    importedData.Rows[currentRowNum]["Locations"] = null;
-                }
+                string locationsJsonDictionary = JsonConvert.SerializeObject(locationsData);
+
+                importedData.Rows[currentRowNum]["Locations"] = locationsJsonDictionary;
 
             }
 
@@ -648,12 +780,14 @@ namespace HospitalityDataUpdater
 
 
             //clear the locations, socials and brands now
-            if (locController != null)
-                locController.Clear();
+            if (locationController != null)
+                locationController.Clear();
             if (brandController != null)
                 brandController.Clear();
-            if (currentSocialController != null)
-                currentSocialController.Clear();
+            if (locationSocialController != null)
+                locationSocialController.Clear();
+            if(companySocialController != null)
+                companySocialController.Clear();
 
         }
 
@@ -828,19 +962,19 @@ namespace HospitalityDataUpdater
             Social socialItem;
 
             //first we check if there is a current social controller
-            if (currentSocialController == null)
+            if (locationSocialController == null)
             {
-                currentSocialController = new SocialController();
+                locationSocialController = new SocialController();
             }
 
             if (socName != string.Empty && socTag != string.Empty)
             {
                 //we create the social item
-                socialItem = new Social(currentSocialController.getSocials().Count, socName, socTag, currentSocialController);
+                socialItem = new Social(locationSocialController.getSocials().Count, socName, socTag, locationSocialController);
                 //add it to the social controller
-                currentSocialController.AddEntry(socialItem);
+                locationSocialController.AddEntry(socialItem);
 
-                socialItem.CreateUI(socialsContainer);
+                socialItem.CreateUI(locationSocialsContainer);
             }
 
         }
@@ -903,32 +1037,32 @@ namespace HospitalityDataUpdater
 
             //now we create the location controller
 
-            if (locController == null)
+            if (locationController == null)
             {
                 
-                locController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
+                locationController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
             }
 
             //we check if this is the first entry
 
             // now we import the locations
-            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocialController, locController, locController.getLocationHolder()); // Create a new Location instance for each array element
+            Location loc = new Location(locationController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, locationSocialController, locationController, locationController.getLocationHolder()); // Create a new Location instance for each array element
 
-            locController.AddEntry(loc);
+            locationController.AddEntry(loc);
 
-            locController.CreateLocationUIs();
+            locationController.CreateLocationUIs();
 
             
 
             EmptyLocInputs();
 
-            if (currentSocialController != null)
+            if (locationSocialController != null)
             {
-                currentSocialController.Clear();
+                locationSocialController.Clear();
 
             }
 
-            currentSocialController = null;
+            locationSocialController = null;
 
             #endregion
 
@@ -971,6 +1105,32 @@ namespace HospitalityDataUpdater
             }
         }
 
+        private void AddCompanySocialButton_Click(object sender, EventArgs e)// this is for the companies social controller
+        {
+            //we get the values
+            string socName = CompanySocialsNameInput.Text;
+            string socTag = CompanySocialsTagInput.Text;
+            Social socialItem;
+
+            //first we check if there is a current social controller
+            if (companySocialController == null)
+            {
+                companySocialController = new SocialController();
+            }
+
+            if (socName != string.Empty && socTag != string.Empty)
+            {
+                //we create the social item
+                socialItem = new Social(companySocialController.getSocials().Count, socName, socTag, companySocialController);
+                //add it to the social controller
+                companySocialController.AddEntry(socialItem);
+
+                socialItem.CreateUI(companySocialsContainer);
+            }
+        }
+
         #endregion
+
+
     }
 }
