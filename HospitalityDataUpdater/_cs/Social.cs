@@ -24,7 +24,7 @@ namespace HospitalityDataUpdater._cs
         FlowLayoutPanel container;
 
         //sets the values when this is created
-        public Social(int i, string name, string account, SocialController cont, FlowLayoutPanel container)
+        public Social(int i, string name, string account, SocialController cont)
         {
             index = i;
             setName(name);
@@ -113,12 +113,13 @@ namespace HospitalityDataUpdater._cs
                 controller.RemoveEntry(this);
             }
         }
-        public void CreateUI() {  //creates the UI 
+        public void CreateUI(FlowLayoutPanel container) {  //creates the UI 
 
             groupBox = new GroupBox();
             deleteButton = new Button();
             socialTag = new Label();
-            
+
+            setContainer(container);
 
             // 
             // Social1Group

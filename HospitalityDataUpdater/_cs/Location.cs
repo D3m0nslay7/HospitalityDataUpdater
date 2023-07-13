@@ -36,7 +36,7 @@ namespace HospitalityDataUpdater._cs
         Button editDataButton;
         FlowLayoutPanel container;
 
-        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer, EventHandler viewSocials, EventHandler editLocation)
+        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer)
         {
             index = i;
             setName(name);
@@ -47,17 +47,16 @@ namespace HospitalityDataUpdater._cs
             setCity(city);
             setPost(postcode);
             setController(cont);
-            setSocials(socCont);
+            setSocialController(socCont);
             setBookingProvider(bookProvider);
             if (flowcontainer == null)
                 Console.WriteLine("NULL HERE");
 
             setContainer(flowcontainer);
-            CreateUI(viewSocials, editLocation);
         }
         //get methods
         #region getMethods
-        public SocialController getSocials()
+        public SocialController getSocialController()
         {
             return socCont;
         }
@@ -104,7 +103,7 @@ namespace HospitalityDataUpdater._cs
         #endregion
         //set methods
         #region setMethods
-        public void setSocials(SocialController socs)
+        public void setSocialController(SocialController socs)
         {
             socCont = socs;
         }
@@ -158,20 +157,22 @@ namespace HospitalityDataUpdater._cs
         #endregion
         public void Clearing()
         {
-            //delete this thing
-            // Remove or dispose of the child controls within the GroupBox
-            foreach (Control control in groupBox.Controls)
+            if (groupBox != null)
             {
-                groupBox.Controls.Remove(control);
-                control.Dispose(); // Optional: Dispose of the control if needed
+                //delete this thing
+                // Remove or dispose of the child controls within the GroupBox
+                foreach (Control control in groupBox.Controls)
+                {
+                    groupBox.Controls.Remove(control);
+                    control.Dispose(); // Optional: Dispose of the control if needed
+                }
+
+                // Remove the GroupBox itself from the container
+                container.Controls.Remove(groupBox);
+
+                // Dispose of the GroupBox if needed
+                groupBox.Dispose();
             }
-
-            // Remove the GroupBox itself from the container
-            container.Controls.Remove(groupBox);
-
-            // Dispose of the GroupBox if needed
-            groupBox.Dispose();
-
         }
         //UI methods
         #region UI Methods

@@ -30,12 +30,12 @@ namespace HospitalityDataUpdater
         int currentRowNum;
         int maxRow;
         //containers
-        public FlowLayoutPanel locationsContainer;
-        public FlowLayoutPanel socialsContainer;
-        public FlowLayoutPanel brandsContainer;
+        FlowLayoutPanel locationsContainer;
+        FlowLayoutPanel socialsContainer;
+        FlowLayoutPanel brandsContainer;
         //controllers
         LocationController locController;
-        SocialController currentSocController;
+        SocialController currentSocialController;
         BrandController brandController;
         //used to check if we have any type of popup open
         bool popup = false;
@@ -57,24 +57,10 @@ namespace HospitalityDataUpdater
             locationsContainer = this.Controls.Find("LocationFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             socialsContainer = this.Controls.Find("SocialsLayoutContainer", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             brandsContainer = this.Controls.Find("BrandsFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
+
             #endregion
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-            
-            #region testing
-            for (int i = 0; i < -1; i++)
-            {
-                //Location loc = new Location(i, "test"+i, "webste"+i, "231" + i, "awdawdawdwad" + i, "awdfafawfawfawfawfwam" + i, "london" + i, "232232" + i,  locController, locationsContainer); // Create a new Location instance for each array element
 
-                //locController.AddEntry(loc);
-            }
-
-            for (int i = 0; i < -1; i++)
-            {
-                Brand brand = new Brand(i, "brand" + i, brandController, brandsContainer);
-
-                brandController.AddEntry(brand);
-            }
-            #endregion
 
             #region excel
 
@@ -107,36 +93,40 @@ namespace HospitalityDataUpdater
             Location tag = button.Tag as Location;
 
             //we return if we are teh same thing
-            if (currentSocController == tag.getSocials())
+            if (currentSocialController == tag.getSocialController())
             {
                 //Console.WriteLine("returning");
                 return;
             }
 
             //if this isnt null ,means theres prob stuff there, so lets see and delete it if there is
-            if (currentSocController != null)
+            if (currentSocialController != null)
             {
 
-                if (currentSocController.getSocials().Count > 0) // only if we have more
+                if (currentSocialController.getSocials().Count > 0) // only if we have more
                 {
-                    currentSocController.Clear();
+                    currentSocialController.Clear();
                 }
 
             }
 
             //Console.WriteLine("spawning in new ones");
             //we now spawn in the next social data
-            currentSocController = tag.getSocials();//get the socials
-            foreach (Social socialData in currentSocController.getSocials())
+            currentSocialController = tag.getSocialController();//get the socials
+            if (currentSocialController != null)
             {
-                //Console.WriteLine("spawning");
-                socialData.CreateUI();
+                foreach (Social socialData in currentSocialController.getSocials())
+                {
+                    //Console.WriteLine("spawning");
+                    socialData.CreateUI(socialsContainer);
+                }
             }
+            
 
 
         }
 
-        public void EmptyLocInputs()
+        private void EmptyLocInputs()
         {
             LocationNameInput.Text = "";
             LocationWebsiteInput.Text = "";
@@ -150,9 +140,27 @@ namespace HospitalityDataUpdater
             LocationBookingProviderInput.Text = "";
         }
 
-        public void UserControl_Disposed(object sender, EventArgs e)
+
+
+        #endregion
+
+        #region Edit Panel
+        private void UserControl_Disposed(object sender, EventArgs e)
         {
             popup = false;
+
+            Console.WriteLine();
+
+            //check if we have imported data
+            if (importedData != null)
+            {
+                //save the data in a backup excel file for saftey
+                exportFile("backup");
+
+                SetData(importedData.Rows[currentRowNum]);
+            }
+
+
         }
 
         private void EditDataButton_Click(object sender, EventArgs e) // simple function to launch edit panel and allow the user to edit this location
@@ -161,7 +169,7 @@ namespace HospitalityDataUpdater
             if (popup)
             {
                 MessageBox.Show("INFO: Finish editing the current location first");
-                return; 
+                return;
             }
 
             //get the location, if we dont have one we return and let the person know
@@ -174,9 +182,11 @@ namespace HospitalityDataUpdater
 
             Location location = button.Tag as Location;
 
+            if (currentSocialController != null)
+                currentSocialController.Clear();
 
             //we create the edit panel and show it
-            EditControl panel = new EditControl(location);
+            EditControl panel = new EditControl(location, ViewSocialsButton_Click, EditDataButton_Click);
             panel.Location = new System.Drawing.Point(0, -7);
             LocationsGroupBox.Controls.Add(panel);
             panel.BringToFront();
@@ -188,12 +198,11 @@ namespace HospitalityDataUpdater
 
 
         }
-
         #endregion
 
         #region excel
 
-        public void exportFile(string param)
+        private void exportFile(string param)
         {
             if(importedData == null)
             {
@@ -280,12 +289,12 @@ namespace HospitalityDataUpdater
                                 .Take(endRow - startRow + 1)
                                 .CopyToDataTable();
 
-                            if (currentSocController != null)
+                            if (currentSocialController != null)
                             {
-                                currentSocController.Clear();
+                                currentSocialController.Clear();
                             }
 
-                            currentSocController = null;
+                            currentSocialController = null;
                             return filteredTable;
                         }
                     }
@@ -303,7 +312,7 @@ namespace HospitalityDataUpdater
             }
            
         }
-        public int GetExcelRowCount(string filePath) // used to retrieve the amount of rows
+        private int GetExcelRowCount(string filePath) // used to retrieve the amount of rows
         {
             if (File.Exists(filePath))
             {
@@ -342,14 +351,14 @@ namespace HospitalityDataUpdater
 
         #region Methods
 
-        public void SetData(DataRow row)//set the data, when we get the data
+        private void SetData(DataRow row)//set the data, when we get the data
         {
             //we import the data now
 
             //get new controllers, we dont want any old data
             //here we get the controlelrs
-            locController = new LocationController();
-            currentSocController = new SocialController();
+            locController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
+            currentSocialController = new SocialController();
             brandController = new BrandController();
 
             //company name
@@ -443,7 +452,7 @@ namespace HospitalityDataUpdater
                                     if (obj != null)
                                     {
                                         string tag = obj.ToString();
-                                        Social social = new Social(p, platform, tag, socCont, socialsContainer);
+                                        Social social = new Social(p, platform, tag, socCont);
 
                                         socCont.AddEntry(social);
                                         p++;
@@ -511,12 +520,17 @@ namespace HospitalityDataUpdater
 
 
                             // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, ViewSocialsButton_Click, EditDataButton_Click); // Create a new Location instance for each array element
+                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locController.getLocationHolder()); // Create a new Location instance for each array element
 
                             locController.AddEntry(loc);
 
+
                             z++;
                         }
+
+                        //spawn the uis now
+
+                        locController.CreateLocationUIs();
                     }
                 }
                 catch (Exception test)
@@ -529,7 +543,7 @@ namespace HospitalityDataUpdater
             }
         }
 
-        public void saveEntries()
+        private void saveEntries()
         {
             if(importedData != null)
             {
@@ -554,7 +568,7 @@ namespace HospitalityDataUpdater
                         Dictionary<string, object> locationData = new Dictionary<string, object>();
 
                         //fi    rst we setup the socials
-                        SocialController socCont = data.getSocials();
+                        SocialController socCont = data.getSocialController();
                         Dictionary<string, object> locationSocials = new Dictionary<string, object>();
 
                         if (socCont != null)
@@ -617,7 +631,7 @@ namespace HospitalityDataUpdater
 
         }
 
-        public void clearEntries()
+        private void clearEntries()
         {
 
             //we wana save data first
@@ -638,8 +652,8 @@ namespace HospitalityDataUpdater
                 locController.Clear();
             if (brandController != null)
                 brandController.Clear();
-            if (currentSocController != null)
-                currentSocController.Clear();
+            if (currentSocialController != null)
+                currentSocialController.Clear();
 
         }
 
@@ -814,19 +828,19 @@ namespace HospitalityDataUpdater
             Social socialItem;
 
             //first we check if there is a current social controller
-            if (currentSocController == null)
+            if (currentSocialController == null)
             {
-                currentSocController = new SocialController();
+                currentSocialController = new SocialController();
             }
 
             if (socName != string.Empty && socTag != string.Empty)
             {
                 //we create the social item
-                socialItem = new Social(currentSocController.getSocials().Count, socName, socTag, currentSocController, socialsContainer);
+                socialItem = new Social(currentSocialController.getSocials().Count, socName, socTag, currentSocialController);
                 //add it to the social controller
-                currentSocController.AddEntry(socialItem);
+                currentSocialController.AddEntry(socialItem);
 
-                socialItem.CreateUI();
+                socialItem.CreateUI(socialsContainer);
             }
 
         }
@@ -887,27 +901,30 @@ namespace HospitalityDataUpdater
                 bookingProvider = null;
             }
 
-            //now we create the location
+            //now we create the location controller
 
             if (locController == null)
             {
-                locController = new LocationController();
+                
+                locController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
             }
 
             // now we import the locations
-            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocController, locController, locationsContainer, ViewSocialsButton_Click, EditDataButton_Click); // Create a new Location instance for each array element
+            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocialController, locController, locController.getLocationHolder()); // Create a new Location instance for each array element
 
             locController.AddEntry(loc);
 
+            locController.CreateLocationUIs();
+
             EmptyLocInputs();
 
-            if (currentSocController != null)
+            if (currentSocialController != null)
             {
-                currentSocController.Clear();
+                currentSocialController.Clear();
 
             }
 
-            currentSocController = null;
+            currentSocialController = null;
 
             #endregion
 

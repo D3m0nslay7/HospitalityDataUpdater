@@ -51,7 +51,7 @@
             this.Edit_SocialNameLabel = new System.Windows.Forms.Label();
             this.Edit_AddSocialsButton = new System.Windows.Forms.Button();
             this.SocialsGroupBox = new System.Windows.Forms.GroupBox();
-            this.SocialsLayoutContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.Edit_SocialsLayoutContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.Edit_SaveButton = new System.Windows.Forms.Button();
             this.Edit_CancelButton = new System.Windows.Forms.Button();
             this.SocialsGroupBox.SuspendLayout();
@@ -198,14 +198,14 @@
             // 
             // Edit_SocialTagInput
             // 
-            this.Edit_SocialTagInput.Location = new System.Drawing.Point(647, 54);
+            this.Edit_SocialTagInput.Location = new System.Drawing.Point(589, 54);
             this.Edit_SocialTagInput.Name = "Edit_SocialTagInput";
             this.Edit_SocialTagInput.Size = new System.Drawing.Size(126, 20);
             this.Edit_SocialTagInput.TabIndex = 27;
             // 
             // Edit_SocialNameInput
             // 
-            this.Edit_SocialNameInput.Location = new System.Drawing.Point(654, 32);
+            this.Edit_SocialNameInput.Location = new System.Drawing.Point(596, 32);
             this.Edit_SocialNameInput.Name = "Edit_SocialNameInput";
             this.Edit_SocialNameInput.Size = new System.Drawing.Size(119, 20);
             this.Edit_SocialNameInput.TabIndex = 26;
@@ -213,7 +213,7 @@
             // Edit_SocialTagLabel
             // 
             this.Edit_SocialTagLabel.AutoSize = true;
-            this.Edit_SocialTagLabel.Location = new System.Drawing.Point(580, 57);
+            this.Edit_SocialTagLabel.Location = new System.Drawing.Point(522, 57);
             this.Edit_SocialTagLabel.Name = "Edit_SocialTagLabel";
             this.Edit_SocialTagLabel.Size = new System.Drawing.Size(61, 13);
             this.Edit_SocialTagLabel.TabIndex = 47;
@@ -222,7 +222,7 @@
             // Edit_SocialNameLabel
             // 
             this.Edit_SocialNameLabel.AutoSize = true;
-            this.Edit_SocialNameLabel.Location = new System.Drawing.Point(580, 35);
+            this.Edit_SocialNameLabel.Location = new System.Drawing.Point(522, 35);
             this.Edit_SocialNameLabel.Name = "Edit_SocialNameLabel";
             this.Edit_SocialNameLabel.Size = new System.Drawing.Size(70, 13);
             this.Edit_SocialNameLabel.TabIndex = 46;
@@ -230,36 +230,37 @@
             // 
             // Edit_AddSocialsButton
             // 
-            this.Edit_AddSocialsButton.Location = new System.Drawing.Point(779, 32);
+            this.Edit_AddSocialsButton.Location = new System.Drawing.Point(721, 32);
             this.Edit_AddSocialsButton.Name = "Edit_AddSocialsButton";
             this.Edit_AddSocialsButton.Size = new System.Drawing.Size(47, 42);
             this.Edit_AddSocialsButton.TabIndex = 28;
             this.Edit_AddSocialsButton.Text = "Add Social";
             this.Edit_AddSocialsButton.UseVisualStyleBackColor = true;
+            this.Edit_AddSocialsButton.Click += new System.EventHandler(this.Edit_AddSocialsButton_Click);
             // 
             // SocialsGroupBox
             // 
-            this.SocialsGroupBox.Controls.Add(this.SocialsLayoutContainer);
-            this.SocialsGroupBox.Location = new System.Drawing.Point(583, 80);
+            this.SocialsGroupBox.Controls.Add(this.Edit_SocialsLayoutContainer);
+            this.SocialsGroupBox.Location = new System.Drawing.Point(520, 80);
             this.SocialsGroupBox.Name = "SocialsGroupBox";
             this.SocialsGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SocialsGroupBox.Size = new System.Drawing.Size(243, 165);
+            this.SocialsGroupBox.Size = new System.Drawing.Size(306, 165);
             this.SocialsGroupBox.TabIndex = 48;
             this.SocialsGroupBox.TabStop = false;
             this.SocialsGroupBox.Text = "Socials";
             // 
-            // SocialsLayoutContainer
+            // Edit_SocialsLayoutContainer
             // 
-            this.SocialsLayoutContainer.AutoScroll = true;
-            this.SocialsLayoutContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SocialsLayoutContainer.Location = new System.Drawing.Point(3, 16);
-            this.SocialsLayoutContainer.Name = "SocialsLayoutContainer";
-            this.SocialsLayoutContainer.Size = new System.Drawing.Size(237, 143);
-            this.SocialsLayoutContainer.TabIndex = 1;
+            this.Edit_SocialsLayoutContainer.AutoScroll = true;
+            this.Edit_SocialsLayoutContainer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Edit_SocialsLayoutContainer.Location = new System.Drawing.Point(3, 16);
+            this.Edit_SocialsLayoutContainer.Name = "Edit_SocialsLayoutContainer";
+            this.Edit_SocialsLayoutContainer.Size = new System.Drawing.Size(300, 143);
+            this.Edit_SocialsLayoutContainer.TabIndex = 1;
             // 
             // Edit_SaveButton
             // 
-            this.Edit_SaveButton.Location = new System.Drawing.Point(488, 221);
+            this.Edit_SaveButton.Location = new System.Drawing.Point(399, 221);
             this.Edit_SaveButton.Name = "Edit_SaveButton";
             this.Edit_SaveButton.Size = new System.Drawing.Size(89, 24);
             this.Edit_SaveButton.TabIndex = 29;
@@ -269,7 +270,7 @@
             // 
             // Edit_CancelButton
             // 
-            this.Edit_CancelButton.Location = new System.Drawing.Point(393, 221);
+            this.Edit_CancelButton.Location = new System.Drawing.Point(304, 221);
             this.Edit_CancelButton.Name = "Edit_CancelButton";
             this.Edit_CancelButton.Size = new System.Drawing.Size(89, 24);
             this.Edit_CancelButton.TabIndex = 50;
@@ -342,7 +343,7 @@
         private System.Windows.Forms.Label Edit_SocialNameLabel;
         private System.Windows.Forms.Button Edit_AddSocialsButton;
         private System.Windows.Forms.GroupBox SocialsGroupBox;
-        public System.Windows.Forms.FlowLayoutPanel SocialsLayoutContainer;
+        public System.Windows.Forms.FlowLayoutPanel Edit_SocialsLayoutContainer;
         private System.Windows.Forms.Button Edit_SaveButton;
         private System.Windows.Forms.Button Edit_CancelButton;
     }
