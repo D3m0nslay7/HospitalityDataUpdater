@@ -753,12 +753,18 @@ namespace HospitalityDataUpdater
                 //get the brand
                 string enteredValue = BrandsInput.Text;
                 
-                //put it in the controller
-                Brand brand = new Brand(brandController.getBrands().Count-1, enteredValue, brandController, brandsContainer);
+                //if brandcontroller is null, we make a new one
+                if(brandController == null)
+                {
+                    brandController = new BrandController();
+                }
 
+
+                //Create brand item, then put it in controller
+                Brand brand = new Brand(brandController.getBrands().Count-1, enteredValue, brandController, brandsContainer);
                 brandController.AddEntry(brand);
 
-                //we empty hte text field
+                //we empty the text field
                 BrandsInput.Text = "";
             }
         }
@@ -867,8 +873,7 @@ namespace HospitalityDataUpdater
             currentSocController = null;
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }

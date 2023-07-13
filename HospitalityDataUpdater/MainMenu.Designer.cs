@@ -32,14 +32,20 @@ namespace HospitalityDataUpdater
         {
             this.LocationFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.InputPanel = new System.Windows.Forms.GroupBox();
+            this.InactiveCheckbox = new System.Windows.Forms.CheckBox();
             this.NumDevStoresInput = new System.Windows.Forms.NumericUpDown();
             this.NumNewStoresInput = new System.Windows.Forms.NumericUpDown();
             this.BrandsGroupBox = new System.Windows.Forms.GroupBox();
+            this.BrandsInputLabel = new System.Windows.Forms.Label();
+            this.BrandsInput = new System.Windows.Forms.TextBox();
+            this.BrandsFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.Num_Dev_StoresLabel = new System.Windows.Forms.Label();
             this.New_Num_StoresLabel = new System.Windows.Forms.Label();
             this.WebsiteInput = new System.Windows.Forms.TextBox();
             this.WebsiteLabel = new System.Windows.Forms.Label();
             this.LocationsGroupBox = new System.Windows.Forms.GroupBox();
+            this.LocationBookingProviderInput = new System.Windows.Forms.TextBox();
+            this.LocationBookingProviderLabel = new System.Windows.Forms.Label();
             this.LocationsPanel = new System.Windows.Forms.Panel();
             this.SocialTagInput = new System.Windows.Forms.TextBox();
             this.SocialNameInput = new System.Windows.Forms.TextBox();
@@ -84,12 +90,6 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
-            this.LocationBookingProviderLabel = new System.Windows.Forms.Label();
-            this.LocationBookingProviderInput = new System.Windows.Forms.TextBox();
-            this.BrandsInputLabel = new System.Windows.Forms.Label();
-            this.BrandsInput = new System.Windows.Forms.TextBox();
-            this.BrandsFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.InactiveCheckbox = new System.Windows.Forms.CheckBox();
             this.InputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumDevStoresInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNewStoresInput)).BeginInit();
@@ -128,6 +128,16 @@ namespace HospitalityDataUpdater
             this.InputPanel.TabStop = false;
             this.InputPanel.Text = "Input";
             // 
+            // InactiveCheckbox
+            // 
+            this.InactiveCheckbox.AutoSize = true;
+            this.InactiveCheckbox.Location = new System.Drawing.Point(6, 66);
+            this.InactiveCheckbox.Name = "InactiveCheckbox";
+            this.InactiveCheckbox.Size = new System.Drawing.Size(91, 17);
+            this.InactiveCheckbox.TabIndex = 29;
+            this.InactiveCheckbox.Text = "Inactive Entry";
+            this.InactiveCheckbox.UseVisualStyleBackColor = true;
+            // 
             // NumDevStoresInput
             // 
             this.NumDevStoresInput.Location = new System.Drawing.Point(337, 42);
@@ -153,6 +163,31 @@ namespace HospitalityDataUpdater
             this.BrandsGroupBox.TabIndex = 10;
             this.BrandsGroupBox.TabStop = false;
             this.BrandsGroupBox.Text = "Brands";
+            // 
+            // BrandsInputLabel
+            // 
+            this.BrandsInputLabel.AutoSize = true;
+            this.BrandsInputLabel.Location = new System.Drawing.Point(6, 15);
+            this.BrandsInputLabel.Name = "BrandsInputLabel";
+            this.BrandsInputLabel.Size = new System.Drawing.Size(70, 13);
+            this.BrandsInputLabel.TabIndex = 5;
+            this.BrandsInputLabel.Text = "Brands Input:";
+            // 
+            // BrandsInput
+            // 
+            this.BrandsInput.Location = new System.Drawing.Point(79, 12);
+            this.BrandsInput.Name = "BrandsInput";
+            this.BrandsInput.Size = new System.Drawing.Size(280, 20);
+            this.BrandsInput.TabIndex = 4;
+            this.BrandsInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BrandsInput_KeyDown);
+
+            // 
+            // BrandsFlowLayout
+            // 
+            this.BrandsFlowLayout.Location = new System.Drawing.Point(6, 31);
+            this.BrandsFlowLayout.Name = "BrandsFlowLayout";
+            this.BrandsFlowLayout.Size = new System.Drawing.Size(354, 291);
+            this.BrandsFlowLayout.TabIndex = 3;
             // 
             // Num_Dev_StoresLabel
             // 
@@ -221,6 +256,22 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.TabIndex = 9;
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
+            // 
+            // LocationBookingProviderInput
+            // 
+            this.LocationBookingProviderInput.Location = new System.Drawing.Point(147, 168);
+            this.LocationBookingProviderInput.Name = "LocationBookingProviderInput";
+            this.LocationBookingProviderInput.Size = new System.Drawing.Size(119, 20);
+            this.LocationBookingProviderInput.TabIndex = 27;
+            // 
+            // LocationBookingProviderLabel
+            // 
+            this.LocationBookingProviderLabel.AutoSize = true;
+            this.LocationBookingProviderLabel.Location = new System.Drawing.Point(6, 172);
+            this.LocationBookingProviderLabel.Name = "LocationBookingProviderLabel";
+            this.LocationBookingProviderLabel.Size = new System.Drawing.Size(135, 13);
+            this.LocationBookingProviderLabel.TabIndex = 26;
+            this.LocationBookingProviderLabel.Text = "Location Booking Provider:";
             // 
             // LocationsPanel
             // 
@@ -629,55 +680,6 @@ namespace HospitalityDataUpdater
             this.NextButton.Text = "Next";
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
-            // 
-            // LocationBookingProviderLabel
-            // 
-            this.LocationBookingProviderLabel.AutoSize = true;
-            this.LocationBookingProviderLabel.Location = new System.Drawing.Point(6, 172);
-            this.LocationBookingProviderLabel.Name = "LocationBookingProviderLabel";
-            this.LocationBookingProviderLabel.Size = new System.Drawing.Size(135, 13);
-            this.LocationBookingProviderLabel.TabIndex = 26;
-            this.LocationBookingProviderLabel.Text = "Location Booking Provider:";
-            // 
-            // LocationBookingProviderInput
-            // 
-            this.LocationBookingProviderInput.Location = new System.Drawing.Point(147, 168);
-            this.LocationBookingProviderInput.Name = "LocationBookingProviderInput";
-            this.LocationBookingProviderInput.Size = new System.Drawing.Size(119, 20);
-            this.LocationBookingProviderInput.TabIndex = 27;
-            // 
-            // BrandsInputLabel
-            // 
-            this.BrandsInputLabel.AutoSize = true;
-            this.BrandsInputLabel.Location = new System.Drawing.Point(6, 15);
-            this.BrandsInputLabel.Name = "BrandsInputLabel";
-            this.BrandsInputLabel.Size = new System.Drawing.Size(70, 13);
-            this.BrandsInputLabel.TabIndex = 5;
-            this.BrandsInputLabel.Text = "Brands Input:";
-            // 
-            // BrandsInput
-            // 
-            this.BrandsInput.Location = new System.Drawing.Point(79, 12);
-            this.BrandsInput.Name = "BrandsInput";
-            this.BrandsInput.Size = new System.Drawing.Size(280, 20);
-            this.BrandsInput.TabIndex = 4;
-            // 
-            // BrandsFlowLayout
-            // 
-            this.BrandsFlowLayout.Location = new System.Drawing.Point(6, 31);
-            this.BrandsFlowLayout.Name = "BrandsFlowLayout";
-            this.BrandsFlowLayout.Size = new System.Drawing.Size(354, 291);
-            this.BrandsFlowLayout.TabIndex = 3;
-            // 
-            // InactiveCheckbox
-            // 
-            this.InactiveCheckbox.AutoSize = true;
-            this.InactiveCheckbox.Location = new System.Drawing.Point(6, 66);
-            this.InactiveCheckbox.Name = "InactiveCheckbox";
-            this.InactiveCheckbox.Size = new System.Drawing.Size(91, 17);
-            this.InactiveCheckbox.TabIndex = 29;
-            this.InactiveCheckbox.Text = "Inactive Entry";
-            this.InactiveCheckbox.UseVisualStyleBackColor = true;
             // 
             // MainMenu
             // 
