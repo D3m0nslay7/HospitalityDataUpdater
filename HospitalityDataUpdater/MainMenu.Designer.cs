@@ -2,7 +2,7 @@
 
 namespace HospitalityDataUpdater
 {
-    partial class MainMenu
+    partial class MainMenuInterface
     {
         /// <summary>
         /// Required designer variable.
@@ -134,7 +134,7 @@ namespace HospitalityDataUpdater
             this.InactiveCheckbox.Location = new System.Drawing.Point(6, 66);
             this.InactiveCheckbox.Name = "InactiveCheckbox";
             this.InactiveCheckbox.Size = new System.Drawing.Size(91, 17);
-            this.InactiveCheckbox.TabIndex = 29;
+            this.InactiveCheckbox.TabIndex = 4;
             this.InactiveCheckbox.Text = "Inactive Entry";
             this.InactiveCheckbox.UseVisualStyleBackColor = true;
             // 
@@ -143,14 +143,14 @@ namespace HospitalityDataUpdater
             this.NumDevStoresInput.Location = new System.Drawing.Point(337, 42);
             this.NumDevStoresInput.Name = "NumDevStoresInput";
             this.NumDevStoresInput.Size = new System.Drawing.Size(39, 20);
-            this.NumDevStoresInput.TabIndex = 12;
+            this.NumDevStoresInput.TabIndex = 3;
             // 
             // NumNewStoresInput
             // 
             this.NumNewStoresInput.Location = new System.Drawing.Point(130, 42);
             this.NumNewStoresInput.Name = "NumNewStoresInput";
             this.NumNewStoresInput.Size = new System.Drawing.Size(39, 20);
-            this.NumNewStoresInput.TabIndex = 11;
+            this.NumNewStoresInput.TabIndex = 2;
             // 
             // BrandsGroupBox
             // 
@@ -178,9 +178,8 @@ namespace HospitalityDataUpdater
             this.BrandsInput.Location = new System.Drawing.Point(79, 12);
             this.BrandsInput.Name = "BrandsInput";
             this.BrandsInput.Size = new System.Drawing.Size(280, 20);
-            this.BrandsInput.TabIndex = 4;
+            this.BrandsInput.TabIndex = 17;
             this.BrandsInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BrandsInput_KeyDown);
-
             // 
             // BrandsFlowLayout
             // 
@@ -212,7 +211,7 @@ namespace HospitalityDataUpdater
             this.WebsiteInput.Location = new System.Drawing.Point(59, 16);
             this.WebsiteInput.Name = "WebsiteInput";
             this.WebsiteInput.Size = new System.Drawing.Size(317, 20);
-            this.WebsiteInput.TabIndex = 2;
+            this.WebsiteInput.TabIndex = 1;
             // 
             // WebsiteLabel
             // 
@@ -253,7 +252,7 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.Location = new System.Drawing.Point(400, 10);
             this.LocationsGroupBox.Name = "LocationsGroupBox";
             this.LocationsGroupBox.Size = new System.Drawing.Size(829, 688);
-            this.LocationsGroupBox.TabIndex = 9;
+            this.LocationsGroupBox.TabIndex = 2;
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
             // 
@@ -262,7 +261,7 @@ namespace HospitalityDataUpdater
             this.LocationBookingProviderInput.Location = new System.Drawing.Point(147, 168);
             this.LocationBookingProviderInput.Name = "LocationBookingProviderInput";
             this.LocationBookingProviderInput.Size = new System.Drawing.Size(119, 20);
-            this.LocationBookingProviderInput.TabIndex = 27;
+            this.LocationBookingProviderInput.TabIndex = 12;
             // 
             // LocationBookingProviderLabel
             // 
@@ -270,7 +269,7 @@ namespace HospitalityDataUpdater
             this.LocationBookingProviderLabel.Location = new System.Drawing.Point(6, 172);
             this.LocationBookingProviderLabel.Name = "LocationBookingProviderLabel";
             this.LocationBookingProviderLabel.Size = new System.Drawing.Size(135, 13);
-            this.LocationBookingProviderLabel.TabIndex = 26;
+            this.LocationBookingProviderLabel.TabIndex = 1;
             this.LocationBookingProviderLabel.Text = "Location Booking Provider:";
             // 
             // LocationsPanel
@@ -286,14 +285,14 @@ namespace HospitalityDataUpdater
             this.SocialTagInput.Location = new System.Drawing.Point(336, 194);
             this.SocialTagInput.Name = "SocialTagInput";
             this.SocialTagInput.Size = new System.Drawing.Size(126, 20);
-            this.SocialTagInput.TabIndex = 24;
+            this.SocialTagInput.TabIndex = 14;
             // 
             // SocialNameInput
             // 
             this.SocialNameInput.Location = new System.Drawing.Point(343, 172);
             this.SocialNameInput.Name = "SocialNameInput";
             this.SocialNameInput.Size = new System.Drawing.Size(119, 20);
-            this.SocialNameInput.TabIndex = 23;
+            this.SocialNameInput.TabIndex = 13;
             // 
             // SocialsGroupBox
             // 
@@ -321,7 +320,7 @@ namespace HospitalityDataUpdater
             this.SocialTagLabel.Location = new System.Drawing.Point(269, 197);
             this.SocialTagLabel.Name = "SocialTagLabel";
             this.SocialTagLabel.Size = new System.Drawing.Size(61, 13);
-            this.SocialTagLabel.TabIndex = 22;
+            this.SocialTagLabel.TabIndex = 1;
             this.SocialTagLabel.Text = "Social Tag:";
             // 
             // LocationAdd1Input
@@ -329,7 +328,7 @@ namespace HospitalityDataUpdater
             this.LocationAdd1Input.Location = new System.Drawing.Point(112, 94);
             this.LocationAdd1Input.Name = "LocationAdd1Input";
             this.LocationAdd1Input.Size = new System.Drawing.Size(404, 20);
-            this.LocationAdd1Input.TabIndex = 7;
+            this.LocationAdd1Input.TabIndex = 8;
             // 
             // LocationAddress1Label
             // 
@@ -337,7 +336,7 @@ namespace HospitalityDataUpdater
             this.LocationAddress1Label.Location = new System.Drawing.Point(5, 97);
             this.LocationAddress1Label.Name = "LocationAddress1Label";
             this.LocationAddress1Label.Size = new System.Drawing.Size(101, 13);
-            this.LocationAddress1Label.TabIndex = 4;
+            this.LocationAddress1Label.TabIndex = 1;
             this.LocationAddress1Label.Text = "Location Address 1:";
             // 
             // LocationPhoneNumberLabel
@@ -346,7 +345,7 @@ namespace HospitalityDataUpdater
             this.LocationPhoneNumberLabel.Location = new System.Drawing.Point(6, 71);
             this.LocationPhoneNumberLabel.Name = "LocationPhoneNumberLabel";
             this.LocationPhoneNumberLabel.Size = new System.Drawing.Size(125, 13);
-            this.LocationPhoneNumberLabel.TabIndex = 19;
+            this.LocationPhoneNumberLabel.TabIndex = 1;
             this.LocationPhoneNumberLabel.Text = "Location Phone Number:";
             // 
             // LocationAddress2Label
@@ -355,7 +354,7 @@ namespace HospitalityDataUpdater
             this.LocationAddress2Label.Location = new System.Drawing.Point(5, 123);
             this.LocationAddress2Label.Name = "LocationAddress2Label";
             this.LocationAddress2Label.Size = new System.Drawing.Size(101, 13);
-            this.LocationAddress2Label.TabIndex = 5;
+            this.LocationAddress2Label.TabIndex = 1;
             this.LocationAddress2Label.Text = "Location Address 2:";
             // 
             // LocationPhoneNumberInput
@@ -363,14 +362,14 @@ namespace HospitalityDataUpdater
             this.LocationPhoneNumberInput.Location = new System.Drawing.Point(137, 68);
             this.LocationPhoneNumberInput.Name = "LocationPhoneNumberInput";
             this.LocationPhoneNumberInput.Size = new System.Drawing.Size(379, 20);
-            this.LocationPhoneNumberInput.TabIndex = 20;
+            this.LocationPhoneNumberInput.TabIndex = 7;
             // 
             // LocationPostcodeInput
             // 
             this.LocationPostcodeInput.Location = new System.Drawing.Point(306, 146);
             this.LocationPostcodeInput.Name = "LocationPostcodeInput";
             this.LocationPostcodeInput.Size = new System.Drawing.Size(209, 20);
-            this.LocationPostcodeInput.TabIndex = 18;
+            this.LocationPostcodeInput.TabIndex = 11;
             // 
             // SocialNameLabel
             // 
@@ -378,7 +377,7 @@ namespace HospitalityDataUpdater
             this.SocialNameLabel.Location = new System.Drawing.Point(269, 175);
             this.SocialNameLabel.Name = "SocialNameLabel";
             this.SocialNameLabel.Size = new System.Drawing.Size(70, 13);
-            this.SocialNameLabel.TabIndex = 21;
+            this.SocialNameLabel.TabIndex = 1;
             this.SocialNameLabel.Text = "Social Name:";
             // 
             // LocationAdd2Input
@@ -386,14 +385,14 @@ namespace HospitalityDataUpdater
             this.LocationAdd2Input.Location = new System.Drawing.Point(112, 120);
             this.LocationAdd2Input.Name = "LocationAdd2Input";
             this.LocationAdd2Input.Size = new System.Drawing.Size(404, 20);
-            this.LocationAdd2Input.TabIndex = 8;
+            this.LocationAdd2Input.TabIndex = 9;
             // 
             // LocationWebsiteInput
             // 
             this.LocationWebsiteInput.Location = new System.Drawing.Point(105, 43);
             this.LocationWebsiteInput.Name = "LocationWebsiteInput";
             this.LocationWebsiteInput.Size = new System.Drawing.Size(411, 20);
-            this.LocationWebsiteInput.TabIndex = 16;
+            this.LocationWebsiteInput.TabIndex = 6;
             // 
             // LocationCityLabel
             // 
@@ -401,7 +400,7 @@ namespace HospitalityDataUpdater
             this.LocationCityLabel.Location = new System.Drawing.Point(5, 149);
             this.LocationCityLabel.Name = "LocationCityLabel";
             this.LocationCityLabel.Size = new System.Drawing.Size(71, 13);
-            this.LocationCityLabel.TabIndex = 9;
+            this.LocationCityLabel.TabIndex = 1;
             this.LocationCityLabel.Text = "Location City:";
             // 
             // LocationWebsiteLabel
@@ -411,7 +410,7 @@ namespace HospitalityDataUpdater
             this.LocationWebsiteLabel.Location = new System.Drawing.Point(6, 46);
             this.LocationWebsiteLabel.Name = "LocationWebsiteLabel";
             this.LocationWebsiteLabel.Size = new System.Drawing.Size(93, 13);
-            this.LocationWebsiteLabel.TabIndex = 15;
+            this.LocationWebsiteLabel.TabIndex = 1;
             this.LocationWebsiteLabel.Text = "Location Website:";
             // 
             // LocationCityInput
@@ -427,7 +426,7 @@ namespace HospitalityDataUpdater
             this.LocationPostcodeLabel.Location = new System.Drawing.Point(201, 149);
             this.LocationPostcodeLabel.Name = "LocationPostcodeLabel";
             this.LocationPostcodeLabel.Size = new System.Drawing.Size(99, 13);
-            this.LocationPostcodeLabel.TabIndex = 11;
+            this.LocationPostcodeLabel.TabIndex = 1;
             this.LocationPostcodeLabel.Text = "Location Postcode:";
             // 
             // AddSocialsButton
@@ -435,7 +434,7 @@ namespace HospitalityDataUpdater
             this.AddSocialsButton.Location = new System.Drawing.Point(468, 172);
             this.AddSocialsButton.Name = "AddSocialsButton";
             this.AddSocialsButton.Size = new System.Drawing.Size(47, 42);
-            this.AddSocialsButton.TabIndex = 13;
+            this.AddSocialsButton.TabIndex = 15;
             this.AddSocialsButton.Text = "Add Social";
             this.AddSocialsButton.UseVisualStyleBackColor = true;
             this.AddSocialsButton.Click += new System.EventHandler(this.AddSocialsButton_Click);
@@ -445,7 +444,7 @@ namespace HospitalityDataUpdater
             this.LocationNameInput.Location = new System.Drawing.Point(94, 17);
             this.LocationNameInput.Name = "LocationNameInput";
             this.LocationNameInput.Size = new System.Drawing.Size(423, 20);
-            this.LocationNameInput.TabIndex = 6;
+            this.LocationNameInput.TabIndex = 5;
             // 
             // LocationNameLabel
             // 
@@ -453,7 +452,7 @@ namespace HospitalityDataUpdater
             this.LocationNameLabel.Location = new System.Drawing.Point(6, 20);
             this.LocationNameLabel.Name = "LocationNameLabel";
             this.LocationNameLabel.Size = new System.Drawing.Size(82, 13);
-            this.LocationNameLabel.TabIndex = 3;
+            this.LocationNameLabel.TabIndex = 1;
             this.LocationNameLabel.Text = "Location Name:";
             // 
             // CreateLocationButton
@@ -461,7 +460,7 @@ namespace HospitalityDataUpdater
             this.CreateLocationButton.Location = new System.Drawing.Point(440, 225);
             this.CreateLocationButton.Name = "CreateLocationButton";
             this.CreateLocationButton.Size = new System.Drawing.Size(75, 23);
-            this.CreateLocationButton.TabIndex = 2;
+            this.CreateLocationButton.TabIndex = 16;
             this.CreateLocationButton.Text = "Create";
             this.CreateLocationButton.UseVisualStyleBackColor = true;
             this.CreateLocationButton.Click += new System.EventHandler(this.CreateLocationButton_Click);
@@ -496,7 +495,8 @@ namespace HospitalityDataUpdater
             this.FileNameTextbox.Location = new System.Drawing.Point(4, 101);
             this.FileNameTextbox.Name = "FileNameTextbox";
             this.FileNameTextbox.Size = new System.Drawing.Size(127, 20);
-            this.FileNameTextbox.TabIndex = 17;
+            this.FileNameTextbox.TabIndex = 0;
+            this.FileNameTextbox.TabStop = false;
             this.FileNameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathTextbox_KeyDown);
             // 
             // FileNameLabel
@@ -513,7 +513,8 @@ namespace HospitalityDataUpdater
             this.ImportButton.Location = new System.Drawing.Point(6, 56);
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(53, 23);
-            this.ImportButton.TabIndex = 15;
+            this.ImportButton.TabIndex = 1;
+            this.ImportButton.TabStop = false;
             this.ImportButton.Text = "Import";
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
@@ -526,6 +527,7 @@ namespace HospitalityDataUpdater
             this.ToRowDropDown.Name = "ToRowDropDown";
             this.ToRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.ToRowDropDown.TabIndex = 14;
+            this.ToRowDropDown.TabStop = false;
             // 
             // RowToRow
             // 
@@ -549,13 +551,15 @@ namespace HospitalityDataUpdater
             this.FromRowDropDown.Name = "FromRowDropDown";
             this.FromRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.FromRowDropDown.TabIndex = 1;
+            this.FromRowDropDown.TabStop = false;
             // 
             // SaveButton
             // 
             this.SaveButton.Location = new System.Drawing.Point(68, 56);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(53, 23);
-            this.SaveButton.TabIndex = 0;
+            this.SaveButton.TabIndex = 2;
+            this.SaveButton.TabStop = false;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
@@ -605,6 +609,7 @@ namespace HospitalityDataUpdater
             this.FileSaveNameInput.Name = "FileSaveNameInput";
             this.FileSaveNameInput.Size = new System.Drawing.Size(127, 20);
             this.FileSaveNameInput.TabIndex = 18;
+            this.FileSaveNameInput.TabStop = false;
             // 
             // SaveRowButton
             // 
@@ -612,6 +617,7 @@ namespace HospitalityDataUpdater
             this.SaveRowButton.Name = "SaveRowButton";
             this.SaveRowButton.Size = new System.Drawing.Size(119, 23);
             this.SaveRowButton.TabIndex = 18;
+            this.SaveRowButton.TabStop = false;
             this.SaveRowButton.Text = "Save Row";
             this.SaveRowButton.UseVisualStyleBackColor = true;
             this.SaveRowButton.Click += new System.EventHandler(this.SaveRowButton_Click);
@@ -630,7 +636,8 @@ namespace HospitalityDataUpdater
             this.SelectButton.Location = new System.Drawing.Point(6, 56);
             this.SelectButton.Name = "SelectButton";
             this.SelectButton.Size = new System.Drawing.Size(71, 23);
-            this.SelectButton.TabIndex = 21;
+            this.SelectButton.TabIndex = 3;
+            this.SelectButton.TabStop = false;
             this.SelectButton.Text = "Select";
             this.SelectButton.UseVisualStyleBackColor = true;
             this.SelectButton.Click += new System.EventHandler(this.SelectButton_Click);
@@ -642,6 +649,7 @@ namespace HospitalityDataUpdater
             this.RowChooserDropDown.Name = "RowChooserDropDown";
             this.RowChooserDropDown.Size = new System.Drawing.Size(71, 21);
             this.RowChooserDropDown.TabIndex = 20;
+            this.RowChooserDropDown.TabStop = false;
             // 
             // RowChooseLabel
             // 
@@ -667,6 +675,7 @@ namespace HospitalityDataUpdater
             this.PreviousButton.Name = "PreviousButton";
             this.PreviousButton.Size = new System.Drawing.Size(60, 23);
             this.PreviousButton.TabIndex = 17;
+            this.PreviousButton.TabStop = false;
             this.PreviousButton.Text = "Previous";
             this.PreviousButton.UseVisualStyleBackColor = true;
             this.PreviousButton.Click += new System.EventHandler(this.PreviousButton_Click);
@@ -677,11 +686,12 @@ namespace HospitalityDataUpdater
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(53, 23);
             this.NextButton.TabIndex = 16;
+            this.NextButton.TabStop = false;
             this.NextButton.Text = "Next";
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
-            // MainMenu
+            // MainMenuInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -689,8 +699,8 @@ namespace HospitalityDataUpdater
             this.Controls.Add(this.ExcelControls);
             this.Controls.Add(this.InputPanel);
             this.Controls.Add(this.LocationsGroupBox);
-            this.Name = "MainMenu";
-            this.Text = "z";
+            this.Name = "MainMenuInterface";
+            this.Text = "Main Menu";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.InputPanel.ResumeLayout(false);
             this.InputPanel.PerformLayout();

@@ -17,11 +17,13 @@ using OfficeOpenXml;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using PhoneNumbers;
-
+using HospitalityDataUpdater.Windows;
+using System.Windows.Controls;
+using Button = System.Windows.Forms.Button;
 
 namespace HospitalityDataUpdater
 {
-    public partial class MainMenu : Form
+    public partial class MainMenuInterface : Form
     {
         //data
         DataTable importedData;
@@ -35,10 +37,12 @@ namespace HospitalityDataUpdater
         LocationController locController;
         SocialController currentSocController;
         BrandController brandController;
+        //used to check if we have any type of popup open
+        bool popup = false;
 
         string filePath = @"C:\ExcelData\";
 
-        public MainMenu()
+        public MainMenuInterface()
         {
             InitializeComponent();
             FileNameTextbox.Text = "data-01";
@@ -48,6 +52,7 @@ namespace HospitalityDataUpdater
         {
             //setup
             #region setup
+
             //here we get the containers for the UI
             locationsContainer = this.Controls.Find("LocationFlowLayout", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
             socialsContainer = this.Controls.Find("SocialsLayoutContainer", true).FirstOrDefault() as FlowLayoutPanel; // we get the socials container
@@ -89,14 +94,101 @@ namespace HospitalityDataUpdater
 
 
 
-        
 
-        
+
+
 
         #region UI Methods
 
+        private void ViewSocialsButton_Click(object sender, EventArgs e)
+        {
+            //we get the location, so we can display hte socials for it
+            Button button = (Button)sender;
+            Location tag = button.Tag as Location;
 
-        
+            //we return if we are teh same thing
+            if (currentSocController == tag.getSocials())
+            {
+                //Console.WriteLine("returning");
+                return;
+            }
+
+            //if this isnt null ,means theres prob stuff there, so lets see and delete it if there is
+            if (currentSocController != null)
+            {
+
+                if (currentSocController.getSocials().Count > 0) // only if we have more
+                {
+                    currentSocController.Clear();
+                }
+
+            }
+
+            //Console.WriteLine("spawning in new ones");
+            //we now spawn in the next social data
+            currentSocController = tag.getSocials();//get the socials
+            foreach (Social socialData in currentSocController.getSocials())
+            {
+                //Console.WriteLine("spawning");
+                socialData.CreateUI();
+            }
+
+
+        }
+
+        public void EmptyLocInputs()
+        {
+            LocationNameInput.Text = "";
+            LocationWebsiteInput.Text = "";
+            LocationPhoneNumberInput.Text = "";
+            LocationAdd1Input.Text = "";
+            LocationAdd2Input.Text = "";
+            LocationCityInput.Text = "";
+            LocationPostcodeInput.Text = "";
+            SocialNameInput.Text = "";
+            SocialTagInput.Text = "";
+            LocationBookingProviderInput.Text = "";
+        }
+
+        public void UserControl_Disposed(object sender, EventArgs e)
+        {
+            popup = false;
+        }
+
+        private void EditDataButton_Click(object sender, EventArgs e) // simple function to launch edit panel and allow the user to edit this location
+        {
+            //checks if we already have a popup open
+            if (popup)
+            {
+                MessageBox.Show("INFO: Finish editing the current location first");
+                return; 
+            }
+
+            //get the location, if we dont have one we return and let the person know
+            Button button = (Button)sender;
+            if (button.Tag == null)
+            {
+                MessageBox.Show("WARNING: did not send a location class to edit, so returned");
+                return;
+            }
+
+            Location location = button.Tag as Location;
+
+
+            //we create the edit panel and show it
+            EditControl panel = new EditControl(location);
+            panel.Location = new System.Drawing.Point(0, -7);
+            LocationsGroupBox.Controls.Add(panel);
+            panel.BringToFront();
+            //an event handler to tell us if hte user gets disposed
+            panel.Disposed += UserControl_Disposed;
+
+            popup = true;
+
+
+
+        }
+
         #endregion
 
         #region excel
@@ -419,7 +511,7 @@ namespace HospitalityDataUpdater
 
 
                             // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
+                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, ViewSocialsButton_Click, EditDataButton_Click); // Create a new Location instance for each array element
 
                             locController.AddEntry(loc);
 
@@ -551,20 +643,6 @@ namespace HospitalityDataUpdater
 
         }
 
-        public void EmptyLocInputs()
-        {
-            LocationNameInput.Text = "";
-            LocationWebsiteInput.Text = "";
-            LocationPhoneNumberInput.Text = "";
-            LocationAdd1Input.Text = "";
-            LocationAdd2Input.Text = "";
-            LocationCityInput.Text = "";
-            LocationPostcodeInput.Text = "";
-            SocialNameInput.Text = "";
-            SocialTagInput.Text = "";
-            LocationBookingProviderInput.Text = "";
-        }
-
         private string[] FormatPhoneNumber(string phoneNumber)
         {
             PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.GetInstance();
@@ -661,42 +739,7 @@ namespace HospitalityDataUpdater
             //set the data for the next row to view
             SetData(importedData.Rows[currentRowNum]);
         }
-
-        private void viewSocialsButton_Click(object sender, EventArgs e)
-        {
-            //we get the location, so we can display hte socials for it
-            Button button = (Button)sender;
-            Location tag = button.Tag as Location;
-
-            //we return if we are teh same thing
-            if (currentSocController == tag.getSocials())
-            {
-                //Console.WriteLine("returning");
-                return;
-            }
-
-            //if this isnt null ,means theres prob stuff there, so lets see and delete it if there is
-            if (currentSocController != null)
-            {
-               
-                if (currentSocController.getSocials().Count > 0) // only if we have more
-                {
-                    currentSocController.Clear();
-                }
-
-            }
-
-            //Console.WriteLine("spawning in new ones");
-            //we now spawn in the next social data
-            currentSocController = tag.getSocials();//get the socials
-            foreach (Social socialData in currentSocController.getSocials())
-            {
-                //Console.WriteLine("spawning");
-                socialData.CreateUI();
-            }
-
-
-        }
+     
         private void SaveRowButton_Click(object sender, EventArgs e)
         {
             saveEntries();
@@ -852,7 +895,7 @@ namespace HospitalityDataUpdater
             }
 
             // now we import the locations
-            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocController, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
+            Location loc = new Location(locController.getLocations().Count, locName, locWeb, locPho, locAdd1, locAdd2, locCity, locPost, bookingProvider, currentSocController, locController, locationsContainer, ViewSocialsButton_Click, EditDataButton_Click); // Create a new Location instance for each array element
 
             locController.AddEntry(loc);
 

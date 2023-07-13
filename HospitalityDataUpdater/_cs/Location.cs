@@ -27,15 +27,16 @@ namespace HospitalityDataUpdater._cs
 
         SocialController socCont;
         //UI vars
-        GroupBox groupBox = new GroupBox();
-        Label locationName = new Label();
-        Label locationAddress = new Label();
-        Label locationWebsite = new Label();
-        Button deleteButton = new Button();
-        Button viewSocialsButton = new Button();
+        GroupBox groupBox;
+        Label locationName;
+        Label locationAddress;
+        Label locationWebsite;
+        Button deleteButton;
+        Button viewSocialsButton;
+        Button editDataButton;
         FlowLayoutPanel container;
 
-        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer, EventHandler viewSocials)
+        public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer, EventHandler viewSocials, EventHandler editLocation)
         {
             index = i;
             setName(name);
@@ -52,7 +53,7 @@ namespace HospitalityDataUpdater._cs
                 Console.WriteLine("NULL HERE");
 
             setContainer(flowcontainer);
-            CreateUI(viewSocials);
+            CreateUI(viewSocials, editLocation);
         }
         //get methods
         #region getMethods
@@ -63,6 +64,10 @@ namespace HospitalityDataUpdater._cs
         public LocationController getController()
         {
             return controller;
+        }
+        public int getIndex()
+        {
+            return index;
         }
         public string getName()
         {
@@ -196,7 +201,7 @@ namespace HospitalityDataUpdater._cs
                 controller.RemoveEntry(this);
             }
         }
-        public void CreateUI(EventHandler viewSocialsButton_Click) //creates the UI for this
+        public void CreateUI(EventHandler viewSocialsButton_Click, EventHandler editButton_Click) //creates the UI for this
         {
             groupBox = new GroupBox();
             locationName = new Label();
@@ -204,6 +209,7 @@ namespace HospitalityDataUpdater._cs
             locationWebsite = new Label();
             deleteButton = new Button();
             viewSocialsButton = new Button();
+            editDataButton = new Button();
 
             // 
             // Location1Group
@@ -213,6 +219,7 @@ namespace HospitalityDataUpdater._cs
             this.groupBox.Controls.Add(locationName);
             this.groupBox.Controls.Add(deleteButton);
             this.groupBox.Controls.Add(viewSocialsButton);
+            this.groupBox.Controls.Add(editDataButton);
             this.groupBox.Location = new System.Drawing.Point(3, 3);
             this.groupBox.Name = "Location"+ index + "GroupBox";
             this.groupBox.Size = new System.Drawing.Size(506, 96);
@@ -279,10 +286,25 @@ namespace HospitalityDataUpdater._cs
 
             // Subscribe to the button's Click event using the event handler
             this.viewSocialsButton.Click += new System.EventHandler(viewSocialsButton_Click);
+            // 
+            // EditButton
+            // 
+            this.editDataButton.Location = new System.Drawing.Point(350, 11);
+            this.editDataButton.Name = "EditDataButton" + index;
+            this.editDataButton.Size = new System.Drawing.Size(75, 23);
+            this.editDataButton.TabIndex = 27;
+            this.editDataButton.Text = "Edit Data";
+            this.editDataButton.Tag = this;
+            this.editDataButton.UseVisualStyleBackColor = true;
+
+            // Subscribe to the button's Click event using the event handler
+            this.editDataButton.Click += new System.EventHandler(editButton_Click);
 
             //
             // Assigns the new ui to the container. displaying it
             //
+
+
 
             container.Controls.Add(groupBox);
             //Console.WriteLine("Printed stufff");
