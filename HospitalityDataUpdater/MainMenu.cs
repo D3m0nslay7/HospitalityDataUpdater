@@ -88,285 +88,15 @@ namespace HospitalityDataUpdater
         }
 
 
-        private string[] FormatPhoneNumber(string phoneNumber)
-        {
-            PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.GetInstance();
-            string defaultRegion = "GB";
-            try
-            {
-                PhoneNumber number = phoneNumberUtil.Parse(phoneNumber, defaultRegion);
 
-                // Extract calling code
-                int callingCode = number.CountryCode;
+        
 
-                // Extract dialing code
-                string dialingCode = phoneNumberUtil.GetNationalSignificantNumber(number);
-
-                //Console.WriteLine("Calling Code: +" + callingCode);
-                //Console.WriteLine("Dialing Code: " + dialingCode);
-                int areaCodeNumber = phoneNumberUtil.GetLengthOfGeographicalAreaCode(number);
-
-
-                string substring1 = dialingCode.Substring(0, areaCodeNumber);
-                string substring2 = dialingCode.Substring(areaCodeNumber);
-                string[] numberArray = new string[] { substring1, substring2 };
-                //Console.WriteLine(areaCodeNumber);
-                //Console.WriteLine(substring1 + "\\n" + substring2);
-                return numberArray;
-            }
-            catch (NumberParseException ex)
-            {
-                Console.WriteLine("Invalid phone number: " + ex.Message);
-                return null;
-            }
-
-        }
-
-        public void SetData(DataRow row)//set the data, when we get the data
-        {
-            //we import the data now
-
-            //get new controllers, we dont want any old data
-            //here we get the controlelrs
-            locController = new LocationController();
-            currentSocController = new SocialController();
-            brandController = new BrandController();
-
-            //company name
-            CompanyNameLabel.Text = "Company Name: " + row["Company"].ToString();
-            //website
-            WebsiteInput.Text = row["Website"].ToString();
-            //new stores
-            if (row["New_Num_Stores"].ToString() == string.Empty)
-            {
-                NumNewStoresInput.Value = Convert.ToInt32(row["Number of Sites"].ToString()); ;
-            }
-            else
-            {
-                NumNewStoresInput.Value = Convert.ToInt32(row["New_Num_Stores"].ToString());
-            }
-            //developing stores
-            if (row["Num_Developing_Stores"].ToString() == string.Empty)
-            {
-                NumDevStoresInput.Value = 0;
-            }
-            else
-            {
-                NumDevStoresInput.Value = Convert.ToInt32(row["Num_Developing_Stores"].ToString());
-            }
-
-            if(row["Inactive"].ToString() == string.Empty)
-            {
-                InactiveCheckbox.Checked = false;
-            }
-            else
-            {
-                InactiveCheckbox.Checked = Convert.ToBoolean(row["Inactive"]);
-            }
-
-            
-            if (row["Brands"] != null)
-            {
-                
-                //brands
-                string brandsJson = row["Brands"].ToString();
-                string[] brands = JsonConvert.DeserializeObject<string[]>(brandsJson);
-                if (brands != null)
-                {
-                    for (int i = 0; i < brands.Length; i++)
-                    {
-                        Brand brand = new Brand(i, brands[i], brandController, brandsContainer);
-
-                        brandController.AddEntry(brand);
-                    }
-                }
-            }
-            
-
-            //Console.WriteLine(row["New_Num_Stores"].ToString());
-
-           
-
-            //locations in a dictionary
-            if (!row.IsNull("Locations"))
-            {
-                try
-                {
-                    var locations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(row["Locations"].ToString());
-                    //loop through each location, and create one and put it in locationscontainer
-
-                    if (locations != null)
-                    {
-                        int z = 0;
-                        foreach (var data in locations)
-                        {
-
-                            string key = data.Key; // Get the outer dictionary key
-                            Dictionary<string, object> innerDict = data.Value; // Get the inner dictionary data
-                                                                               //first we setup the socials
-                            SocialController socCont = new SocialController();
-
-                            // Access the "location_socials" inner object
-                            if (innerDict["location_socials"] != null)
-                            {
-                                JObject locationSocialsObject = (JObject)innerDict["location_socials"];
-
-                                Dictionary<string, object> locationSocials = locationSocialsObject.ToObject<Dictionary<string, object>>();
-
-
-                                int p = 0;
-                                foreach (var socialData in locationSocials)
-                                {
-                                    string platform = socialData.Key; // e.g., "instagram", "twitter", "Facebook"
-                                    object obj = socialData.Value; // the value associated with the platform
-
-                                    if (obj != null)
-                                    {
-                                        string tag = obj.ToString();
-                                        Social social = new Social(p, platform, tag, socCont, socialsContainer);
-
-                                        socCont.AddEntry(social);
-                                        p++;
-                                    }
-
-
-                                }
-                            }
-
-                            string locName = null;
-                            string locadd1 = null;
-                            string locadd2 = null;
-                            string locCity = null;
-                            string locPost = null;
-                            string locPho = null;
-                            string locWeb = null;
-                            string locBooking = null;
-                            if (innerDict["location_name"] != null)
-                            {
-                                locName = innerDict["location_name"].ToString();
-                            }
-                            if (innerDict["location_address_1"] != null)
-                            {
-                                locadd1 = innerDict["location_address_1"].ToString();
-                            }
-                            if (innerDict["location_address_2"] != null)
-                            {
-                                locadd2 = innerDict["location_address_2"].ToString();
-                            }
-                            if (innerDict["location_city"] != null)
-                            {
-                                locCity = innerDict["location_city"].ToString();
-                            }
-                            if (innerDict["location_postcode"] != null)
-                            {
-                                locPost = innerDict["location_postcode"].ToString();
-                            }
-                            if (innerDict["location_phone"] != null)
-                            {
-                                //Console.WriteLine(innerDict["location_phone"]);
-
-                                JArray locationPhoneArray = (JArray)innerDict["location_phone"];
-                                locPho = string.Join(" ", locationPhoneArray.Select(x => x.ToString()));
-                                //Console.WriteLine(locPho);
-
-                            }
-                            if (innerDict["location_website"] != null)
-                            {
-                                locWeb = innerDict["location_website"].ToString();
-                            }
-                            
-                            //we want to check if this key exists, because it was added in later
-                            if (innerDict.ContainsKey("booking_provider"))
-                            {
-                                if (innerDict["booking_provider"] != null)
-                                {
-                                    locBooking = innerDict["booking_provider"].ToString();
-                                }
-                            }
-                            else
-                            {
-                                innerDict.Add("booking_provider", locBooking);
-                            }
-                            
-
-
-                            // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
-
-                            locController.AddEntry(loc);
-
-                            z++;
-                        }
-                    }
-                }
-                catch (Exception test)
-                {
-                    Console.WriteLine(test.Message);
-                    MessageBox.Show("Bit of an error with locations buddy");
-                    
-                }
-               
-            }
-        }
+        
 
         #region UI Methods
 
-        private void ImportButton_Click(object sender, EventArgs e)
-        {
-            //get the desired rows
-            int from = Convert.ToInt32(FromRowDropDown.SelectedItem);
-            int to = Convert.ToInt32(ToRowDropDown.SelectedItem);
 
-            //bit of validation here
-            if (from > to)
-            {
-                MessageBox.Show("The row on the left is bigger then the row on the right.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            //imports
-            importedData = Import(from, to);
-            if(importedData != null)
-            {
-                RowChooserDropDown.Items.Clear();
-                for (int i = 0; i < importedData.Rows.Count; i++)
-                {
-                    RowChooserDropDown.Items.Add(i);
-                }
-                currentRowNum = 0;
-                RowNumberLabel.Text = "Row Number: " + currentRowNum;
-                maxRow = importedData.Rows.Count;
-                SetData(importedData.Rows[currentRowNum]);
-                MessageBox.Show("Successfully inserted data");
-            }
-            
-        }
-
-
-
-        private void FilePathTextbox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // Enter key was pressed
-
-                string enteredValue = filePath+FileNameTextbox.Text + ".xlsx";
-                int rows = GetExcelRowCount(enteredValue);
-                if (rows > -1)
-                {
-                    FromRowDropDown.Items.Clear();
-                    ToRowDropDown.Items.Clear();
-                    for (int i = 0; i < rows; i++)
-                    {
-                        FromRowDropDown.Items.Add(i);
-                        ToRowDropDown.Items.Add(i);
-
-                    }
-
-                    MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
-                }   
-            }
-        }
+        
         #endregion
 
         #region excel
@@ -510,6 +240,194 @@ namespace HospitalityDataUpdater
         }
         #endregion
 
+        #region Methods
+
+        public void SetData(DataRow row)//set the data, when we get the data
+        {
+            //we import the data now
+
+            //get new controllers, we dont want any old data
+            //here we get the controlelrs
+            locController = new LocationController();
+            currentSocController = new SocialController();
+            brandController = new BrandController();
+
+            //company name
+            CompanyNameLabel.Text = "Company Name: " + row["Company"].ToString();
+            //website
+            WebsiteInput.Text = row["Website"].ToString();
+            //new stores
+            if (row["New_Num_Stores"].ToString() == string.Empty)
+            {
+                NumNewStoresInput.Value = Convert.ToInt32(row["Number of Sites"].ToString()); ;
+            }
+            else
+            {
+                NumNewStoresInput.Value = Convert.ToInt32(row["New_Num_Stores"].ToString());
+            }
+            //developing stores
+            if (row["Num_Developing_Stores"].ToString() == string.Empty)
+            {
+                NumDevStoresInput.Value = 0;
+            }
+            else
+            {
+                NumDevStoresInput.Value = Convert.ToInt32(row["Num_Developing_Stores"].ToString());
+            }
+
+            if (row["Inactive"].ToString() == string.Empty)
+            {
+                InactiveCheckbox.Checked = false;
+            }
+            else
+            {
+                InactiveCheckbox.Checked = Convert.ToBoolean(row["Inactive"]);
+            }
+
+
+            if (row["Brands"] != null)
+            {
+
+                //brands
+                string brandsJson = row["Brands"].ToString();
+                string[] brands = JsonConvert.DeserializeObject<string[]>(brandsJson);
+                if (brands != null)
+                {
+                    for (int i = 0; i < brands.Length; i++)
+                    {
+                        Brand brand = new Brand(i, brands[i], brandController, brandsContainer);
+
+                        brandController.AddEntry(brand);
+                    }
+                }
+            }
+
+
+            //Console.WriteLine(row["New_Num_Stores"].ToString());
+
+
+
+            //locations in a dictionary
+            if (!row.IsNull("Locations"))
+            {
+                try
+                {
+                    var locations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(row["Locations"].ToString());
+                    //loop through each location, and create one and put it in locationscontainer
+
+                    if (locations != null)
+                    {
+                        int z = 0;
+                        foreach (var data in locations)
+                        {
+
+                            string key = data.Key; // Get the outer dictionary key
+                            Dictionary<string, object> innerDict = data.Value; // Get the inner dictionary data
+                                                                               //first we setup the socials
+                            SocialController socCont = new SocialController();
+
+                            // Access the "location_socials" inner object
+                            if (innerDict["location_socials"] != null)
+                            {
+                                JObject locationSocialsObject = (JObject)innerDict["location_socials"];
+
+                                Dictionary<string, object> locationSocials = locationSocialsObject.ToObject<Dictionary<string, object>>();
+
+
+                                int p = 0;
+                                foreach (var socialData in locationSocials)
+                                {
+                                    string platform = socialData.Key; // e.g., "instagram", "twitter", "Facebook"
+                                    object obj = socialData.Value; // the value associated with the platform
+
+                                    if (obj != null)
+                                    {
+                                        string tag = obj.ToString();
+                                        Social social = new Social(p, platform, tag, socCont, socialsContainer);
+
+                                        socCont.AddEntry(social);
+                                        p++;
+                                    }
+
+
+                                }
+                            }
+
+                            string locName = null;
+                            string locadd1 = null;
+                            string locadd2 = null;
+                            string locCity = null;
+                            string locPost = null;
+                            string locPho = null;
+                            string locWeb = null;
+                            string locBooking = null;
+                            if (innerDict["location_name"] != null)
+                            {
+                                locName = innerDict["location_name"].ToString();
+                            }
+                            if (innerDict["location_address_1"] != null)
+                            {
+                                locadd1 = innerDict["location_address_1"].ToString();
+                            }
+                            if (innerDict["location_address_2"] != null)
+                            {
+                                locadd2 = innerDict["location_address_2"].ToString();
+                            }
+                            if (innerDict["location_city"] != null)
+                            {
+                                locCity = innerDict["location_city"].ToString();
+                            }
+                            if (innerDict["location_postcode"] != null)
+                            {
+                                locPost = innerDict["location_postcode"].ToString();
+                            }
+                            if (innerDict["location_phone"] != null)
+                            {
+                                //Console.WriteLine(innerDict["location_phone"]);
+
+                                JArray locationPhoneArray = (JArray)innerDict["location_phone"];
+                                locPho = string.Join(" ", locationPhoneArray.Select(x => x.ToString()));
+                                //Console.WriteLine(locPho);
+
+                            }
+                            if (innerDict["location_website"] != null)
+                            {
+                                locWeb = innerDict["location_website"].ToString();
+                            }
+
+                            //we want to check if this key exists, because it was added in later
+                            if (innerDict.ContainsKey("booking_provider"))
+                            {
+                                if (innerDict["booking_provider"] != null)
+                                {
+                                    locBooking = innerDict["booking_provider"].ToString();
+                                }
+                            }
+                            else
+                            {
+                                innerDict.Add("booking_provider", locBooking);
+                            }
+
+
+
+                            // now we import the locations
+                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locController, locationsContainer, viewSocialsButton_Click); // Create a new Location instance for each array element
+
+                            locController.AddEntry(loc);
+
+                            z++;
+                        }
+                    }
+                }
+                catch (Exception test)
+                {
+                    Console.WriteLine(test.Message);
+                    MessageBox.Show("Bit of an error with locations buddy");
+
+                }
+
+            }
+        }
 
         public void saveEntries()
         {
@@ -639,6 +557,42 @@ namespace HospitalityDataUpdater
             LocationBookingProviderInput.Text = "";
         }
 
+        private string[] FormatPhoneNumber(string phoneNumber)
+        {
+            PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.GetInstance();
+            string defaultRegion = "GB";
+            try
+            {
+                PhoneNumber number = phoneNumberUtil.Parse(phoneNumber, defaultRegion);
+
+                // Extract calling code
+                int callingCode = number.CountryCode;
+
+                // Extract dialing code
+                string dialingCode = phoneNumberUtil.GetNationalSignificantNumber(number);
+
+                //Console.WriteLine("Calling Code: +" + callingCode);
+                //Console.WriteLine("Dialing Code: " + dialingCode);
+                int areaCodeNumber = phoneNumberUtil.GetLengthOfGeographicalAreaCode(number);
+
+
+                string substring1 = dialingCode.Substring(0, areaCodeNumber);
+                string substring2 = dialingCode.Substring(areaCodeNumber);
+                string[] numberArray = new string[] { substring1, substring2 };
+                //Console.WriteLine(areaCodeNumber);
+                //Console.WriteLine(substring1 + "\\n" + substring2);
+                return numberArray;
+            }
+            catch (NumberParseException ex)
+            {
+                Console.WriteLine("Invalid phone number: " + ex.Message);
+                return null;
+            }
+
+        }
+
+        #endregion
+
         //stuff to controll the rows and stuff
         #region rowsController
 
@@ -742,7 +696,39 @@ namespace HospitalityDataUpdater
 
         #endregion
 
+        //inputs into the interface.
         #region Inputs
+
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+            //get the desired rows
+            int from = Convert.ToInt32(FromRowDropDown.SelectedItem);
+            int to = Convert.ToInt32(ToRowDropDown.SelectedItem);
+
+            //bit of validation here
+            if (from > to)
+            {
+                MessageBox.Show("The row on the left is bigger then the row on the right.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //imports
+            importedData = Import(from, to);
+            if (importedData != null)
+            {
+                RowChooserDropDown.Items.Clear();
+                for (int i = 0; i < importedData.Rows.Count; i++)
+                {
+                    RowChooserDropDown.Items.Add(i);
+                }
+                currentRowNum = 0;
+                RowNumberLabel.Text = "Row Number: " + currentRowNum;
+                maxRow = importedData.Rows.Count;
+                SetData(importedData.Rows[currentRowNum]);
+                MessageBox.Show("Successfully inserted data");
+            }
+
+        }
 
         private void BrandsInput_KeyDown(object sender, KeyEventArgs e)
         {
@@ -768,7 +754,6 @@ namespace HospitalityDataUpdater
                 BrandsInput.Text = "";
             }
         }
-
 
         private void AddSocialsButton_Click(object sender, EventArgs e)
         {
@@ -873,6 +858,29 @@ namespace HospitalityDataUpdater
             currentSocController = null;
         }
 
+        private void FilePathTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Enter key was pressed
+
+                string enteredValue = filePath + FileNameTextbox.Text + ".xlsx";
+                int rows = GetExcelRowCount(enteredValue);
+                if (rows > -1)
+                {
+                    FromRowDropDown.Items.Clear();
+                    ToRowDropDown.Items.Clear();
+                    for (int i = 0; i < rows; i++)
+                    {
+                        FromRowDropDown.Items.Add(i);
+                        ToRowDropDown.Items.Add(i);
+
+                    }
+
+                    MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
+                }
+            }
+        }
 
         #endregion
     }
