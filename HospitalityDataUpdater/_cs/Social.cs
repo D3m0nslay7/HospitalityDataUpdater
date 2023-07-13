@@ -81,7 +81,7 @@ namespace HospitalityDataUpdater._cs
         {
             return Name;
         }
-        public string getAccount() // gets the account information
+        public string getTag() // gets the account information
         {
             return Account;
         }
@@ -160,7 +160,7 @@ namespace HospitalityDataUpdater._cs
             this.socialTag.Name = "TagSocial"+index;
             this.socialTag.Size = new System.Drawing.Size(35, 13);
             this.socialTag.TabIndex = 28;
-            this.socialTag.Text = "Social Tag: " + getAccount();
+            this.socialTag.Text = "Social Tag: " + getTag();
 
 
             container.Controls.Add(groupBox);

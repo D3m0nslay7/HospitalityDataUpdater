@@ -32,6 +32,14 @@ namespace HospitalityDataUpdater
         {
             this.LocationFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.InputPanel = new System.Windows.Forms.GroupBox();
+            this.CompanySocialsGroupBox = new System.Windows.Forms.GroupBox();
+            this.SocialsHolderPanel = new System.Windows.Forms.Panel();
+            this.CompanySocialsFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.CompanySocialsTagInput = new System.Windows.Forms.TextBox();
+            this.AddCompanySocialButton = new System.Windows.Forms.Button();
+            this.CompanySocialsNameLabel = new System.Windows.Forms.Label();
+            this.CompanySocialsNameInput = new System.Windows.Forms.TextBox();
+            this.CompanySocialsTagLabel = new System.Windows.Forms.Label();
             this.InactiveCheckbox = new System.Windows.Forms.CheckBox();
             this.NumDevStoresInput = new System.Windows.Forms.NumericUpDown();
             this.NumNewStoresInput = new System.Windows.Forms.NumericUpDown();
@@ -91,6 +99,8 @@ namespace HospitalityDataUpdater
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
             this.InputPanel.SuspendLayout();
+            this.CompanySocialsGroupBox.SuspendLayout();
+            this.SocialsHolderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumDevStoresInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNewStoresInput)).BeginInit();
             this.BrandsGroupBox.SuspendLayout();
@@ -113,6 +123,7 @@ namespace HospitalityDataUpdater
             // 
             // InputPanel
             // 
+            this.InputPanel.Controls.Add(this.CompanySocialsGroupBox);
             this.InputPanel.Controls.Add(this.InactiveCheckbox);
             this.InputPanel.Controls.Add(this.NumDevStoresInput);
             this.InputPanel.Controls.Add(this.NumNewStoresInput);
@@ -127,6 +138,80 @@ namespace HospitalityDataUpdater
             this.InputPanel.TabIndex = 0;
             this.InputPanel.TabStop = false;
             this.InputPanel.Text = "Input";
+            // 
+            // CompanySocialsGroupBox
+            // 
+            this.CompanySocialsGroupBox.Controls.Add(this.SocialsHolderPanel);
+            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsTagInput);
+            this.CompanySocialsGroupBox.Controls.Add(this.AddCompanySocialButton);
+            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsNameLabel);
+            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsNameInput);
+            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsTagLabel);
+            this.CompanySocialsGroupBox.Location = new System.Drawing.Point(4, 226);
+            this.CompanySocialsGroupBox.Name = "CompanySocialsGroupBox";
+            this.CompanySocialsGroupBox.Size = new System.Drawing.Size(366, 281);
+            this.CompanySocialsGroupBox.TabIndex = 18;
+            this.CompanySocialsGroupBox.TabStop = false;
+            this.CompanySocialsGroupBox.Text = "Company Socials";
+            // 
+            // SocialsHolderPanel
+            // 
+            this.SocialsHolderPanel.Controls.Add(this.CompanySocialsFlowLayout);
+            this.SocialsHolderPanel.Location = new System.Drawing.Point(6, 67);
+            this.SocialsHolderPanel.Name = "SocialsHolderPanel";
+            this.SocialsHolderPanel.Size = new System.Drawing.Size(354, 205);
+            this.SocialsHolderPanel.TabIndex = 31;
+            // 
+            // CompanySocialsFlowLayout
+            // 
+            this.CompanySocialsFlowLayout.AutoScroll = true;
+            this.CompanySocialsFlowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CompanySocialsFlowLayout.Location = new System.Drawing.Point(0, 0);
+            this.CompanySocialsFlowLayout.Name = "CompanySocialsFlowLayout";
+            this.CompanySocialsFlowLayout.Size = new System.Drawing.Size(354, 205);
+            this.CompanySocialsFlowLayout.TabIndex = 3;
+            // 
+            // CompanySocialsTagInput
+            // 
+            this.CompanySocialsTagInput.Location = new System.Drawing.Point(72, 41);
+            this.CompanySocialsTagInput.Name = "CompanySocialsTagInput";
+            this.CompanySocialsTagInput.Size = new System.Drawing.Size(126, 20);
+            this.CompanySocialsTagInput.TabIndex = 19;
+            // 
+            // AddCompanySocialButton
+            // 
+            this.AddCompanySocialButton.Location = new System.Drawing.Point(204, 19);
+            this.AddCompanySocialButton.Name = "AddCompanySocialButton";
+            this.AddCompanySocialButton.Size = new System.Drawing.Size(154, 42);
+            this.AddCompanySocialButton.TabIndex = 20;
+            this.AddCompanySocialButton.Text = "Add Social";
+            this.AddCompanySocialButton.UseVisualStyleBackColor = true;
+            this.AddCompanySocialButton.Click += new System.EventHandler(this.AddCompanySocialButton_Click);
+            // 
+            // CompanySocialsNameLabel
+            // 
+            this.CompanySocialsNameLabel.AutoSize = true;
+            this.CompanySocialsNameLabel.Location = new System.Drawing.Point(5, 22);
+            this.CompanySocialsNameLabel.Name = "CompanySocialsNameLabel";
+            this.CompanySocialsNameLabel.Size = new System.Drawing.Size(70, 13);
+            this.CompanySocialsNameLabel.TabIndex = 27;
+            this.CompanySocialsNameLabel.Text = "Social Name:";
+            // 
+            // CompanySocialsNameInput
+            // 
+            this.CompanySocialsNameInput.Location = new System.Drawing.Point(79, 19);
+            this.CompanySocialsNameInput.Name = "CompanySocialsNameInput";
+            this.CompanySocialsNameInput.Size = new System.Drawing.Size(119, 20);
+            this.CompanySocialsNameInput.TabIndex = 18;
+            // 
+            // CompanySocialsTagLabel
+            // 
+            this.CompanySocialsTagLabel.AutoSize = true;
+            this.CompanySocialsTagLabel.Location = new System.Drawing.Point(5, 44);
+            this.CompanySocialsTagLabel.Name = "CompanySocialsTagLabel";
+            this.CompanySocialsTagLabel.Size = new System.Drawing.Size(61, 13);
+            this.CompanySocialsTagLabel.TabIndex = 26;
+            this.CompanySocialsTagLabel.Text = "Social Tag:";
             // 
             // InactiveCheckbox
             // 
@@ -157,9 +242,9 @@ namespace HospitalityDataUpdater
             this.BrandsGroupBox.Controls.Add(this.BrandsInputLabel);
             this.BrandsGroupBox.Controls.Add(this.BrandsInput);
             this.BrandsGroupBox.Controls.Add(this.BrandsFlowLayout);
-            this.BrandsGroupBox.Location = new System.Drawing.Point(6, 178);
+            this.BrandsGroupBox.Location = new System.Drawing.Point(4, 89);
             this.BrandsGroupBox.Name = "BrandsGroupBox";
-            this.BrandsGroupBox.Size = new System.Drawing.Size(366, 335);
+            this.BrandsGroupBox.Size = new System.Drawing.Size(366, 131);
             this.BrandsGroupBox.TabIndex = 10;
             this.BrandsGroupBox.TabStop = false;
             this.BrandsGroupBox.Text = "Brands";
@@ -183,9 +268,11 @@ namespace HospitalityDataUpdater
             // 
             // BrandsFlowLayout
             // 
-            this.BrandsFlowLayout.Location = new System.Drawing.Point(6, 31);
+            this.BrandsFlowLayout.AutoScroll = true;
+            this.BrandsFlowLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrandsFlowLayout.Location = new System.Drawing.Point(3, 33);
             this.BrandsFlowLayout.Name = "BrandsFlowLayout";
-            this.BrandsFlowLayout.Size = new System.Drawing.Size(354, 291);
+            this.BrandsFlowLayout.Size = new System.Drawing.Size(360, 95);
             this.BrandsFlowLayout.TabIndex = 3;
             // 
             // Num_Dev_StoresLabel
@@ -704,6 +791,9 @@ namespace HospitalityDataUpdater
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.InputPanel.ResumeLayout(false);
             this.InputPanel.PerformLayout();
+            this.CompanySocialsGroupBox.ResumeLayout(false);
+            this.CompanySocialsGroupBox.PerformLayout();
+            this.SocialsHolderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.NumDevStoresInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNewStoresInput)).EndInit();
             this.BrandsGroupBox.ResumeLayout(false);
@@ -782,6 +872,14 @@ namespace HospitalityDataUpdater
         private TextBox BrandsInput;
         private FlowLayoutPanel BrandsFlowLayout;
         private CheckBox InactiveCheckbox;
+        private GroupBox CompanySocialsGroupBox;
+        private Panel SocialsHolderPanel;
+        private FlowLayoutPanel CompanySocialsFlowLayout;
+        private TextBox CompanySocialsTagInput;
+        private Button AddCompanySocialButton;
+        private Label CompanySocialsNameLabel;
+        private TextBox CompanySocialsNameInput;
+        private Label CompanySocialsTagLabel;
     }
 }
 
