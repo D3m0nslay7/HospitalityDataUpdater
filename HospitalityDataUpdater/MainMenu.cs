@@ -453,6 +453,39 @@ namespace HospitalityDataUpdater
                         social.CreateUI(companySocialsContainer);
                     }
 
+
+            if (!row.IsNull("Company_Socials"))
+            {
+                try
+                {
+                    //we get the company socials, and turn them into a dictionary
+                    Dictionary<string, List<string>> companySocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(row["Company_Socials"].ToString());
+
+                    //we create a company social controller
+                    companySocialController = new SocialController();
+                    //check if its null
+                    if (companySocials != null)
+                    {
+                        int p = 0;
+                        foreach (var social in companySocials)
+                        {
+                            foreach (string item in social.Value)
+                            {
+
+                                Social soc = new Social(p, social.Key, item, companySocialController);
+
+                                companySocialController.AddEntry(soc);
+                                p++;
+                            }
+                        }
+                    }
+
+                    //now we display the company socials
+                    foreach (Social social in companySocialController.getSocials())
+                    {
+                        social.CreateUI(companySocialsContainer);
+                    }
+
                 }
                 catch (Exception exception)
                 {
