@@ -453,51 +453,20 @@ namespace HospitalityDataUpdater
                         social.CreateUI(companySocialsContainer);
                     }
 
-
-            if (!row.IsNull("Company_Socials"))
-            {
-                try
-                {
-                    //we get the company socials, and turn them into a dictionary
-                    Dictionary<string, List<string>> companySocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(row["Company_Socials"].ToString());
-
-                    //we create a company social controller
-                    companySocialController = new SocialController();
-                    //check if its null
-                    if (companySocials != null)
-                    {
-                        int p = 0;
-                        foreach (var social in companySocials)
-                        {
-                            foreach (string item in social.Value)
-                            {
-
-                                Social soc = new Social(p, social.Key, item, companySocialController);
-
-                                companySocialController.AddEntry(soc);
-                                p++;
-                            }
-                        }
-                    }
-
-                    //now we display the company socials
-                    foreach (Social social in companySocialController.getSocials())
-                    {
-                        social.CreateUI(companySocialsContainer);
-                    }
-
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
                     MessageBox.Show("Bit of an error with company socials buddy");
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("WARNING: please contact the developer, you are you using an outdated excel file");
             }
+
+
 
             //Console.WriteLine(row["New_Num_Stores"].ToString());
 
@@ -505,159 +474,160 @@ namespace HospitalityDataUpdater
 
             //locations in a dictionary
             if (!row.IsNull("Locations"))
-            {
-                try
-                {
-                    var locations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(row["Locations"].ToString());
-                    //loop through each location, and create one and put it in locationscontainer
-
-                    if (locations != null)
                     {
-                        int z = 0;
-                        foreach (var data in locations)
+                        try
                         {
+                            var locations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(row["Locations"].ToString());
+                            //loop through each location, and create one and put it in locationscontainer
 
-                            string key = data.Key; // Get the outer dictionary key
-                            Dictionary<string, object> innerDict = data.Value; // Get the inner dictionary data
-                            //first we setup the socials
-                            SocialController socCont = new SocialController();
-
-                            // Access the "location_socials" inner object
-                            if (innerDict["location_socials"] != null)
+                            if (locations != null)
                             {
-                                //JObject locationSocialsObject = (JObject)innerDict["location_socials"];
-                                // we are going to try import the data using the new format,
-                                try
+                                int z = 0;
+                                foreach (var data in locations)
                                 {
-                                    Dictionary<string, List<string>> locationSocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(innerDict["location_socials"].ToString());
 
-                                    //check if its null
-                                    if (locationSocials != null)
+                                    string key = data.Key; // Get the outer dictionary key
+                                    Dictionary<string, object> innerDict = data.Value; // Get the inner dictionary data
+                                                                                       //first we setup the socials
+                                    SocialController socCont = new SocialController();
+
+                                    // Access the "location_socials" inner object
+                                    if (innerDict["location_socials"] != null)
                                     {
-                                        int p = 0;
-                                        foreach (var social in locationSocials)
+                                        //JObject locationSocialsObject = (JObject)innerDict["location_socials"];
+                                        // we are going to try import the data using the new format,
+                                        try
                                         {
-                                            foreach (string item in social.Value)
+                                            Dictionary<string, List<string>> locationSocials = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(innerDict["location_socials"].ToString());
+
+                                            //check if its null
+                                            if (locationSocials != null)
                                             {
+                                                int p = 0;
+                                                foreach (var social in locationSocials)
+                                                {
+                                                    foreach (string item in social.Value)
+                                                    {
 
-                                                Social soc = new Social(p, social.Key, item, socCont);
+                                                        Social soc = new Social(p, social.Key, item, socCont);
 
-                                                socCont.AddEntry(soc);
-                                                p++;
+                                                        socCont.AddEntry(soc);
+                                                        p++;
+                                                    }
+                                                }
                                             }
                                         }
-                                    }
-                                }
-                                //there was an error importing
-                                catch (Exception)
-                                {
-                                    //we will now try importing based on the old format
-                                    //the reason this works is because we save it as the new format, meaning old data can now be saved as such
-                                    MessageBox.Show("You are using an old location, we are going to reformat it normally");
-                                    try
-                                    {
-                                        Dictionary<string, object>  locationSocials = JsonConvert.DeserializeObject<Dictionary<string, object>>(innerDict["location_socials"].ToString());
-                                        int p = 0;
-                                        foreach (var item in locationSocials)
+                                        //there was an error importing
+                                        catch (Exception)
                                         {
-                                            Social soc = new Social(p, item.Key, item.Value.ToString(), socCont);
+                                            //we will now try importing based on the old format
+                                            //the reason this works is because we save it as the new format, meaning old data can now be saved as such
+                                            MessageBox.Show("You are using an old location, we are going to reformat it normally");
+                                            try
+                                            {
+                                                Dictionary<string, object> locationSocials = JsonConvert.DeserializeObject<Dictionary<string, object>>(innerDict["location_socials"].ToString());
+                                                int p = 0;
+                                                foreach (var item in locationSocials)
+                                                {
+                                                    Social soc = new Social(p, item.Key, item.Value.ToString(), socCont);
 
-                                            socCont.AddEntry(soc);
-                                            p++;
+                                                    socCont.AddEntry(soc);
+                                                    p++;
+                                                }
+
+                                            }
+                                            catch (Exception)
+                                            {
+
+                                                MessageBox.Show("You are using an old location, we are going to reformat it");
+                                            }
+
                                         }
 
                                     }
-                                    catch (Exception)
+
+                                    string locName = null;
+                                    string locadd1 = null;
+                                    string locadd2 = null;
+                                    string locCity = null;
+                                    string locPost = null;
+                                    string locPho = null;
+                                    string locWeb = null;
+                                    string locBooking = null;
+                                    if (innerDict["location_name"] != null)
                                     {
-
-                                        MessageBox.Show("You are using an old location, we are going to reformat it");
+                                        locName = innerDict["location_name"].ToString();
                                     }
-                                    
+                                    if (innerDict["location_address_1"] != null)
+                                    {
+                                        locadd1 = innerDict["location_address_1"].ToString();
+                                    }
+                                    if (innerDict["location_address_2"] != null)
+                                    {
+                                        locadd2 = innerDict["location_address_2"].ToString();
+                                    }
+                                    if (innerDict["location_city"] != null)
+                                    {
+                                        locCity = innerDict["location_city"].ToString();
+                                    }
+                                    if (innerDict["location_postcode"] != null)
+                                    {
+                                        locPost = innerDict["location_postcode"].ToString();
+                                    }
+                                    if (innerDict["location_phone"] != null)
+                                    {
+                                        //Console.WriteLine(innerDict["location_phone"]);
+
+                                        JArray locationPhoneArray = (JArray)innerDict["location_phone"];
+                                        locPho = string.Join(" ", locationPhoneArray.Select(x => x.ToString()));
+                                        //Console.WriteLine(locPho);
+
+                                    }
+                                    if (innerDict["location_website"] != null)
+                                    {
+                                        locWeb = innerDict["location_website"].ToString();
+                                    }
+
+                                    //we want to check if this key exists, because it was added in later
+                                    if (innerDict.ContainsKey("booking_provider"))
+                                    {
+                                        if (innerDict["booking_provider"] != null)
+                                        {
+                                            locBooking = innerDict["booking_provider"].ToString();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        innerDict.Add("booking_provider", locBooking);
+                                    }
+
+
+
+                                    // now we import the locations
+                                    Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locationController, locationController.getLocationHolder()); // Create a new Location instance for each array element
+
+                                    locationController.AddEntry(loc);
+
+
+                                    z++;
                                 }
 
-                            }
+                                //spawn the uis now
 
-                            string locName = null;
-                            string locadd1 = null;
-                            string locadd2 = null;
-                            string locCity = null;
-                            string locPost = null;
-                            string locPho = null;
-                            string locWeb = null;
-                            string locBooking = null;
-                            if (innerDict["location_name"] != null)
-                            {
-                                locName = innerDict["location_name"].ToString();
+                                locationController.CreateLocationUIs();
                             }
-                            if (innerDict["location_address_1"] != null)
-                            {
-                                locadd1 = innerDict["location_address_1"].ToString();
-                            }
-                            if (innerDict["location_address_2"] != null)
-                            {
-                                locadd2 = innerDict["location_address_2"].ToString();
-                            }
-                            if (innerDict["location_city"] != null)
-                            {
-                                locCity = innerDict["location_city"].ToString();
-                            }
-                            if (innerDict["location_postcode"] != null)
-                            {
-                                locPost = innerDict["location_postcode"].ToString();
-                            }
-                            if (innerDict["location_phone"] != null)
-                            {
-                                //Console.WriteLine(innerDict["location_phone"]);
+                        }
+                        catch (Exception test)
+                        {
+                            Console.WriteLine(test.Message);
+                            MessageBox.Show("Bit of an error with locations buddy");
 
-                                JArray locationPhoneArray = (JArray)innerDict["location_phone"];
-                                locPho = string.Join(" ", locationPhoneArray.Select(x => x.ToString()));
-                                //Console.WriteLine(locPho);
-
-                            }
-                            if (innerDict["location_website"] != null)
-                            {
-                                locWeb = innerDict["location_website"].ToString();
-                            }
-
-                            //we want to check if this key exists, because it was added in later
-                            if (innerDict.ContainsKey("booking_provider"))
-                            {
-                                if (innerDict["booking_provider"] != null)
-                                {
-                                    locBooking = innerDict["booking_provider"].ToString();
-                                }
-                            }
-                            else
-                            {
-                                innerDict.Add("booking_provider", locBooking);
-                            }
-
-
-
-                            // now we import the locations
-                            Location loc = new Location(z, locName, locWeb, locPho, locadd1, locadd2, locCity, locPost, locBooking, socCont, locationController, locationController.getLocationHolder()); // Create a new Location instance for each array element
-
-                            locationController.AddEntry(loc);
-
-
-                            z++;
                         }
 
-                        //spawn the uis now
-
-                        locationController.CreateLocationUIs();
-                    }
-                }
-                catch (Exception test)
-                {
-                    Console.WriteLine(test.Message);
-                    MessageBox.Show("Bit of an error with locations buddy");
-
-                }
-
+                    
+                
             }
         }
-
         private void saveEntries()
         {
             if(importedData != null)
