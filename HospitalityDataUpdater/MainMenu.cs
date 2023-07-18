@@ -24,6 +24,7 @@ using System.Collections;
 using static OfficeOpenXml.ExcelErrorValue;
 using System.Windows.Input;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using System.Text.RegularExpressions;
 
 namespace HospitalityDataUpdater
 {
@@ -456,6 +457,8 @@ namespace HospitalityDataUpdater
                 }
                 catch (Exception exception)
                 {
+
+
                     Console.WriteLine(exception.Message);
                     MessageBox.Show("Bit of an error with company socials buddy");
                 }
@@ -794,7 +797,7 @@ namespace HospitalityDataUpdater
 
         }
 
-        private string[] FormatPhoneNumber(string phoneNumber)
+        private string[] FormatPhoneNumber(string phoneNumber) // code to format phonenumber
         {
             PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.GetInstance();
             string defaultRegion = "GB";
@@ -826,6 +829,18 @@ namespace HospitalityDataUpdater
                 return null;
             }
 
+        }
+
+        private string FormatPostCode(string postcode)// function to format postcode.
+        {
+
+            // Remove any non-alphanumeric characters from the postcode
+            string cleanedPostcode = Regex.Replace(postcode, "[^a-zA-Z0-9]", "");
+
+            // Insert a space before the last three characters
+            string formattedPostcode = cleanedPostcode.Insert(cleanedPostcode.Length - 3, " ");
+
+            return formattedPostcode;
         }
 
         #endregion
@@ -1026,12 +1041,7 @@ namespace HospitalityDataUpdater
             else
             {
                 //we want to format the postcode
-                //we get the length of the string, then split it based on the last 3 letters, to format the postcode
-                int length = locPost.Length;
-                string lastThreeLetters = locPost.Substring(length - 3);
-                string modifiedString = locPost.Substring(0, length - 3) + " " + lastThreeLetters;
-
-                locPost = modifiedString;
+                locPost = FormatPostCode(locPost);
             }
             if(bookingProvider == string.Empty)
             {

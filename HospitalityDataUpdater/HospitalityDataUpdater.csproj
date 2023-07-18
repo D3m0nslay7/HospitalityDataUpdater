@@ -55,7 +55,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>54E586EE519692ED79F85DE7B85C20C52265EDD6</ManifestCertificateThumbprint>
-    <ManifestCertificateThumbprint>479EFB899D820341B63C30AAFF3C74501082DA34</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>CA5626EEA4D976E7FE9661EF1C058B1262B7313F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>HospitalityDataUpdater_TemporaryKey.pfx</ManifestKeyFile>
@@ -149,7 +149,6 @@
     <Compile Include="_cs\Brand.cs" />
     <Compile Include="_cs\Controllers\BrandController.cs" />
     <Compile Include="_cs\Controllers\SocialController.cs" />
-    <Compile Include="_cs\Items.cs" />
     <Compile Include="_cs\Location.cs" />
     <Compile Include="_cs\Controllers\LocationController.cs" />
     <Compile Include="_cs\Social.cs" />
