@@ -38,7 +38,6 @@ namespace HospitalityDataUpdater
             this.CompanySocialsTagInput = new System.Windows.Forms.TextBox();
             this.AddCompanySocialButton = new System.Windows.Forms.Button();
             this.CompanySocialsNameLabel = new System.Windows.Forms.Label();
-            this.CompanySocialsNameInput = new System.Windows.Forms.TextBox();
             this.CompanySocialsTagLabel = new System.Windows.Forms.Label();
             this.InactiveCheckbox = new System.Windows.Forms.CheckBox();
             this.NumDevStoresInput = new System.Windows.Forms.NumericUpDown();
@@ -56,7 +55,6 @@ namespace HospitalityDataUpdater
             this.LocationBookingProviderLabel = new System.Windows.Forms.Label();
             this.LocationsPanel = new System.Windows.Forms.Panel();
             this.SocialTagInput = new System.Windows.Forms.TextBox();
-            this.SocialNameInput = new System.Windows.Forms.TextBox();
             this.SocialsGroupBox = new System.Windows.Forms.GroupBox();
             this.SocialsLayoutContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.SocialTagLabel = new System.Windows.Forms.Label();
@@ -98,6 +96,8 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
+            this.CompanySocialsNameComboBox = new System.Windows.Forms.ComboBox();
+            this.SocialNameComboBox = new System.Windows.Forms.ComboBox();
             this.InputPanel.SuspendLayout();
             this.CompanySocialsGroupBox.SuspendLayout();
             this.SocialsHolderPanel.SuspendLayout();
@@ -141,11 +141,11 @@ namespace HospitalityDataUpdater
             // 
             // CompanySocialsGroupBox
             // 
+            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsNameComboBox);
             this.CompanySocialsGroupBox.Controls.Add(this.SocialsHolderPanel);
             this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsTagInput);
             this.CompanySocialsGroupBox.Controls.Add(this.AddCompanySocialButton);
             this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsNameLabel);
-            this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsNameInput);
             this.CompanySocialsGroupBox.Controls.Add(this.CompanySocialsTagLabel);
             this.CompanySocialsGroupBox.Location = new System.Drawing.Point(4, 226);
             this.CompanySocialsGroupBox.Name = "CompanySocialsGroupBox";
@@ -196,13 +196,6 @@ namespace HospitalityDataUpdater
             this.CompanySocialsNameLabel.Size = new System.Drawing.Size(70, 13);
             this.CompanySocialsNameLabel.TabIndex = 27;
             this.CompanySocialsNameLabel.Text = "Social Name:";
-            // 
-            // CompanySocialsNameInput
-            // 
-            this.CompanySocialsNameInput.Location = new System.Drawing.Point(79, 19);
-            this.CompanySocialsNameInput.Name = "CompanySocialsNameInput";
-            this.CompanySocialsNameInput.Size = new System.Drawing.Size(119, 20);
-            this.CompanySocialsNameInput.TabIndex = 18;
             // 
             // CompanySocialsTagLabel
             // 
@@ -311,11 +304,11 @@ namespace HospitalityDataUpdater
             // 
             // LocationsGroupBox
             // 
+            this.LocationsGroupBox.Controls.Add(this.SocialNameComboBox);
             this.LocationsGroupBox.Controls.Add(this.LocationBookingProviderInput);
             this.LocationsGroupBox.Controls.Add(this.LocationBookingProviderLabel);
             this.LocationsGroupBox.Controls.Add(this.LocationsPanel);
             this.LocationsGroupBox.Controls.Add(this.SocialTagInput);
-            this.LocationsGroupBox.Controls.Add(this.SocialNameInput);
             this.LocationsGroupBox.Controls.Add(this.SocialsGroupBox);
             this.LocationsGroupBox.Controls.Add(this.SocialTagLabel);
             this.LocationsGroupBox.Controls.Add(this.LocationAdd1Input);
@@ -373,13 +366,6 @@ namespace HospitalityDataUpdater
             this.SocialTagInput.Name = "SocialTagInput";
             this.SocialTagInput.Size = new System.Drawing.Size(126, 20);
             this.SocialTagInput.TabIndex = 14;
-            // 
-            // SocialNameInput
-            // 
-            this.SocialNameInput.Location = new System.Drawing.Point(343, 172);
-            this.SocialNameInput.Name = "SocialNameInput";
-            this.SocialNameInput.Size = new System.Drawing.Size(119, 20);
-            this.SocialNameInput.TabIndex = 13;
             // 
             // SocialsGroupBox
             // 
@@ -778,6 +764,46 @@ namespace HospitalityDataUpdater
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
+            // CompanySocialsNameComboBox
+            // 
+            this.CompanySocialsNameComboBox.DisplayMember = "10000";
+            this.CompanySocialsNameComboBox.FormattingEnabled = true;
+            this.CompanySocialsNameComboBox.Items.AddRange(new object[] {
+            "youtube",
+            "linkedin",
+            "instagram",
+            "twitter",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "pinterest"});
+            this.CompanySocialsNameComboBox.Location = new System.Drawing.Point(79, 19);
+            this.CompanySocialsNameComboBox.Name = "CompanySocialsNameComboBox";
+            this.CompanySocialsNameComboBox.Size = new System.Drawing.Size(119, 21);
+            this.CompanySocialsNameComboBox.TabIndex = 18;
+            this.CompanySocialsNameComboBox.TabStop = false;
+            this.CompanySocialsNameComboBox.Text = "Select Social Media";
+            // 
+            // SocialNameComboBox
+            // 
+            this.SocialNameComboBox.DisplayMember = "10000";
+            this.SocialNameComboBox.FormattingEnabled = true;
+            this.SocialNameComboBox.Items.AddRange(new object[] {
+            "youtube",
+            "linkedin",
+            "instagram",
+            "twitter",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "pinterest"});
+            this.SocialNameComboBox.Location = new System.Drawing.Point(336, 169);
+            this.SocialNameComboBox.Name = "SocialNameComboBox";
+            this.SocialNameComboBox.Size = new System.Drawing.Size(126, 21);
+            this.SocialNameComboBox.TabIndex = 13;
+            this.SocialNameComboBox.TabStop = false;
+            this.SocialNameComboBox.Text = "Select Social Media";
+            // 
             // MainMenuInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -854,7 +880,6 @@ namespace HospitalityDataUpdater
         private System.Windows.Forms.TextBox LocationPhoneNumberInput;
         private System.Windows.Forms.Label LocationPhoneNumberLabel;
         private System.Windows.Forms.TextBox SocialTagInput;
-        private System.Windows.Forms.TextBox SocialNameInput;
         private System.Windows.Forms.Label SocialTagLabel;
         private System.Windows.Forms.Label SocialNameLabel;
         public System.Windows.Forms.FlowLayoutPanel LocationFlowLayout;
@@ -878,8 +903,9 @@ namespace HospitalityDataUpdater
         private TextBox CompanySocialsTagInput;
         private Button AddCompanySocialButton;
         private Label CompanySocialsNameLabel;
-        private TextBox CompanySocialsNameInput;
         private Label CompanySocialsTagLabel;
+        private ComboBox CompanySocialsNameComboBox;
+        private ComboBox SocialNameComboBox;
     }
 }
 
