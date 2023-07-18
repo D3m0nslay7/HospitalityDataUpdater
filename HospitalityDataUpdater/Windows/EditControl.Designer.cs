@@ -292,6 +292,7 @@
             // 
             // EditInformationToolTip
             // 
+            this.EditInformationToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.EditInformationToolTip.ToolTipTitle = "Edit Inputs Information";
             // 
             // Edit_SocialNameComboBox

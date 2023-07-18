@@ -12,8 +12,9 @@ namespace HospitalityDataUpdater._cs
     internal class Location
     {
 
-        //controller
-        LocationController controller;
+        //controllers
+        LocationController locationController;
+        SocialController socialController;
         //vars
         int index;
         string lname;
@@ -25,7 +26,7 @@ namespace HospitalityDataUpdater._cs
         string lPost;
         string bookingProvider;
 
-        SocialController socCont;
+        
         //UI vars
         GroupBox groupBox;
         Label locationName;
@@ -36,6 +37,7 @@ namespace HospitalityDataUpdater._cs
         Button editDataButton;
         FlowLayoutPanel container;
 
+        //Constructor
         public Location(int i, string name, string web, string num, string add1, string add2, string city, string postcode, string bookProvider, SocialController socCont, LocationController cont, FlowLayoutPanel flowcontainer)
         {
             index = i;
@@ -56,13 +58,14 @@ namespace HospitalityDataUpdater._cs
         }
         //get methods
         #region getMethods
+        //Simple methods to get all the variables within this class
         public SocialController getSocialController()
         {
-            return socCont;
+            return socialController;
         }
         public LocationController getController()
         {
-            return controller;
+            return locationController;
         }
         public int getIndex()
         {
@@ -103,9 +106,10 @@ namespace HospitalityDataUpdater._cs
         #endregion
         //set methods
         #region setMethods
+        //Simple methods to set all the variables within this class
         public void setSocialController(SocialController socs)
         {
-            socCont = socs;
+            socialController = socs;
         }
         public void setContainer(FlowLayoutPanel panel)
         {
@@ -113,14 +117,13 @@ namespace HospitalityDataUpdater._cs
         }
         public void setController(LocationController cont)
         {
-            controller = cont;
+            locationController = cont;
         }
         public void setName(string name)
         {
             lname = name;
 
         }
-
         public void setWebsite(string web)
         {
             lWebsite = web;
@@ -155,7 +158,9 @@ namespace HospitalityDataUpdater._cs
             bookingProvider = provider;
         }
         #endregion
-        public void Clearing()
+        //UI methods
+        #region UI Methods
+        public void ClearUI() // Method Used to clear the UI
         {
             if (groupBox != null)
             {
@@ -174,10 +179,7 @@ namespace HospitalityDataUpdater._cs
                 groupBox.Dispose();
             }
         }
-        //UI methods
-        #region UI Methods
-
-        public void DeleteUI()
+        public void DeleteButton_Pressed() // Method used to delete the UI when the button is pressed
         {
             // Handle the button click event
             DialogResult result = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -199,10 +201,11 @@ namespace HospitalityDataUpdater._cs
                 groupBox.Dispose();
 
                 //Now we delete this entry from the list
-                controller.RemoveEntry(this);
+                locationController.RemoveEntry(this);
             }
         }
-        public void CreateUI(EventHandler viewSocialsButton_Click, EventHandler editButton_Click) //creates the UI for this
+        //we require the event handlers for the edit and view socials button, these event handlers are stored in the location controller.
+        public void CreateUI(EventHandler viewSocialsButton_Click, EventHandler editButton_Click) //creates the UI for this location
         {
             groupBox = new GroupBox();
             locationName = new Label();
@@ -269,8 +272,7 @@ namespace HospitalityDataUpdater._cs
             // Define the event handler for the button click event
             EventHandler deleteButtonClickHandler = (sender, e) =>
             {
-
-                DeleteUI();
+                DeleteButton_Pressed();
             };
             // Subscribe to the button's Click event using the event handler
             deleteButton.Click += deleteButtonClickHandler;
@@ -304,17 +306,9 @@ namespace HospitalityDataUpdater._cs
             //
             // Assigns the new ui to the container. displaying it
             //
-
-
-
             container.Controls.Add(groupBox);
-            //Console.WriteLine("Printed stufff");
+            
         }
-        public void RefreshUI() //refresh's the UI for this
-        {
-            //we dont need this atm
-        }
-
         #endregion
     }
 }

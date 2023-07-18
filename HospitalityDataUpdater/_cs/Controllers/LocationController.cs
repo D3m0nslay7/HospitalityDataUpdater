@@ -69,7 +69,7 @@ namespace HospitalityDataUpdater._cs
         {
             foreach (Location location in locations)
             {
-                location.Clearing();
+                location.ClearUI();
 
             }
         }
@@ -83,7 +83,7 @@ namespace HospitalityDataUpdater._cs
             //get the old locations index
             int oldLocationIndex = oldLoc.getIndex();
             //dispose of the old location now
-            oldLoc.Clearing();
+            oldLoc.ClearUI();
             locations.Remove(oldLoc);
             //insert the new location
             locations.Insert(oldLocationIndex, newLoc);
