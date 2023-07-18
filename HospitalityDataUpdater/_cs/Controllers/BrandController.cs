@@ -10,9 +10,9 @@ namespace HospitalityDataUpdater._cs.Controllers
     internal class BrandController
     {
         //vars
-
         List<Brand> brands;
 
+        //Constructer
         public BrandController()
         {
             brands = new List<Brand>();
@@ -27,48 +27,44 @@ namespace HospitalityDataUpdater._cs.Controllers
             return brands;
         }
 
+        //Method that returns the brands in a serlized json array
         public string getSaveableData()
         {
+            //create a list of strings
             List<string> brandNames = new List<string>();
+            //loop through the current brand classes in our brand list
             foreach (Brand brand in getBrands())
             {
+                //add each name into the list of brandNames
                 brandNames.Add(brand.GetName());
             }
-
-            string[] a = brandNames.ToArray();
+            //convert the list of brandnames into a serialzied jsonarray, meaning we can now save it in excel
             string jsonArray = JsonConvert.SerializeObject(brandNames);
-
+            //return our serlized array
             return jsonArray;
         }
         #endregion
 
-        //Set Methods
-        #region setMethods
-
-        #endregion
-
-
         #region Methods
         public void RemoveEntry(Brand brand)
         {
-            //delete this entry
-            //Console.WriteLine(locations.Count);
-            //Console.WriteLine("deleting entry" + location.getName());
+            //delete the entry we got from whatever called this method
             brands.Remove(brand);
-            //Console.WriteLine(locations.Count);
         }
         public void AddEntry(Brand brand)
         {
-            //adds an entry
+            //adds an entry we recived to our brands list
             brands.Add(brand);
-            //Console.WriteLine("added entry" + location.getName());
         }
-        public void Clear()
+        public void Clear() // used to clear the brands list
         {
+            //loop through the brands list
             foreach (Brand brand in brands)
             {
-                brand.Clearing();
+                //call clearui, which will delete the ui
+                brand.ClearUI();
             }
+            //we empty the list now
             brands.Clear();
         }
         #endregion

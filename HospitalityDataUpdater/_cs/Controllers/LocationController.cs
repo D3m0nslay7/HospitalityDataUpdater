@@ -20,6 +20,7 @@ namespace HospitalityDataUpdater._cs
         EventHandler viewSocials = null;
         EventHandler editLocation = null;
 
+        //Constructor
         public LocationController(FlowLayoutPanel locHolder, EventHandler viewSoc, EventHandler editLoc)
         {
             locations = new List<Location>();
@@ -61,16 +62,18 @@ namespace HospitalityDataUpdater._cs
             //we go through the list and create the UI for each location
             foreach (Location location in locations)
             {
+                //call, create ui and we send the event handlers we have stored
                 location.CreateUI(viewSocials, editLocation);
             }
         }
-
-        public void RemoveUIs()
+        
+        public void RemoveUIs() // Method to delete all UI for locations, but not delete them
         {
+            //loop through the locations list
             foreach (Location location in locations)
             {
+                //calls clear on each individual location, clearing the data
                 location.ClearUI();
-
             }
         }
 
@@ -87,28 +90,26 @@ namespace HospitalityDataUpdater._cs
             locations.Remove(oldLoc);
             //insert the new location
             locations.Insert(oldLocationIndex, newLoc);
-
+            //create the UI for the locations now
             CreateLocationUIs();
         }
 
-        public void RemoveEntry(Location location)
+        public void RemoveEntry(Location location) // Deletes the location we got
         {
             //delete this entry
-            //Console.WriteLine(locations.Count);
-            //Console.WriteLine("deleting entry" + location.getName());
             locations.Remove(location);
-            //Console.WriteLine(locations.Count);
         }
-        public void AddEntry(Location location)
+        public void AddEntry(Location location) // Adds a entry
         {
             //adds an entry
             locations.Add(location);
-            //Console.WriteLine("added entry" + location.getName());
         }
 
-        public void Clear()
+        public void Clear() // Clears the entire location controller
         {
+            //removes all UI's of the locations stored
             RemoveUIs();
+            //clears the list
             locations.Clear();
         }
         #endregion

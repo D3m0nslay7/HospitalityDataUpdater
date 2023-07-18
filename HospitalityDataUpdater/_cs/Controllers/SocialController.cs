@@ -27,33 +27,24 @@ namespace HospitalityDataUpdater._cs.Controllers
         }
         #endregion
 
-        //Set Methods
-        #region setMethods
-
-        #endregion
-
-
         #region Methods
-        public void RemoveEntry(Social social)
+        public void RemoveEntry(Social social) // Deletes an entry we got passed
         {
             //delete this entry
-            //Console.WriteLine(locations.Count);
-            //Console.WriteLine("deleting entry" + location.getName());
             socials.Remove(social);
-            //Console.WriteLine(locations.Count);
         }
-        public void AddEntry(Social social)
+        public void AddEntry(Social social) // Adds the entry we got passed to the socials list
         {
             //adds an entry
             socials.Add(social);
-            //Console.WriteLine("added entry" + location.getName());
         }
-        public void Clear()
+        public void Clear() // Clears the social UI's
         {
+            //loops through our socials list
             foreach (Social social in socials)
             {
-                social.Clearing();
-
+                //deletes the socials List
+                social.ClearUI();
             }
         }
 

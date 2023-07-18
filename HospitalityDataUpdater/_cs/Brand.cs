@@ -20,6 +20,7 @@ namespace HospitalityDataUpdater._cs
         Button deleteButton = new Button();
         FlowLayoutPanel container;
 
+        //Constructor
         public Brand(int i, string name, BrandController cont, FlowLayoutPanel container)
         {
             index = i;
@@ -30,6 +31,7 @@ namespace HospitalityDataUpdater._cs
         }
 
         //get Methods
+        //Simple methods to get all the variables within this class
         #region getMethods
         public string GetName()
         {
@@ -41,14 +43,15 @@ namespace HospitalityDataUpdater._cs
         }
         #endregion
         //set Methods
+        //Simple methods to set all the variables within this class
         #region setMethods
         public void SetName(string n)
         {
-            this.Name = n;
+            Name = n;
         }
         public void SetContainer(FlowLayoutPanel c)
         {
-            this.container = c;
+            container = c;
         }
         public void SetController(BrandController cont)
         {
@@ -56,7 +59,11 @@ namespace HospitalityDataUpdater._cs
         }
         #endregion
 
-        public void Clearing()
+
+
+        //ui Methods
+        #region uiMethods
+        public void ClearUI()// Method Used to clear the UI
         {
             //delete this thing
             // Remove or dispose of the child controls within the GroupBox
@@ -72,10 +79,7 @@ namespace HospitalityDataUpdater._cs
             // Dispose of the GroupBox if needed
             groupBox.Dispose();
         }
-
-        //ui Methods
-        #region uiMethods
-        public void DeleteUI()
+        public void DeleteButton_Pressed()// Method used to delete the UI when the button is pressed
         {// Handle the button click event
             DialogResult result = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -99,7 +103,7 @@ namespace HospitalityDataUpdater._cs
                 controller.RemoveEntry(this);
             }
         }
-        public void CreateUI()
+        public void CreateUI() //creates the UI
         {
             groupBox = new GroupBox();
             deleteButton = new Button();
@@ -127,11 +131,13 @@ namespace HospitalityDataUpdater._cs
             // Define the event handler for the button click event
             EventHandler deleteButtonClickHandler = (sender, e) =>
             {
-                DeleteUI();
+                DeleteButton_Pressed();
             };
             // Subscribe to the button's Click event using the event handler
             deleteButton.Click += deleteButtonClickHandler;
-
+            //
+            // Assigns the new ui to the container. displaying it
+            //
             container.Controls.Add(groupBox);
         }
 

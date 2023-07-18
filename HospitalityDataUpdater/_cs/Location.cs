@@ -57,8 +57,8 @@ namespace HospitalityDataUpdater._cs
             setContainer(flowcontainer);
         }
         //get methods
-        #region getMethods
         //Simple methods to get all the variables within this class
+        #region getMethods
         public SocialController getSocialController()
         {
             return socialController;
@@ -105,8 +105,8 @@ namespace HospitalityDataUpdater._cs
         }
         #endregion
         //set methods
-        #region setMethods
         //Simple methods to set all the variables within this class
+        #region setMethods
         public void setSocialController(SocialController socs)
         {
             socialController = socs;
@@ -162,6 +162,7 @@ namespace HospitalityDataUpdater._cs
         #region UI Methods
         public void ClearUI() // Method Used to clear the UI
         {
+            //checks if the container for this even exists
             if (groupBox != null)
             {
                 //delete this thing
@@ -172,10 +173,10 @@ namespace HospitalityDataUpdater._cs
                     control.Dispose(); // Optional: Dispose of the control if needed
                 }
 
-                // Remove the GroupBox itself from the container
+                // Remove the GroupBox itself from the parent container
                 container.Controls.Remove(groupBox);
 
-                // Dispose of the GroupBox if needed
+                // Dispose of the GroupBox
                 groupBox.Dispose();
             }
         }
@@ -214,7 +215,6 @@ namespace HospitalityDataUpdater._cs
             deleteButton = new Button();
             viewSocialsButton = new Button();
             editDataButton = new Button();
-
             // 
             // Location1Group
             // 
@@ -267,7 +267,6 @@ namespace HospitalityDataUpdater._cs
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Tag = new { type = "location", index = index };
-
             // adds function to the button
             // Define the event handler for the button click event
             EventHandler deleteButtonClickHandler = (sender, e) =>
@@ -286,7 +285,6 @@ namespace HospitalityDataUpdater._cs
             this.viewSocialsButton.Text = "View Socials";
             this.viewSocialsButton.Tag = this;
             this.viewSocialsButton.UseVisualStyleBackColor = true;
-
             // Subscribe to the button's Click event using the event handler
             this.viewSocialsButton.Click += new System.EventHandler(viewSocialsButton_Click);
             // 
@@ -299,10 +297,8 @@ namespace HospitalityDataUpdater._cs
             this.editDataButton.Text = "Edit Data";
             this.editDataButton.Tag = this;
             this.editDataButton.UseVisualStyleBackColor = true;
-
             // Subscribe to the button's Click event using the event handler
             this.editDataButton.Click += new System.EventHandler(editButton_Click);
-
             //
             // Assigns the new ui to the container. displaying it
             //
