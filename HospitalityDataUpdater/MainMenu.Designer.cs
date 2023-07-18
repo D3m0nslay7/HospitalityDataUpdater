@@ -30,9 +30,12 @@ namespace HospitalityDataUpdater
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuInterface));
             this.LocationFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.InputPanel = new System.Windows.Forms.GroupBox();
             this.CompanySocialsGroupBox = new System.Windows.Forms.GroupBox();
+            this.CompanySocialsNameComboBox = new System.Windows.Forms.ComboBox();
             this.SocialsHolderPanel = new System.Windows.Forms.Panel();
             this.CompanySocialsFlowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.CompanySocialsTagInput = new System.Windows.Forms.TextBox();
@@ -51,6 +54,7 @@ namespace HospitalityDataUpdater
             this.WebsiteInput = new System.Windows.Forms.TextBox();
             this.WebsiteLabel = new System.Windows.Forms.Label();
             this.LocationsGroupBox = new System.Windows.Forms.GroupBox();
+            this.SocialNameComboBox = new System.Windows.Forms.ComboBox();
             this.LocationBookingProviderInput = new System.Windows.Forms.TextBox();
             this.LocationBookingProviderLabel = new System.Windows.Forms.Label();
             this.LocationsPanel = new System.Windows.Forms.Panel();
@@ -96,8 +100,7 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel = new System.Windows.Forms.Label();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
-            this.CompanySocialsNameComboBox = new System.Windows.Forms.ComboBox();
-            this.SocialNameComboBox = new System.Windows.Forms.ComboBox();
+            this.InputsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.InputPanel.SuspendLayout();
             this.CompanySocialsGroupBox.SuspendLayout();
             this.SocialsHolderPanel.SuspendLayout();
@@ -120,6 +123,9 @@ namespace HospitalityDataUpdater
             this.LocationFlowLayout.Name = "LocationFlowLayout";
             this.LocationFlowLayout.Size = new System.Drawing.Size(529, 413);
             this.LocationFlowLayout.TabIndex = 0;
+            this.InputsToolTip.SetToolTip(this.LocationFlowLayout, "Locations Container:\r\nA container to hold created location items, locations can b" +
+        "e edited or deleted here. You can also choose to view specific socials for locat" +
+        "ions here as well.");
             // 
             // InputPanel
             // 
@@ -154,6 +160,28 @@ namespace HospitalityDataUpdater
             this.CompanySocialsGroupBox.TabStop = false;
             this.CompanySocialsGroupBox.Text = "Company Socials";
             // 
+            // CompanySocialsNameComboBox
+            // 
+            this.CompanySocialsNameComboBox.DisplayMember = "10000";
+            this.CompanySocialsNameComboBox.FormattingEnabled = true;
+            this.CompanySocialsNameComboBox.Items.AddRange(new object[] {
+            "youtube",
+            "linkedin",
+            "instagram",
+            "twitter",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "pinterest"});
+            this.CompanySocialsNameComboBox.Location = new System.Drawing.Point(79, 19);
+            this.CompanySocialsNameComboBox.Name = "CompanySocialsNameComboBox";
+            this.CompanySocialsNameComboBox.Size = new System.Drawing.Size(119, 21);
+            this.CompanySocialsNameComboBox.TabIndex = 18;
+            this.CompanySocialsNameComboBox.TabStop = false;
+            this.CompanySocialsNameComboBox.Text = "Select Social Media";
+            this.InputsToolTip.SetToolTip(this.CompanySocialsNameComboBox, "Social Name Dropdown:\r\nDropdown box containing Social Media names, this is to pro" +
+        "vide consitency and remove human errors such as spelling mistakes.");
+            // 
             // SocialsHolderPanel
             // 
             this.SocialsHolderPanel.Controls.Add(this.CompanySocialsFlowLayout);
@@ -170,6 +198,8 @@ namespace HospitalityDataUpdater
             this.CompanySocialsFlowLayout.Name = "CompanySocialsFlowLayout";
             this.CompanySocialsFlowLayout.Size = new System.Drawing.Size(354, 205);
             this.CompanySocialsFlowLayout.TabIndex = 3;
+            this.InputsToolTip.SetToolTip(this.CompanySocialsFlowLayout, "Company Socials Container:\r\nSimple container for social media items created for t" +
+        "his companies socials.");
             // 
             // CompanySocialsTagInput
             // 
@@ -177,6 +207,8 @@ namespace HospitalityDataUpdater
             this.CompanySocialsTagInput.Name = "CompanySocialsTagInput";
             this.CompanySocialsTagInput.Size = new System.Drawing.Size(126, 20);
             this.CompanySocialsTagInput.TabIndex = 19;
+            this.InputsToolTip.SetToolTip(this.CompanySocialsTagInput, "Social Media Tag:\r\nThe social media tag, has to be correct.\r\nNOTE: Should not con" +
+        "tain the @ Symbol");
             // 
             // AddCompanySocialButton
             // 
@@ -185,6 +217,8 @@ namespace HospitalityDataUpdater
             this.AddCompanySocialButton.Size = new System.Drawing.Size(154, 42);
             this.AddCompanySocialButton.TabIndex = 20;
             this.AddCompanySocialButton.Text = "Add Social";
+            this.InputsToolTip.SetToolTip(this.AddCompanySocialButton, "Add Social Button:\r\nWill create a social media item based on the inputs, the item" +
+        " can be deleted if required.");
             this.AddCompanySocialButton.UseVisualStyleBackColor = true;
             this.AddCompanySocialButton.Click += new System.EventHandler(this.AddCompanySocialButton_Click);
             // 
@@ -214,6 +248,8 @@ namespace HospitalityDataUpdater
             this.InactiveCheckbox.Size = new System.Drawing.Size(91, 17);
             this.InactiveCheckbox.TabIndex = 4;
             this.InactiveCheckbox.Text = "Inactive Entry";
+            this.InputsToolTip.SetToolTip(this.InactiveCheckbox, "Inactive Entry:\r\nIf the company is inactive, tick this and there is no need to ed" +
+        "it anything else.");
             this.InactiveCheckbox.UseVisualStyleBackColor = true;
             // 
             // NumDevStoresInput
@@ -222,6 +258,7 @@ namespace HospitalityDataUpdater
             this.NumDevStoresInput.Name = "NumDevStoresInput";
             this.NumDevStoresInput.Size = new System.Drawing.Size(39, 20);
             this.NumDevStoresInput.TabIndex = 3;
+            this.InputsToolTip.SetToolTip(this.NumDevStoresInput, "Number of Developing Stores:\r\nNumber of stores being developed by this company.");
             // 
             // NumNewStoresInput
             // 
@@ -229,6 +266,8 @@ namespace HospitalityDataUpdater
             this.NumNewStoresInput.Name = "NumNewStoresInput";
             this.NumNewStoresInput.Size = new System.Drawing.Size(39, 20);
             this.NumNewStoresInput.TabIndex = 2;
+            this.InputsToolTip.SetToolTip(this.NumNewStoresInput, "New Number of Stores:\r\nThe new amount of stores found.\r\nNote: Will automatically " +
+        "be assigned at the end to the number of locations.");
             // 
             // BrandsGroupBox
             // 
@@ -257,6 +296,8 @@ namespace HospitalityDataUpdater
             this.BrandsInput.Name = "BrandsInput";
             this.BrandsInput.Size = new System.Drawing.Size(280, 20);
             this.BrandsInput.TabIndex = 17;
+            this.InputsToolTip.SetToolTip(this.BrandsInput, "Brands Input:\r\nInput for franchise brands this company is apart of, ex Starbucks " +
+        "and McDonalds.\r\nSimply enter the data and press enter for it to be inputted.");
             this.BrandsInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BrandsInput_KeyDown);
             // 
             // BrandsFlowLayout
@@ -267,6 +308,7 @@ namespace HospitalityDataUpdater
             this.BrandsFlowLayout.Name = "BrandsFlowLayout";
             this.BrandsFlowLayout.Size = new System.Drawing.Size(360, 95);
             this.BrandsFlowLayout.TabIndex = 3;
+            this.InputsToolTip.SetToolTip(this.BrandsFlowLayout, "Brands Container:\r\nSimple Container for the brands.");
             // 
             // Num_Dev_StoresLabel
             // 
@@ -292,6 +334,8 @@ namespace HospitalityDataUpdater
             this.WebsiteInput.Name = "WebsiteInput";
             this.WebsiteInput.Size = new System.Drawing.Size(317, 20);
             this.WebsiteInput.TabIndex = 1;
+            this.InputsToolTip.SetToolTip(this.WebsiteInput, "Website:\r\nThe Company\'s website input.\r\nMust be an actual URL.\r\nWill autoformat t" +
+        "he url, getting rid of https and any extra information other than domain.\r\n");
             // 
             // WebsiteLabel
             // 
@@ -336,12 +380,37 @@ namespace HospitalityDataUpdater
             this.LocationsGroupBox.TabStop = false;
             this.LocationsGroupBox.Text = "Locations";
             // 
+            // SocialNameComboBox
+            // 
+            this.SocialNameComboBox.DisplayMember = "10000";
+            this.SocialNameComboBox.FormattingEnabled = true;
+            this.SocialNameComboBox.Items.AddRange(new object[] {
+            "youtube",
+            "linkedin",
+            "instagram",
+            "twitter",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "pinterest"});
+            this.SocialNameComboBox.Location = new System.Drawing.Point(336, 169);
+            this.SocialNameComboBox.Name = "SocialNameComboBox";
+            this.SocialNameComboBox.Size = new System.Drawing.Size(126, 21);
+            this.SocialNameComboBox.TabIndex = 13;
+            this.SocialNameComboBox.TabStop = false;
+            this.SocialNameComboBox.Text = "Select Social Media";
+            this.InputsToolTip.SetToolTip(this.SocialNameComboBox, "Social Name Dropdown:\r\nDropdown box containing Social Media names, this is to pro" +
+        "vide consitency and remove human errors such as spelling mistakes.\r\n");
+            // 
             // LocationBookingProviderInput
             // 
             this.LocationBookingProviderInput.Location = new System.Drawing.Point(147, 168);
             this.LocationBookingProviderInput.Name = "LocationBookingProviderInput";
             this.LocationBookingProviderInput.Size = new System.Drawing.Size(119, 20);
             this.LocationBookingProviderInput.TabIndex = 12;
+            this.InputsToolTip.SetToolTip(this.LocationBookingProviderInput, "Location Booking Provider:\r\nBooking provider for the location, such as ResDiary, " +
+        "or sevenrooms. Can be anything.\r\nNOTE: booking can be in terms of hotel booking," +
+        " or resturant reservation booking.");
             // 
             // LocationBookingProviderLabel
             // 
@@ -366,6 +435,8 @@ namespace HospitalityDataUpdater
             this.SocialTagInput.Name = "SocialTagInput";
             this.SocialTagInput.Size = new System.Drawing.Size(126, 20);
             this.SocialTagInput.TabIndex = 14;
+            this.InputsToolTip.SetToolTip(this.SocialTagInput, "Social Media Tag:\r\nThe social media tag, has to be correct.\r\nNOTE: Should not con" +
+        "tain the @ Symbol\r\n");
             // 
             // SocialsGroupBox
             // 
@@ -386,6 +457,9 @@ namespace HospitalityDataUpdater
             this.SocialsLayoutContainer.Name = "SocialsLayoutContainer";
             this.SocialsLayoutContainer.Size = new System.Drawing.Size(255, 629);
             this.SocialsLayoutContainer.TabIndex = 1;
+            this.InputsToolTip.SetToolTip(this.SocialsLayoutContainer, "Location Social Media Locater:\r\nA container to hold the social media for a locati" +
+        "on, will only show the locations for the social media yo are currently working o" +
+        "n.");
             // 
             // SocialTagLabel
             // 
@@ -402,6 +476,7 @@ namespace HospitalityDataUpdater
             this.LocationAdd1Input.Name = "LocationAdd1Input";
             this.LocationAdd1Input.Size = new System.Drawing.Size(404, 20);
             this.LocationAdd1Input.TabIndex = 8;
+            this.InputsToolTip.SetToolTip(this.LocationAdd1Input, resources.GetString("LocationAdd1Input.ToolTip"));
             // 
             // LocationAddress1Label
             // 
@@ -436,6 +511,7 @@ namespace HospitalityDataUpdater
             this.LocationPhoneNumberInput.Name = "LocationPhoneNumberInput";
             this.LocationPhoneNumberInput.Size = new System.Drawing.Size(379, 20);
             this.LocationPhoneNumberInput.TabIndex = 7;
+            this.InputsToolTip.SetToolTip(this.LocationPhoneNumberInput, resources.GetString("LocationPhoneNumberInput.ToolTip"));
             // 
             // LocationPostcodeInput
             // 
@@ -443,6 +519,7 @@ namespace HospitalityDataUpdater
             this.LocationPostcodeInput.Name = "LocationPostcodeInput";
             this.LocationPostcodeInput.Size = new System.Drawing.Size(209, 20);
             this.LocationPostcodeInput.TabIndex = 11;
+            this.InputsToolTip.SetToolTip(this.LocationPostcodeInput, "Location Postcode:\r\nThe postcode for the location, This is autoformatted.");
             // 
             // SocialNameLabel
             // 
@@ -459,6 +536,7 @@ namespace HospitalityDataUpdater
             this.LocationAdd2Input.Name = "LocationAdd2Input";
             this.LocationAdd2Input.Size = new System.Drawing.Size(404, 20);
             this.LocationAdd2Input.TabIndex = 9;
+            this.InputsToolTip.SetToolTip(this.LocationAdd2Input, resources.GetString("LocationAdd2Input.ToolTip"));
             // 
             // LocationWebsiteInput
             // 
@@ -466,6 +544,7 @@ namespace HospitalityDataUpdater
             this.LocationWebsiteInput.Name = "LocationWebsiteInput";
             this.LocationWebsiteInput.Size = new System.Drawing.Size(411, 20);
             this.LocationWebsiteInput.TabIndex = 6;
+            this.InputsToolTip.SetToolTip(this.LocationWebsiteInput, resources.GetString("LocationWebsiteInput.ToolTip"));
             // 
             // LocationCityLabel
             // 
@@ -492,6 +571,8 @@ namespace HospitalityDataUpdater
             this.LocationCityInput.Name = "LocationCityInput";
             this.LocationCityInput.Size = new System.Drawing.Size(119, 20);
             this.LocationCityInput.TabIndex = 10;
+            this.InputsToolTip.SetToolTip(this.LocationCityInput, "Location City:\r\nThe city this location is located in, usually included in the add" +
+        "ress, if not found in address use google maps to find it.\r\n");
             // 
             // LocationPostcodeLabel
             // 
@@ -509,6 +590,9 @@ namespace HospitalityDataUpdater
             this.AddSocialsButton.Size = new System.Drawing.Size(47, 42);
             this.AddSocialsButton.TabIndex = 15;
             this.AddSocialsButton.Text = "Add Social";
+            this.InputsToolTip.SetToolTip(this.AddSocialsButton, "Add Social Button:\r\nWill create a social media item based on the inputs, the item" +
+        " can be deleted if required.\r\nNOTE: This social media item is only visable and c" +
+        "onnected to the location you create.\r\n");
             this.AddSocialsButton.UseVisualStyleBackColor = true;
             this.AddSocialsButton.Click += new System.EventHandler(this.AddSocialsButton_Click);
             // 
@@ -518,6 +602,8 @@ namespace HospitalityDataUpdater
             this.LocationNameInput.Name = "LocationNameInput";
             this.LocationNameInput.Size = new System.Drawing.Size(423, 20);
             this.LocationNameInput.TabIndex = 5;
+            this.InputsToolTip.SetToolTip(this.LocationNameInput, "Location Name:\r\nThe name of the location, normally specified on the facebook, goo" +
+        "gle maps or company website.");
             // 
             // LocationNameLabel
             // 
@@ -535,6 +621,8 @@ namespace HospitalityDataUpdater
             this.CreateLocationButton.Size = new System.Drawing.Size(75, 23);
             this.CreateLocationButton.TabIndex = 16;
             this.CreateLocationButton.Text = "Create";
+            this.InputsToolTip.SetToolTip(this.CreateLocationButton, "Create Button:\r\nWill create the location based on the information above.\r\nNOTE: L" +
+        "ocations once created, can be edited or deleted.");
             this.CreateLocationButton.UseVisualStyleBackColor = true;
             this.CreateLocationButton.Click += new System.EventHandler(this.CreateLocationButton_Click);
             // 
@@ -570,6 +658,7 @@ namespace HospitalityDataUpdater
             this.FileNameTextbox.Size = new System.Drawing.Size(127, 20);
             this.FileNameTextbox.TabIndex = 0;
             this.FileNameTextbox.TabStop = false;
+            this.InputsToolTip.SetToolTip(this.FileNameTextbox, "Import File:\r\nThe name of the excel file in C:\\ExcelData you want to import\r\n");
             this.FileNameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathTextbox_KeyDown);
             // 
             // FileNameLabel
@@ -577,9 +666,9 @@ namespace HospitalityDataUpdater
             this.FileNameLabel.AutoSize = true;
             this.FileNameLabel.Location = new System.Drawing.Point(6, 85);
             this.FileNameLabel.Name = "FileNameLabel";
-            this.FileNameLabel.Size = new System.Drawing.Size(48, 13);
+            this.FileNameLabel.Size = new System.Drawing.Size(55, 13);
             this.FileNameLabel.TabIndex = 16;
-            this.FileNameLabel.Text = "File Path";
+            this.FileNameLabel.Text = "Import File";
             // 
             // ImportButton
             // 
@@ -589,6 +678,7 @@ namespace HospitalityDataUpdater
             this.ImportButton.TabIndex = 1;
             this.ImportButton.TabStop = false;
             this.ImportButton.Text = "Import";
+            this.InputsToolTip.SetToolTip(this.ImportButton, "Import Button:\r\nWill import based on the rows you chose above");
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
             // 
@@ -601,6 +691,7 @@ namespace HospitalityDataUpdater
             this.ToRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.ToRowDropDown.TabIndex = 14;
             this.ToRowDropDown.TabStop = false;
+            this.InputsToolTip.SetToolTip(this.ToRowDropDown, "Row To:\r\nThe row you want to import to\r\n");
             // 
             // RowToRow
             // 
@@ -625,6 +716,7 @@ namespace HospitalityDataUpdater
             this.FromRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.FromRowDropDown.TabIndex = 1;
             this.FromRowDropDown.TabStop = false;
+            this.InputsToolTip.SetToolTip(this.FromRowDropDown, "Row From:\r\nThe row you want to import from");
             // 
             // SaveButton
             // 
@@ -634,6 +726,9 @@ namespace HospitalityDataUpdater
             this.SaveButton.TabIndex = 2;
             this.SaveButton.TabStop = false;
             this.SaveButton.Text = "Save";
+            this.InputsToolTip.SetToolTip(this.SaveButton, "Save Button:\r\nWill save the data you\'ve worked on so far.\r\nNOTE: If nothing is in" +
+        " the save as field, then will save\r\nthe data based on the \"Import File\", so it c" +
+        "an overwrite data");
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
@@ -672,17 +767,19 @@ namespace HospitalityDataUpdater
             this.SaveFileLabel.AutoSize = true;
             this.SaveFileLabel.Location = new System.Drawing.Point(6, 107);
             this.SaveFileLabel.Name = "SaveFileLabel";
-            this.SaveFileLabel.Size = new System.Drawing.Size(85, 13);
+            this.SaveFileLabel.Size = new System.Drawing.Size(50, 13);
             this.SaveFileLabel.TabIndex = 23;
-            this.SaveFileLabel.Text = "File Save Name:";
+            this.SaveFileLabel.Text = "Save As:";
             // 
             // FileSaveNameInput
             // 
-            this.FileSaveNameInput.Location = new System.Drawing.Point(89, 104);
+            this.FileSaveNameInput.Location = new System.Drawing.Point(58, 104);
             this.FileSaveNameInput.Name = "FileSaveNameInput";
-            this.FileSaveNameInput.Size = new System.Drawing.Size(127, 20);
+            this.FileSaveNameInput.Size = new System.Drawing.Size(158, 20);
             this.FileSaveNameInput.TabIndex = 18;
             this.FileSaveNameInput.TabStop = false;
+            this.InputsToolTip.SetToolTip(this.FileSaveNameInput, "Save As:\r\nThe name of the file you want to save this as in C:\\ExcelData\r\nWARNING:" +
+        " This can overwrite data, so watch out.");
             // 
             // SaveRowButton
             // 
@@ -692,6 +789,8 @@ namespace HospitalityDataUpdater
             this.SaveRowButton.TabIndex = 18;
             this.SaveRowButton.TabStop = false;
             this.SaveRowButton.Text = "Save Row";
+            this.InputsToolTip.SetToolTip(this.SaveRowButton, "Save Row Button:\r\nWill save the current row its on in the program ONLY, not in an" +
+        "y excel file.");
             this.SaveRowButton.UseVisualStyleBackColor = true;
             this.SaveRowButton.Click += new System.EventHandler(this.SaveRowButton_Click);
             // 
@@ -703,6 +802,8 @@ namespace HospitalityDataUpdater
             this.CompanyNameLabel.Size = new System.Drawing.Size(85, 13);
             this.CompanyNameLabel.TabIndex = 22;
             this.CompanyNameLabel.Text = "Company Name:";
+            this.InputsToolTip.SetToolTip(this.CompanyNameLabel, "Company Name:\r\nWill display the name of the company you are currently on. Is non-" +
+        "editable");
             // 
             // SelectButton
             // 
@@ -712,6 +813,7 @@ namespace HospitalityDataUpdater
             this.SelectButton.TabIndex = 3;
             this.SelectButton.TabStop = false;
             this.SelectButton.Text = "Select";
+            this.InputsToolTip.SetToolTip(this.SelectButton, "Select Button:\r\nIt will load the row you selected in the Row Chooser dropdown.");
             this.SelectButton.UseVisualStyleBackColor = true;
             this.SelectButton.Click += new System.EventHandler(this.SelectButton_Click);
             // 
@@ -723,6 +825,8 @@ namespace HospitalityDataUpdater
             this.RowChooserDropDown.Size = new System.Drawing.Size(71, 21);
             this.RowChooserDropDown.TabIndex = 20;
             this.RowChooserDropDown.TabStop = false;
+            this.InputsToolTip.SetToolTip(this.RowChooserDropDown, "Row Chooser:\r\nYou can pick a specific row based on what you imported here.\r\nSimpl" +
+        "e choose the row then click the select button.");
             // 
             // RowChooseLabel
             // 
@@ -741,6 +845,8 @@ namespace HospitalityDataUpdater
             this.RowNumberLabel.Size = new System.Drawing.Size(99, 13);
             this.RowNumberLabel.TabIndex = 18;
             this.RowNumberLabel.Text = "Row Number: 0001";
+            this.InputsToolTip.SetToolTip(this.RowNumberLabel, "Row Number:\r\nWill display the row you are currently editing.\r\nNOTE: starts at 0, " +
+        "due to c# index setup.");
             // 
             // PreviousButton
             // 
@@ -750,6 +856,9 @@ namespace HospitalityDataUpdater
             this.PreviousButton.TabIndex = 17;
             this.PreviousButton.TabStop = false;
             this.PreviousButton.Text = "Previous";
+            this.InputsToolTip.SetToolTip(this.PreviousButton, "Previous Button:\r\nWill go back 1 from the row you are currently on\r\nNote: Will sa" +
+        "ve data in the file based off of \"save as\", if that is empty it will go for \"Imp" +
+        "ort File\" entry.\r\n");
             this.PreviousButton.UseVisualStyleBackColor = true;
             this.PreviousButton.Click += new System.EventHandler(this.PreviousButton_Click);
             // 
@@ -761,48 +870,16 @@ namespace HospitalityDataUpdater
             this.NextButton.TabIndex = 16;
             this.NextButton.TabStop = false;
             this.NextButton.Text = "Next";
+            this.InputsToolTip.SetToolTip(this.NextButton, "Next Button:\r\nWill go further 1 from the row you are currently on\r\nNote: Will sav" +
+        "e data in the file based off of \"save as\", if that is empty it will go for \"Impo" +
+        "rt File\" entry.\r\n\r\n");
             this.NextButton.UseVisualStyleBackColor = true;
             this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
-            // CompanySocialsNameComboBox
+            // InputsToolTip
             // 
-            this.CompanySocialsNameComboBox.DisplayMember = "10000";
-            this.CompanySocialsNameComboBox.FormattingEnabled = true;
-            this.CompanySocialsNameComboBox.Items.AddRange(new object[] {
-            "youtube",
-            "linkedin",
-            "instagram",
-            "twitter",
-            "facebook",
-            "tiktok",
-            "snapchat",
-            "pinterest"});
-            this.CompanySocialsNameComboBox.Location = new System.Drawing.Point(79, 19);
-            this.CompanySocialsNameComboBox.Name = "CompanySocialsNameComboBox";
-            this.CompanySocialsNameComboBox.Size = new System.Drawing.Size(119, 21);
-            this.CompanySocialsNameComboBox.TabIndex = 18;
-            this.CompanySocialsNameComboBox.TabStop = false;
-            this.CompanySocialsNameComboBox.Text = "Select Social Media";
-            // 
-            // SocialNameComboBox
-            // 
-            this.SocialNameComboBox.DisplayMember = "10000";
-            this.SocialNameComboBox.FormattingEnabled = true;
-            this.SocialNameComboBox.Items.AddRange(new object[] {
-            "youtube",
-            "linkedin",
-            "instagram",
-            "twitter",
-            "facebook",
-            "tiktok",
-            "snapchat",
-            "pinterest"});
-            this.SocialNameComboBox.Location = new System.Drawing.Point(336, 169);
-            this.SocialNameComboBox.Name = "SocialNameComboBox";
-            this.SocialNameComboBox.Size = new System.Drawing.Size(126, 21);
-            this.SocialNameComboBox.TabIndex = 13;
-            this.SocialNameComboBox.TabStop = false;
-            this.SocialNameComboBox.Text = "Select Social Media";
+            this.InputsToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.InputsToolTip.ToolTipTitle = "Information for Inputs";
             // 
             // MainMenuInterface
             // 
@@ -906,6 +983,7 @@ namespace HospitalityDataUpdater
         private Label CompanySocialsTagLabel;
         private ComboBox CompanySocialsNameComboBox;
         private ComboBox SocialNameComboBox;
+        private ToolTip InputsToolTip;
     }
 }
 

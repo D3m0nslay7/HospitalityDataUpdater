@@ -117,4 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="InputsToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="InputsToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="LocationAdd1Input.ToolTip" xml:space="preserve">
+    <value>Location Address 1:
+1st Address Line for the location, usually is the house, flat or unity number alongside the street.
+WARNING: Do not include any special characters, such as commas, instead if you want to seperate data use spaces only.</value>
+  </data>
+  <data name="LocationPhoneNumberInput.ToolTip" xml:space="preserve">
+    <value>Location Phone Number: 
+The Phone Number of this location, if there is none then you should keep this empty.
+NOTE: This is auto formatted, so just copy paste the entire phone number.
+WARNING: Will not work with international numbers.</value>
+  </data>
+  <data name="LocationAdd2Input.ToolTip" xml:space="preserve">
+    <value>Location Address 2: 
+The second address line for the location, should include maybe the area, or region the location is in
+NOTE: Do not include any special characters, such as commas, instead if you want to seperate data use spaces only.
+</value>
+  </data>
+  <data name="LocationWebsiteInput.ToolTip" xml:space="preserve">
+    <value>Location Website:
+This locations specific website.
+NOTE 1: Should not be a page of the company website, if there is no unique website do not enter one.
+NOTE 2: This is auto formatted like company website input.</value>
+  </data>
 </root>

@@ -174,7 +174,7 @@ namespace HospitalityDataUpdater.Windows
         private void Edit_AddSocialsButton_Click(object sender, EventArgs e)
         {
             //we get the values
-            string socName = Edit_SocialNameInput.Text;
+            string socName = Edit_SocialNameComboBox.SelectedItem.ToString();
             string socTag = Edit_SocialTagInput.Text;
             Social socialItem;
 

@@ -1191,8 +1191,7 @@ namespace HospitalityDataUpdater
             }
         }
 
+
         #endregion
-
-
     }
 }

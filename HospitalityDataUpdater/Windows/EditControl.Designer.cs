@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditControl));
             this.Edit_LocationIdLabel = new System.Windows.Forms.Label();
             this.Edit_LocationBookingProviderInput = new System.Windows.Forms.TextBox();
             this.Edit_LocationBookingProviderLabel = new System.Windows.Forms.Label();
@@ -46,7 +48,6 @@
             this.Edit_LocationNameInput = new System.Windows.Forms.TextBox();
             this.Edit_LocationNameLabel = new System.Windows.Forms.Label();
             this.Edit_SocialTagInput = new System.Windows.Forms.TextBox();
-            this.Edit_SocialNameInput = new System.Windows.Forms.TextBox();
             this.Edit_SocialTagLabel = new System.Windows.Forms.Label();
             this.Edit_SocialNameLabel = new System.Windows.Forms.Label();
             this.Edit_AddSocialsButton = new System.Windows.Forms.Button();
@@ -54,6 +55,8 @@
             this.Edit_SocialsLayoutContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.Edit_SaveButton = new System.Windows.Forms.Button();
             this.Edit_CancelButton = new System.Windows.Forms.Button();
+            this.EditInformationToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Edit_SocialNameComboBox = new System.Windows.Forms.ComboBox();
             this.SocialsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +76,9 @@
             this.Edit_LocationBookingProviderInput.Name = "Edit_LocationBookingProviderInput";
             this.Edit_LocationBookingProviderInput.Size = new System.Drawing.Size(119, 20);
             this.Edit_LocationBookingProviderInput.TabIndex = 25;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationBookingProviderInput, "Location Booking Provider:\r\nBooking provider for the location, such as ResDiary, " +
+        "or sevenrooms. Can be anything.\r\nNOTE: booking can be in terms of hotel booking," +
+        " or resturant reservation booking.\r\n");
             // 
             // Edit_LocationBookingProviderLabel
             // 
@@ -89,6 +95,7 @@
             this.Edit_LocationAdd1Input.Name = "Edit_LocationAdd1Input";
             this.Edit_LocationAdd1Input.Size = new System.Drawing.Size(404, 20);
             this.Edit_LocationAdd1Input.TabIndex = 21;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationAdd1Input, resources.GetString("Edit_LocationAdd1Input.ToolTip"));
             // 
             // Edit_LocationAddress1Label
             // 
@@ -123,6 +130,7 @@
             this.Edit_LocationPhoneNumberInput.Name = "Edit_LocationPhoneNumberInput";
             this.Edit_LocationPhoneNumberInput.Size = new System.Drawing.Size(379, 20);
             this.Edit_LocationPhoneNumberInput.TabIndex = 20;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationPhoneNumberInput, resources.GetString("Edit_LocationPhoneNumberInput.ToolTip"));
             // 
             // Edit_LocationPostcodeInput
             // 
@@ -130,6 +138,7 @@
             this.Edit_LocationPostcodeInput.Name = "Edit_LocationPostcodeInput";
             this.Edit_LocationPostcodeInput.Size = new System.Drawing.Size(209, 20);
             this.Edit_LocationPostcodeInput.TabIndex = 24;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationPostcodeInput, "Location Postcode:\r\nThe postcode for the location, This is autoformatted.");
             // 
             // Edit_LocationAdd2Input
             // 
@@ -137,6 +146,7 @@
             this.Edit_LocationAdd2Input.Name = "Edit_LocationAdd2Input";
             this.Edit_LocationAdd2Input.Size = new System.Drawing.Size(404, 20);
             this.Edit_LocationAdd2Input.TabIndex = 22;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationAdd2Input, resources.GetString("Edit_LocationAdd2Input.ToolTip"));
             // 
             // Edit_LocationWebsiteInput
             // 
@@ -144,6 +154,7 @@
             this.Edit_LocationWebsiteInput.Name = "Edit_LocationWebsiteInput";
             this.Edit_LocationWebsiteInput.Size = new System.Drawing.Size(411, 20);
             this.Edit_LocationWebsiteInput.TabIndex = 19;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationWebsiteInput, resources.GetString("Edit_LocationWebsiteInput.ToolTip"));
             // 
             // Edit_LocationCityLabel
             // 
@@ -170,6 +181,8 @@
             this.Edit_LocationCityInput.Name = "Edit_LocationCityInput";
             this.Edit_LocationCityInput.Size = new System.Drawing.Size(119, 20);
             this.Edit_LocationCityInput.TabIndex = 23;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationCityInput, "Location City:\r\nThe city this location is located in, usually included in the add" +
+        "ress, if not found in address use google maps to find it.\r\n\r\n");
             // 
             // Edit_LocationPostcodeLabel
             // 
@@ -186,6 +199,8 @@
             this.Edit_LocationNameInput.Name = "Edit_LocationNameInput";
             this.Edit_LocationNameInput.Size = new System.Drawing.Size(423, 20);
             this.Edit_LocationNameInput.TabIndex = 18;
+            this.EditInformationToolTip.SetToolTip(this.Edit_LocationNameInput, "Location Name:\r\nThe name of the location, normally specified on the facebook, goo" +
+        "gle maps or company website.\r\n");
             // 
             // Edit_LocationNameLabel
             // 
@@ -202,13 +217,8 @@
             this.Edit_SocialTagInput.Name = "Edit_SocialTagInput";
             this.Edit_SocialTagInput.Size = new System.Drawing.Size(126, 20);
             this.Edit_SocialTagInput.TabIndex = 27;
-            // 
-            // Edit_SocialNameInput
-            // 
-            this.Edit_SocialNameInput.Location = new System.Drawing.Point(596, 32);
-            this.Edit_SocialNameInput.Name = "Edit_SocialNameInput";
-            this.Edit_SocialNameInput.Size = new System.Drawing.Size(119, 20);
-            this.Edit_SocialNameInput.TabIndex = 26;
+            this.EditInformationToolTip.SetToolTip(this.Edit_SocialTagInput, "Social Media Tag:\r\nThe social media tag, has to be correct.\r\nNOTE: Should not con" +
+        "tain the @ Symbol\r\n\r\n");
             // 
             // Edit_SocialTagLabel
             // 
@@ -235,6 +245,7 @@
             this.Edit_AddSocialsButton.Size = new System.Drawing.Size(47, 42);
             this.Edit_AddSocialsButton.TabIndex = 28;
             this.Edit_AddSocialsButton.Text = "Add Social";
+            this.EditInformationToolTip.SetToolTip(this.Edit_AddSocialsButton, resources.GetString("Edit_AddSocialsButton.ToolTip"));
             this.Edit_AddSocialsButton.UseVisualStyleBackColor = true;
             this.Edit_AddSocialsButton.Click += new System.EventHandler(this.Edit_AddSocialsButton_Click);
             // 
@@ -279,16 +290,42 @@
             this.Edit_CancelButton.UseVisualStyleBackColor = true;
             this.Edit_CancelButton.Click += new System.EventHandler(this.Edit_CancelButton_Click);
             // 
+            // EditInformationToolTip
+            // 
+            this.EditInformationToolTip.ToolTipTitle = "Edit Inputs Information";
+            // 
+            // Edit_SocialNameComboBox
+            // 
+            this.Edit_SocialNameComboBox.DisplayMember = "10000";
+            this.Edit_SocialNameComboBox.FormattingEnabled = true;
+            this.Edit_SocialNameComboBox.Items.AddRange(new object[] {
+            "youtube",
+            "linkedin",
+            "instagram",
+            "twitter",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "pinterest"});
+            this.Edit_SocialNameComboBox.Location = new System.Drawing.Point(589, 31);
+            this.Edit_SocialNameComboBox.Name = "Edit_SocialNameComboBox";
+            this.Edit_SocialNameComboBox.Size = new System.Drawing.Size(126, 21);
+            this.Edit_SocialNameComboBox.TabIndex = 26;
+            this.Edit_SocialNameComboBox.TabStop = false;
+            this.Edit_SocialNameComboBox.Text = "Select Social Media";
+            this.EditInformationToolTip.SetToolTip(this.Edit_SocialNameComboBox, "Social Name Dropdown:\r\nDropdown box containing Social Media names, this is to pro" +
+        "vide consitency and remove human errors such as spelling mistakes.\r\n\r\n");
+            // 
             // EditControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.Controls.Add(this.Edit_SocialNameComboBox);
             this.Controls.Add(this.Edit_CancelButton);
             this.Controls.Add(this.Edit_SaveButton);
             this.Controls.Add(this.SocialsGroupBox);
             this.Controls.Add(this.Edit_SocialTagInput);
-            this.Controls.Add(this.Edit_SocialNameInput);
             this.Controls.Add(this.Edit_SocialTagLabel);
             this.Controls.Add(this.Edit_SocialNameLabel);
             this.Controls.Add(this.Edit_AddSocialsButton);
@@ -338,7 +375,6 @@
         private System.Windows.Forms.TextBox Edit_LocationNameInput;
         private System.Windows.Forms.Label Edit_LocationNameLabel;
         private System.Windows.Forms.TextBox Edit_SocialTagInput;
-        private System.Windows.Forms.TextBox Edit_SocialNameInput;
         private System.Windows.Forms.Label Edit_SocialTagLabel;
         private System.Windows.Forms.Label Edit_SocialNameLabel;
         private System.Windows.Forms.Button Edit_AddSocialsButton;
@@ -346,5 +382,7 @@
         public System.Windows.Forms.FlowLayoutPanel Edit_SocialsLayoutContainer;
         private System.Windows.Forms.Button Edit_SaveButton;
         private System.Windows.Forms.Button Edit_CancelButton;
+        private System.Windows.Forms.ToolTip EditInformationToolTip;
+        private System.Windows.Forms.ComboBox Edit_SocialNameComboBox;
     }
 }
