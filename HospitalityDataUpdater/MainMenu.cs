@@ -144,7 +144,7 @@ namespace HospitalityDataUpdater
             LocationAdd2Input.Text = "";
             LocationCityInput.Text = "";
             LocationPostcodeInput.Text = "";
-            SocialNameInput.Text = "";
+            SocialNameComboBox.SelectedIndex = 0;
             SocialTagInput.Text = "";
             LocationBookingProviderInput.Text = "";
         }
@@ -975,7 +975,7 @@ namespace HospitalityDataUpdater
         private void AddSocialsButton_Click(object sender, EventArgs e)
         {
             //we get the values
-            string socName = SocialNameInput.Text;
+            string socName = SocialNameComboBox.SelectedItem.ToString();
             string socTag = SocialTagInput.Text;
             Social socialItem;
 
@@ -1121,7 +1121,7 @@ namespace HospitalityDataUpdater
         private void AddCompanySocialButton_Click(object sender, EventArgs e)// this is for the companies social controller
         {
             //we get the values
-            string socName = CompanySocialsNameInput.Text;
+            string socName = CompanySocialsNameComboBox.SelectedItem.ToString();
             string socTag = CompanySocialsTagInput.Text;
             Social socialItem;
 
