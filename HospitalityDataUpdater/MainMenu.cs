@@ -636,7 +636,17 @@ namespace HospitalityDataUpdater
             if(importedData != null)
             {
                 //we save all the entries into the row
-                importedData.Rows[currentRowNum]["Website"] = FormatURL(WebsiteInput.Text);
+
+                //we only want to format it if there is something within the field
+                if (WebsiteInput.Text != null)
+                {
+                    importedData.Rows[currentRowNum]["Website"] = FormatURL(WebsiteInput.Text);
+                }
+                else
+                {
+                    importedData.Rows[currentRowNum]["Website"] = null;
+                }
+
                 importedData.Rows[currentRowNum]["New_Num_Stores"] = NumNewStoresInput.Value;
                 importedData.Rows[currentRowNum]["Num_Developing_Stores"] = NumDevStoresInput.Value;
                 importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
@@ -728,8 +738,11 @@ namespace HospitalityDataUpdater
                         string locPho = data.getPhoneNum();
                         string locWeb = data.getWebsite();
                         string locBooking = data.getBookingProvider();
-
-                        string[] phoneNumbers = FormatPhoneNumber(locPho);
+                        string[] phoneNumbers = null;
+                        if (locPho != null)
+                        {
+                            phoneNumbers = FormatPhoneNumber(locPho);
+                        }
                         //Console.WriteLine(phoneNumbers);
                         JArray phojsonArray = null;
                         if (phoneNumbers != null)
@@ -845,17 +858,31 @@ namespace HospitalityDataUpdater
 
         private string FormatURL(string url) // function to format url, takes url, removes everything but domain, then adds www. to the front
         {
-            Uri uri = new Uri(url);
-            //gets the domain
-            string domain = uri.Host;
-            //we check if the domain already starts with a www. or not
-            if (!domain.StartsWith("www."))
+            try
             {
-                //since it doesnt start with www, we add it on
-                domain = "www." + domain;
+                // Prepend a default scheme if the URL doesn't have one
+                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
+                {
+                    url = "http://" + url;
+                }
+
+                Uri uri = new Uri(url);
+                //gets the domain
+                string domain = uri.Host;
+                //we check if the domain already starts with a www. or not
+                if (!domain.StartsWith("www."))
+                {
+                    //since it doesnt start with www, we add it on
+                    domain = "www." + domain;
+                }
+                //return the domain
+                return domain;
             }
-            //return the domain
-            return domain;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         #endregion
@@ -1031,6 +1058,7 @@ namespace HospitalityDataUpdater
             }
             if (locWeb == string.Empty)
             {
+
                 locWeb = null;
             }
             else
@@ -1085,7 +1113,8 @@ namespace HospitalityDataUpdater
 
             locationController.CreateLocationUIs();
 
-            
+            //here we set the new num of stores field to the number of locations
+            NumNewStoresInput.Value = locationController.getLocations().Count;
 
             EmptyLocInputs();
 
