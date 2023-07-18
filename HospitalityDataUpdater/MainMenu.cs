@@ -636,7 +636,7 @@ namespace HospitalityDataUpdater
             if(importedData != null)
             {
                 //we save all the entries into the row
-                importedData.Rows[currentRowNum]["Website"] = WebsiteInput.Text;
+                importedData.Rows[currentRowNum]["Website"] = FormatURL(WebsiteInput.Text);
                 importedData.Rows[currentRowNum]["New_Num_Stores"] = NumNewStoresInput.Value;
                 importedData.Rows[currentRowNum]["Num_Developing_Stores"] = NumDevStoresInput.Value;
                 importedData.Rows[currentRowNum]["Brands"] = brandController.getSaveableData();
@@ -843,6 +843,21 @@ namespace HospitalityDataUpdater
             return formattedPostcode;
         }
 
+        private string FormatURL(string url) // function to format url, takes url, removes everything but domain, then adds www. to the front
+        {
+            Uri uri = new Uri(url);
+            //gets the domain
+            string domain = uri.Host;
+            //we check if the domain already starts with a www. or not
+            if (!domain.StartsWith("www."))
+            {
+                //since it doesnt start with www, we add it on
+                domain = "www." + domain;
+            }
+            //return the domain
+            return domain;
+        }
+
         #endregion
 
         //stuff to controll the rows and stuff
@@ -1017,6 +1032,11 @@ namespace HospitalityDataUpdater
             if (locWeb == string.Empty)
             {
                 locWeb = null;
+            }
+            else
+            {
+                // formats the url
+                locWeb = FormatURL(locWeb);
             }
             if (locPho == string.Empty)
             {
