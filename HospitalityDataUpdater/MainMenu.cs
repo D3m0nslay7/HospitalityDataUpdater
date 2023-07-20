@@ -1,15 +1,9 @@
 ﻿using HospitalityDataUpdater._cs;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using HospitalityDataUpdater._cs.Controllers;
 using Newtonsoft.Json;
 using ExcelDataReader;
@@ -18,11 +12,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using PhoneNumbers;
 using HospitalityDataUpdater.Windows;
-using System.Windows.Controls;
 using Button = System.Windows.Forms.Button;
-using System.Collections;
-using static OfficeOpenXml.ExcelErrorValue;
-using System.Windows.Input;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using System.Text.RegularExpressions;
 
