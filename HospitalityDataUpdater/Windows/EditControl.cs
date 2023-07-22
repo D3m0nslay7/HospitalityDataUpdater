@@ -18,6 +18,7 @@ namespace HospitalityDataUpdater.Windows
         //methods relating to the mainmenu
         EventHandler viewSocials = null;
         EventHandler editLocation = null;
+        //Constructor
         public EditControl(Location inputData, EventHandler viewSoc, EventHandler editLoc)
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace HospitalityDataUpdater.Windows
             Edit_LocationIdLabel.Text = Edit_LocationIdLabel.Text + data.getIndex();
             socialsContainer = Edit_SocialsLayoutContainer;
         }
-
+        //When the control loads
         private void EditControl_Load(object sender, EventArgs e)
         {
             //we want to set the fields to the data we have
@@ -38,7 +39,7 @@ namespace HospitalityDataUpdater.Windows
 
         #region Methods
 
-        private void SetFields() //set the fields from this location class to edit
+        private void SetFields() // set the fields from location class we want to edit
         {
             //get the normal fields
             Edit_LocationNameInput.Text = data.getName();
@@ -55,8 +56,8 @@ namespace HospitalityDataUpdater.Windows
             if (socialsContainer != null)
             {
 
-                //we now spawn in the next social data
-                currentSocialController = data.getSocialController();//get the socials
+                //we now spawn in the social data for this location
+                currentSocialController = data.getSocialController(); // get the socials
                 if (currentSocialController != null) // check if we have socials
                 {
                     foreach (Social socialData in currentSocialController.getSocials())
@@ -69,7 +70,7 @@ namespace HospitalityDataUpdater.Windows
             }
         }
 
-        private void ClosePanel()
+        private void ClosePanel() // Closes the Panel
         {
             // Get the parent container and remove the user control
             Control parentContainer = this.Parent;
@@ -151,8 +152,7 @@ namespace HospitalityDataUpdater.Windows
             //replace the old location with the new one.
             locController.ReplaceEntry(data, loc);
 
-            ClosePanel();
-
+            ClosePanel();                                                                                                                                                             
         }
 
         private void Edit_CancelButton_Click(object sender, EventArgs e) // leaves the edit panel
@@ -160,7 +160,7 @@ namespace HospitalityDataUpdater.Windows
             ClosePanel();
         }
 
-        private void Edit_AddSocialsButton_Click(object sender, EventArgs e)
+        private void Edit_AddSocialsButton_Click(object sender, EventArgs e) // 
         {
             //we get the values
             string socName = Edit_SocialNameComboBox.SelectedItem.ToString();

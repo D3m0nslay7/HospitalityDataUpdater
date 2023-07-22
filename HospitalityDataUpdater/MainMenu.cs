@@ -58,22 +58,19 @@ namespace HospitalityDataUpdater
 
             companySocialController = null;
             #endregion
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
+            //This is to set the license of the excelPackage
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.Commercial;
 
-            #region excel
-
-
-            #endregion
-            //makes the filepath
+            //We check if the folder exists,if not we make one here. This filepath can be changed above
             if (!Directory.Exists(filePath))
             {
                 Directory.CreateDirectory(filePath);
-                Console.WriteLine("Folder created successfully.");
+                //Console.WriteLine("Folder created successfully.");
             }
             else
             {
-                Console.WriteLine("Folder already exists.");
+                //Console.WriteLine("Folder already exists.");
             }
         }
 
@@ -85,13 +82,13 @@ namespace HospitalityDataUpdater
 
         #region UI Methods
 
-        private void ViewSocialsButton_Click(object sender, EventArgs e)
+        private void ViewSocialsButton_Click(object sender, EventArgs e) // A method to view the socials of a location
         {
-            //we get the location, so we can display hte socials for it
+            //we get the location, so we can display the socials for it
             Button button = (Button)sender;
             Location tag = button.Tag as Location;
 
-            //we return if we are teh same thing
+            //we return if we are the same thing
             if (locationSocialController == tag.getSocialController())
             {
                 //Console.WriteLine("returning");
@@ -102,7 +99,7 @@ namespace HospitalityDataUpdater
             if (locationSocialController != null)
             {
 
-                if (locationSocialController.getSocials().Count > 0) // only if we have more
+                if (locationSocialController.getSocials().Count > 0) // only if we have items in the list we call clear
                 {
                     locationSocialController.Clear();
                 }
@@ -125,7 +122,7 @@ namespace HospitalityDataUpdater
 
         }
 
-        private void EmptyLocInputs()
+        private void EmptyLocInputs() // A simple methods to get rid of all the location inputs
         {
             LocationNameInput.Text = "";
             LocationWebsiteInput.Text = "";
@@ -144,11 +141,9 @@ namespace HospitalityDataUpdater
         #endregion
 
         #region Edit Panel
-        private void UserControl_Disposed(object sender, EventArgs e)
+        private void EditControl_Disposed(object sender, EventArgs e) // Method to check if the edit control has been disposed off
         {
             popup = false;
-
-            Console.WriteLine();
 
             //check if we have imported data
             if (importedData != null)
@@ -156,7 +151,7 @@ namespace HospitalityDataUpdater
                 //save the data in a backup excel file for saftey
                 exportFile("backup");
 
-                SetData(importedData.Rows[currentRowNum]);
+                SetData(importedData.Rows[currentRowNum]); // saves the edited data
             }
 
 
@@ -189,8 +184,8 @@ namespace HospitalityDataUpdater
             panel.Location = new System.Drawing.Point(0, -7);
             LocationsGroupBox.Controls.Add(panel);
             panel.BringToFront();
-            //an event handler to tell us if hte user gets disposed
-            panel.Disposed += UserControl_Disposed;
+            //an event handler to tell us if the edit panel gets disposed
+            panel.Disposed += EditControl_Disposed;
 
             popup = true;
 
@@ -201,17 +196,25 @@ namespace HospitalityDataUpdater
 
         #region excel
 
-        private void exportFile(string param)
+        private void exportFile(string param) // Exports the data, the param being the name of the file
         {
             if(importedData == null)
             {
                 return;
             }
+            //clears the entires of the form
             clearEntries();
+
             string newFilePath = "";
+            //if we dont have a file save, we save using whatevers in the fileinpt text
             if(FileSaveNameInput.Text == string.Empty)
             {
                 newFilePath = filePath+FileNameTextbox.Text + ".xlsx";
+            }
+            else if (FileNameTextbox.Text == string.Empty)
+            {
+                MessageBox.Show("WARNING: There is nothing in either the File Import field, nor the Field Save field.");
+                return;
             }
             else
             {
@@ -355,7 +358,6 @@ namespace HospitalityDataUpdater
             //we import the data now
 
             //get new controllers, we dont want any old data
-            //here we get the controlelrs
             locationController = new LocationController(locationsContainer, ViewSocialsButton_Click, EditDataButton_Click);
             locationSocialController = new SocialController();
             brandController = new BrandController();
