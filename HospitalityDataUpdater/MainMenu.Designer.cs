@@ -81,8 +81,6 @@ namespace HospitalityDataUpdater
             this.CreateLocationButton = new System.Windows.Forms.Button();
             this.LocationsSavedLabel = new System.Windows.Forms.Label();
             this.ExcelPanel = new System.Windows.Forms.GroupBox();
-            this.FileNameTextbox = new System.Windows.Forms.TextBox();
-            this.FileNameLabel = new System.Windows.Forms.Label();
             this.ImportButton = new System.Windows.Forms.Button();
             this.ToRowDropDown = new System.Windows.Forms.ComboBox();
             this.RowToRow = new System.Windows.Forms.Label();
@@ -101,6 +99,7 @@ namespace HospitalityDataUpdater
             this.PreviousButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
             this.InputsToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.SelectFileButton = new System.Windows.Forms.Button();
             this.InputPanel.SuspendLayout();
             this.CompanySocialsGroupBox.SuspendLayout();
             this.SocialsHolderPanel.SuspendLayout();
@@ -637,8 +636,7 @@ namespace HospitalityDataUpdater
             // 
             // ExcelPanel
             // 
-            this.ExcelPanel.Controls.Add(this.FileNameTextbox);
-            this.ExcelPanel.Controls.Add(this.FileNameLabel);
+            this.ExcelPanel.Controls.Add(this.SelectFileButton);
             this.ExcelPanel.Controls.Add(this.ImportButton);
             this.ExcelPanel.Controls.Add(this.ToRowDropDown);
             this.ExcelPanel.Controls.Add(this.RowToRow);
@@ -651,30 +649,11 @@ namespace HospitalityDataUpdater
             this.ExcelPanel.TabStop = false;
             this.ExcelPanel.Text = "Importer";
             // 
-            // FileNameTextbox
-            // 
-            this.FileNameTextbox.Location = new System.Drawing.Point(4, 101);
-            this.FileNameTextbox.Name = "FileNameTextbox";
-            this.FileNameTextbox.Size = new System.Drawing.Size(127, 20);
-            this.FileNameTextbox.TabIndex = 0;
-            this.FileNameTextbox.TabStop = false;
-            this.InputsToolTip.SetToolTip(this.FileNameTextbox, "Import File:\r\nThe name of the excel file in C:\\ExcelData you want to import\r\n");
-            this.FileNameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathTextbox_KeyDown);
-            // 
-            // FileNameLabel
-            // 
-            this.FileNameLabel.AutoSize = true;
-            this.FileNameLabel.Location = new System.Drawing.Point(6, 85);
-            this.FileNameLabel.Name = "FileNameLabel";
-            this.FileNameLabel.Size = new System.Drawing.Size(55, 13);
-            this.FileNameLabel.TabIndex = 16;
-            this.FileNameLabel.Text = "Import File";
-            // 
             // ImportButton
             // 
-            this.ImportButton.Location = new System.Drawing.Point(6, 56);
+            this.ImportButton.Location = new System.Drawing.Point(14, 97);
             this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(53, 23);
+            this.ImportButton.Size = new System.Drawing.Size(50, 23);
             this.ImportButton.TabIndex = 1;
             this.ImportButton.TabStop = false;
             this.ImportButton.Text = "Import";
@@ -686,7 +665,7 @@ namespace HospitalityDataUpdater
             // 
             this.ToRowDropDown.DisplayMember = "10000";
             this.ToRowDropDown.FormattingEnabled = true;
-            this.ToRowDropDown.Location = new System.Drawing.Point(68, 29);
+            this.ToRowDropDown.Location = new System.Drawing.Point(68, 74);
             this.ToRowDropDown.Name = "ToRowDropDown";
             this.ToRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.ToRowDropDown.TabIndex = 14;
@@ -695,12 +674,12 @@ namespace HospitalityDataUpdater
             // 
             // RowToRow
             // 
-            this.RowToRow.AutoSize = true;
-            this.RowToRow.Location = new System.Drawing.Point(17, 13);
+            this.RowToRow.Location = new System.Drawing.Point(11, 56);
             this.RowToRow.Name = "RowToRow";
-            this.RowToRow.Size = new System.Drawing.Size(89, 13);
+            this.RowToRow.Size = new System.Drawing.Size(107, 13);
             this.RowToRow.TabIndex = 13;
             this.RowToRow.Text = "from Row to Row";
+            this.RowToRow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FromRowDropDown
             // 
@@ -711,7 +690,7 @@ namespace HospitalityDataUpdater
             "3",
             "4",
             "5"});
-            this.FromRowDropDown.Location = new System.Drawing.Point(6, 29);
+            this.FromRowDropDown.Location = new System.Drawing.Point(14, 74);
             this.FromRowDropDown.Name = "FromRowDropDown";
             this.FromRowDropDown.Size = new System.Drawing.Size(50, 21);
             this.FromRowDropDown.TabIndex = 1;
@@ -720,9 +699,9 @@ namespace HospitalityDataUpdater
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(68, 56);
+            this.SaveButton.Location = new System.Drawing.Point(68, 97);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(53, 23);
+            this.SaveButton.Size = new System.Drawing.Size(50, 23);
             this.SaveButton.TabIndex = 2;
             this.SaveButton.TabStop = false;
             this.SaveButton.Text = "Save";
@@ -812,7 +791,7 @@ namespace HospitalityDataUpdater
             this.SelectButton.Size = new System.Drawing.Size(71, 23);
             this.SelectButton.TabIndex = 3;
             this.SelectButton.TabStop = false;
-            this.SelectButton.Text = "Select";
+            this.SelectButton.Text = "Select Row";
             this.InputsToolTip.SetToolTip(this.SelectButton, "Select Button:\r\nIt will load the row you selected in the Row Chooser dropdown.");
             this.SelectButton.UseVisualStyleBackColor = true;
             this.SelectButton.Click += new System.EventHandler(this.SelectButton_Click);
@@ -881,6 +860,18 @@ namespace HospitalityDataUpdater
             this.InputsToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.InputsToolTip.ToolTipTitle = "Information for Inputs";
             // 
+            // SelectFileButton
+            // 
+            this.SelectFileButton.Location = new System.Drawing.Point(11, 14);
+            this.SelectFileButton.Name = "SelectFileButton";
+            this.SelectFileButton.Size = new System.Drawing.Size(107, 39);
+            this.SelectFileButton.TabIndex = 0;
+            this.SelectFileButton.TabStop = false;
+            this.SelectFileButton.Text = "Select File";
+            this.InputsToolTip.SetToolTip(this.SelectFileButton, "Select File Button:\r\nWill Allow you to get the rows and data from an excel file");
+            this.SelectFileButton.UseVisualStyleBackColor = true;
+            this.SelectFileButton.Click += new System.EventHandler(this.SelectFileButton_Click);
+            // 
             // MainMenuInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -906,7 +897,6 @@ namespace HospitalityDataUpdater
             this.LocationsPanel.ResumeLayout(false);
             this.SocialsGroupBox.ResumeLayout(false);
             this.ExcelPanel.ResumeLayout(false);
-            this.ExcelPanel.PerformLayout();
             this.ExcelControls.ResumeLayout(false);
             this.CurrRowsContr.ResumeLayout(false);
             this.CurrRowsContr.PerformLayout();
@@ -961,8 +951,6 @@ namespace HospitalityDataUpdater
         private System.Windows.Forms.Label SocialNameLabel;
         public System.Windows.Forms.FlowLayoutPanel LocationFlowLayout;
         public System.Windows.Forms.FlowLayoutPanel SocialsLayoutContainer;
-        private System.Windows.Forms.TextBox FileNameTextbox;
-        private System.Windows.Forms.Label FileNameLabel;
         private Label CompanyNameLabel;
         private Button SaveRowButton;
         private Label SaveFileLabel;
@@ -984,6 +972,7 @@ namespace HospitalityDataUpdater
         private ComboBox CompanySocialsNameComboBox;
         private ComboBox SocialNameComboBox;
         private ToolTip InputsToolTip;
+        private Button SelectFileButton;
     }
 }
 

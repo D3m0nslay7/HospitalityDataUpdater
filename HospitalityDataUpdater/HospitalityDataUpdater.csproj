@@ -146,6 +146,12 @@
     <Compile Include="Windows\EditControl.Designer.cs">
       <DependentUpon>EditControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\InputTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\InputTextForm.Designer.cs">
+      <DependentUpon>InputTextForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="_cs\Brand.cs" />
     <Compile Include="_cs\Controllers\BrandController.cs" />
     <Compile Include="_cs\Controllers\SocialController.cs" />
@@ -166,6 +172,9 @@
     </Compile>
     <EmbeddedResource Include="Windows\EditControl.resx">
       <DependentUpon>EditControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\InputTextForm.resx">
+      <DependentUpon>InputTextForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="HospitalityDataUpdater_1_TemporaryKey.pfx" />
     <None Include="HospitalityDataUpdater_TemporaryKey.pfx" />

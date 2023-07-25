@@ -39,10 +39,11 @@ namespace HospitalityDataUpdater
 
         string filePath = @"C:\ExcelData\";
 
+        string importedFileName = "";
+
         public MainMenuInterface()
         {
             InitializeComponent();
-            FileNameTextbox.Text = "File Name Here";
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -76,7 +77,16 @@ namespace HospitalityDataUpdater
 
 
 
-
+        private string ShowInputBox(string title, string prompt) // used to open a prompt input box
+        {
+            string userInput = InputBox.Show(title, prompt);
+            if (!string.IsNullOrEmpty(userInput))
+            {
+                //give the user input back to the user
+                return userInput;
+            }
+            return null;
+        }
 
 
 
@@ -206,12 +216,12 @@ namespace HospitalityDataUpdater
             clearEntries();
 
             string newFilePath = "";
-            //if we dont have a file save, we save using whatevers in the fileinpt text
+            //if we dont have a file save, we save using whatevers in the fileinput text
             if(FileSaveNameInput.Text == string.Empty)
             {
-                newFilePath = filePath+FileNameTextbox.Text + ".xlsx";
+                newFilePath = filePath+importedFileName + ".xlsx";
             }
-            else if (FileNameTextbox.Text == string.Empty)
+            else if (importedFileName == string.Empty)
             {
                 MessageBox.Show("WARNING: There is nothing in either the File Import field, nor the Field Save field.");
                 return;
@@ -269,7 +279,7 @@ namespace HospitalityDataUpdater
                 clearEntries();
             }
 
-            string path = filePath+FileNameTextbox.Text + ".xlsx"; // get the filepath from the ui
+            string path = importedFileName; // get the filepath from the ui
             if (File.Exists(path))
             {
                 try
@@ -297,6 +307,7 @@ namespace HospitalityDataUpdater
                             }
 
                             locationSocialController = null;
+                            
                             return filteredTable;
                         }
                     }
@@ -882,6 +893,29 @@ namespace HospitalityDataUpdater
         //stuff to controll the rows and stuff
         #region rowsController
 
+        private void SelectFileButton_Click(object sender, EventArgs e)
+        {
+            string path = filePath + ShowInputBox("File Name", "Please write the name of the file you want to import, stored in " + filePath) + ".xlsx"; // get the filepath from the ui
+            if (File.Exists(path))
+            {
+                int rows = GetExcelRowCount(path);
+                if (rows > -1)
+                {
+                    importedFileName = path;
+                    FromRowDropDown.Items.Clear();
+                    ToRowDropDown.Items.Clear();
+                    for (int i = 0; i < rows; i++)
+                    {
+                        FromRowDropDown.Items.Add(i);
+                        ToRowDropDown.Items.Add(i);
+
+                    }
+
+                    MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
+                }
+            }
+           
+        }
         private void SelectButton_Click(object sender, EventArgs e)
         {
             if (importedData == null) return;
@@ -1135,29 +1169,6 @@ namespace HospitalityDataUpdater
             #endregion
         }
 
-        private void FilePathTextbox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // Enter key was pressed
-
-                string enteredValue = filePath + FileNameTextbox.Text + ".xlsx";
-                int rows = GetExcelRowCount(enteredValue);
-                if (rows > -1)
-                {
-                    FromRowDropDown.Items.Clear();
-                    ToRowDropDown.Items.Clear();
-                    for (int i = 0; i < rows; i++)
-                    {
-                        FromRowDropDown.Items.Add(i);
-                        ToRowDropDown.Items.Add(i);
-
-                    }
-
-                    MessageBox.Show("Successfully got the rows for the file, choose what u want to insert");
-                }
-            }
-        }
 
         private void AddCompanySocialButton_Click(object sender, EventArgs e)// this is for the companies social controller
         {
@@ -1185,5 +1196,7 @@ namespace HospitalityDataUpdater
 
 
         #endregion
+
+
     }
 }
